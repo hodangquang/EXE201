@@ -1,0 +1,143 @@
+/* RainsWorldPage.css */
+
+.world-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  color: #1a1a1a;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+/* Header */
+.world-header {
+  padding: 40px 40px 60px 40px;
+  max-width: 100%;
+}
+
+.world-title {
+  font-size: 80px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+  line-height: 0.95;
+}
+
+.world-desc {
+  font-size: 13.5px;
+  color: #1a1a1a;
+  max-width: 700px;
+  line-height: 1.45;
+  margin-bottom: 40px;
+}
+
+/* Section */
+.world-section {
+  padding: 0 40px 80px 40px;
+}
+
+.world-section-header {
+  margin-bottom: 30px;
+}
+
+.world-section-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.world-section-header p {
+  font-size: 13.5px;
+  color: #444;
+}
+
+/* Marquee */
+.world-marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.world-marquee-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: scroll-marquee 120s linear infinite;
+}
+
+.world-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.world-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 450px; /* portrait images */
+  flex-shrink: 0;
+}
+
+.world-img-wrapper {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  margin-bottom: 16px;
+}
+
+.world-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.world-card:hover .world-img-wrapper img {
+  transform: scale(1.03);
+}
+
+.world-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.world-info p {
+  font-size: 14px;
+  color: #666;
+}
+
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 10px));
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .world-title {
+    font-size: 60px;
+  }
+  .world-card {
+    width: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .world-header {
+    padding: 20px 20px 40px 20px;
+  }
+  .world-section {
+    padding: 0 20px 60px 20px;
+  }
+  .world-title {
+    font-size: 48px;
+  }
+  .world-grid {
+    grid-template-columns: 1fr;
+  }
+}

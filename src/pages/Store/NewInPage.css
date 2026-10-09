@@ -1,0 +1,356 @@
+.new-in-page {
+  background-color: #fff;
+  color: #111;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+.new-in-top-banner {
+  background-color: #3f3f3f;
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  padding: 8px 0;
+  font-weight: 500;
+  position: relative;
+  z-index: 101;
+}
+
+/* Rains Nav specific to New In */
+.ni-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ni-nav-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  gap: 12px;
+}
+
+.ni-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ni-logo-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 9999px;
+  background: #f5f5f5;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #10100f;
+  text-decoration: none;
+}
+
+.ni-nav-menu {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 4px;
+}
+
+.ni-nav-link {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 11px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1e1e1e;
+  text-decoration: none;
+}
+
+.ni-nav-link:hover {
+  text-decoration: underline;
+}
+
+.ni-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ni-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 9999px;
+  background: #f5f5f5;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  border: none;
+  cursor: pointer;
+}
+
+/* Header */
+.new-in-header {
+  padding: 20px 40px 30px 40px;
+  max-width: 100%;
+}
+
+.new-in-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.new-in-desc {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 30px;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.new-in-categories {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.new-in-cat-pill {
+  padding: 8px 18px;
+  border-radius: 9999px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #333;
+}
+
+.new-in-cat-pill:hover {
+  border-color: #111;
+}
+
+.new-in-cat-pill.active {
+  border-color: #111;
+  color: #111;
+}
+
+/* Toolbar */
+.new-in-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 90;
+}
+
+.new-in-sort {
+  cursor: pointer;
+  color: #555;
+}
+
+.new-in-sort strong {
+  color: #111;
+  font-weight: 500;
+}
+
+.new-in-layout-toggles {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle-group-label,
+.layout-option {
+  color: #777;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.toggle-group-label.active,
+.layout-option.active {
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Grid */
+.new-in-grid {
+  display: grid;
+  width: 100%;
+}
+
+.new-in-grid.grid-two {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.new-in-grid.grid-four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.new-in-grid.grid-eight {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+/* Product Card */
+.new-in-product-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #F1F1F1;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.new-in-product-img-wrapper {
+  aspect-ratio: 0.666;
+  overflow: hidden;
+  position: relative;
+}
+
+.new-in-product-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.new-in-product-card:hover .new-in-product-img-wrapper img {
+  transform: scale(1.04);
+}
+
+.new-in-product-info {
+  padding: 12px 16px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.new-in-product-details-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.new-in-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+}
+
+.new-in-colors {
+  display: flex;
+  gap: 5px;
+}
+
+.color-swatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.new-in-price {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+}
+
+/* Show more */
+.new-in-show-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 20px;
+  gap: 16px;
+}
+
+.progress-text {
+  font-size: 11px;
+  color: #555;
+}
+
+.progress-bar-bg {
+  width: 220px;
+  height: 3px;
+  background: #EAEAEA;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #999;
+  border-radius: 2px;
+}
+
+.btn-show-more {
+  padding: 12px 28px;
+  border: 1px solid #111;
+  background: #fff;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-show-more:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* Floating Filter Button */
+.floating-filter-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 100;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.floating-filter-btn:hover {
+  background: #222;
+  transform: translateX(-50%) translateY(-2px);
+}

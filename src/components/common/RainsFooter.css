@@ -1,0 +1,193 @@
+/* ─────────────────────────────────
+   EXACT RAINS FOOTER CLONE
+───────────────────────────────── */
+.rw-footer-rains {
+  background: #ffffff;
+  color: #10100f;
+  padding: 44px 18px 0 18px;
+  border-top: 1px solid rgba(16, 16, 15, 0.08);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.rw-footer-top-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 56px;
+  padding-bottom: 48px;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.rw-footer-left-col {
+  max-width: 440px;
+  flex: 0 0 360px;
+}
+
+.rw-footer-guarantees {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rw-guarantee-item {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #10100f;
+  line-height: 1.45;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.rw-footer-subscribe {
+  margin-top: 24px;
+}
+
+.rw-sub-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #10100f;
+  margin-bottom: 6px;
+}
+
+.rw-sub-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #555554;
+  margin-bottom: 16px;
+  max-width: 320px;
+}
+
+.rw-footer-signup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 24px;
+  background: #2b2b2a;
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.rw-footer-signup-btn:hover {
+  background: #000000;
+  transform: translateY(-1px);
+}
+
+.rw-footer-nav-cols {
+  display: flex;
+  gap: 40px;
+  flex: 1;
+  justify-content: space-between;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.rw-footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rw-nav-col-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #10100f;
+  margin-bottom: 8px;
+}
+
+.rw-footer-link {
+  font-size: 11px;
+  color: #555554;
+  text-decoration: none;
+  line-height: 1.45;
+  transition: color 0.15s ease;
+}
+
+.rw-footer-link:hover {
+  color: #10100f;
+  text-decoration: underline;
+}
+
+.rw-footer-shipping-btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  color: #10100f;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Legal sub-bar */
+.rw-footer-legal-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 28px;
+  font-size: 10.5px;
+  color: #777776;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.rw-legal-copy {
+  color: #555554;
+  font-weight: 500;
+}
+
+.rw-legal-link {
+  color: #777776;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.rw-legal-link:hover {
+  color: #10100f;
+  text-decoration: underline;
+}
+
+/* Giant edge-to-edge RAINS Wordmark */
+.rw-footer-giant-wordmark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 27vw;
+  font-weight: 900;
+  line-height: 0.74;
+  letter-spacing: -0.04em;
+  text-align: center;
+  color: #10100f;
+  user-select: none;
+  width: calc(100% + 36px);
+  margin-left: -18px;
+  margin-right: -18px;
+  display: block;
+  overflow: hidden;
+  padding-top: 10px;
+  margin-bottom: -1vw;
+}
+
+@media (max-width: 900px) {
+  .rw-footer-top-grid {
+    flex-direction: column;
+    gap: 36px;
+  }
+  .rw-footer-left-col {
+    max-width: 100%;
+    flex: auto;
+  }
+  .rw-footer-nav-cols {
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+}

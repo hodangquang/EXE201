@@ -54,7 +54,7 @@ export const CustomerDetail = ({ userId, isModal = false }) => {
   const { fullName, email, gender, avatarUrl, role, isVerified, createdAt, updatedAt } = customer;
 
   return (
-    <div>
+    <div className="rw-admin-page">
       {!isModal && (
         <div style={{ marginBottom: '24px' }}>
           <button
@@ -87,7 +87,7 @@ export const CustomerDetail = ({ userId, isModal = false }) => {
       <Row gutter={[24, 24]}>
         <Col xs={24} lg={isModal ? 24 : 12}>
           <div className={isModal ? '' : 'flat-card'} style={{ padding: isModal ? '0' : '32px 24px' }}>
-            <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+            <div className="rw-customer-summary" style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
               <Avatar 
                 src={avatarUrl} 
                 icon={<User size={40} />} 
@@ -128,7 +128,7 @@ export const CustomerDetail = ({ userId, isModal = false }) => {
 
                 <Divider style={{ margin: '20px 0' }} />
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="rw-spec-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, color: '#4A4A4A' }}>
                     <Calendar size={16} color="#70706f" style={{ marginTop: 2 }} />
                     <div>

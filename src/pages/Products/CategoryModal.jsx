@@ -46,7 +46,7 @@ export const CategoryModal = ({ open, onClose, onCreated, initialData }) => {
   };
 
   return (
-    <Modal title={initialData ? "Cập nhật danh mục" : "Thêm danh mục mới"} open={open} onCancel={onClose} footer={null} destroyOnClose>
+    <Modal rootClassName="rw-admin-modal" title={initialData ? "Cập nhật danh mục" : "Thêm danh mục mới"} open={open} onCancel={onClose} footer={null} destroyOnClose>
       <Form form={form} layout="vertical" onFinish={handleSave} style={{ marginTop: 16 }}>
         <Form.Item name="name" label="Tên danh mục" rules={[{ required: true, message: 'Vui lòng nhập tên danh mục' }]}>
           <Input placeholder="Ví dụ: Áo thun" style={{ borderRadius: 0 }} />

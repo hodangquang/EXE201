@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowDown,
   ArrowUpRight,
   CheckCircle2,
   PackageCheck,
@@ -9,8 +8,12 @@ import {
   Search,
   Scissors,
   ShoppingBag,
+  Pause,
+  Play,
 } from 'lucide-react';
 import AccountMenu from '../../components/common/AccountMenu';
+import EditorialHero from '../../components/common/EditorialHero';
+import RainsFooter from '../../components/common/RainsFooter';
 import { useCart } from '../../contexts/CartContext';
 import '../Home/HomePage.css';
 import './AboutPage.css';
@@ -21,24 +24,32 @@ const circularSteps = [
     title: 'Gửi đồ cũ',
     description: 'Bạn gửi những món đồ không còn sử dụng để bắt đầu một hành trình mới.',
     icon: Recycle,
+    detail: 'Bắt đầu trong mục Bán đồ cũ của tài khoản. Chuẩn bị ảnh rõ tình trạng món đồ và mô tả để gửi yêu cầu.',
+    image: '/images/prod-patchwork-denim.jpg',
   },
   {
     number: '02',
     title: 'Kiểm định',
     description: 'Mỗi sản phẩm được xem xét tình trạng và chọn hướng xử lý phù hợp.',
     icon: CheckCircle2,
+    detail: 'Theo dõi yêu cầu đã gửi ngay trong tài khoản. Thông tin tình trạng và hình ảnh giúp quá trình xem xét món đồ rõ ràng hơn.',
+    image: '/images/prod-charcoal-wool.jpg',
   },
   {
     number: '03',
     title: 'Tái thiết kế',
     description: 'Chất liệu cũ được kết hợp, sửa đổi và tạo thành một thiết kế mang cá tính riêng.',
     icon: Scissors,
+    detail: 'Khám phá cách những mảng vải, phom dáng và đường may cũ có thể tạo nên một ngôn ngữ thiết kế mới.',
+    image: '/images/prod-side-profile.jpg',
   },
   {
     number: '04',
     title: 'Trở lại tủ đồ',
     description: 'Thiết kế hoàn thiện tiếp tục được sử dụng thay vì kết thúc ở bãi rác.',
     icon: PackageCheck,
+    detail: 'Xem mô tả, màu và kích cỡ có sẵn trên trang sản phẩm để tìm món đồ phù hợp với tủ đồ của bạn.',
+    image: '/images/prod-patchwork-denim.jpg',
   },
 ];
 
@@ -62,6 +73,8 @@ const principles = [
 
 export default function AboutPage() {
   const { openCart, cartItemCount } = useCart();
+  const [activeStep, setActiveStep] = useState(0);
+  const [motionPaused, setMotionPaused] = useState(false);
 
   useEffect(() => {
     const revealElements = document.querySelectorAll('[data-about-reveal]');
@@ -88,7 +101,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main className="rw about-page">
+    <main className={`rw about-page ${motionPaused ? 'about-motion-paused' : ''}`}>
       <div className="rw-announcement">
         <div className="rw-announcement-inner">
           <span>REWEAR — Thời trang tuần hoàn, khởi đầu mới</span>
@@ -109,57 +122,22 @@ export default function AboutPage() {
           </div>
 
           <div className="rw-nav-right">
-            <button className="rw-nav-pill" type="button" aria-label="Tìm kiếm">
-              <Search size={14} aria-hidden="true" /> Tìm kiếm
-            </button>
+            <Link className="rw-nav-pill" to="/new-in#catalog-tools" aria-label="Tìm kiếm sản phẩm">
+              <Search size={14} aria-hidden="true" /><span>Tìm kiếm</span>
+            </Link>
             <button className="rw-nav-pill" type="button" onClick={openCart} aria-label={`Giỏ hàng, ${cartItemCount} sản phẩm`}>
-              <ShoppingBag size={14} aria-hidden="true" /> Giỏ hàng ({cartItemCount})
+              <ShoppingBag size={14} aria-hidden="true" /><span>Giỏ hàng ({cartItemCount})</span>
             </button>
-            <AccountMenu className="rw-nav-pill" />
+            <AccountMenu className="rw-nav-pill" withSpan />
           </div>
         </div>
       </nav>
 
-      <section className="about-hero" aria-labelledby="about-hero-title">
-        <div className="about-hero__glow about-hero__glow--one" aria-hidden="true" />
-        <div className="about-hero__glow about-hero__glow--two" aria-hidden="true" />
-
-        <div className="about-hero__copy">
-          <p className="about-eyebrow" data-about-reveal>THỜI TRANG TUẦN HOÀN</p>
-          <h1 id="about-hero-title" data-about-reveal>CŨ LÀ<br />KHỞI ĐẦU.</h1>
-          <div className="about-hero__intro" data-about-reveal>
-            <p>
-              REWEAR kết nối hành trình thu gom, tuyển chọn và tái thiết kế quần áo đã qua sử
-              dụng thành những sản phẩm thời trang mang cá tính riêng.
-            </p>
-            <a className="about-arrow-link" href="#our-cycle">
-              Khám phá hành trình <ArrowDown size={18} />
-            </a>
-          </div>
-        </div>
-
-        <div className="about-hero__visual" data-about-reveal>
-          <figure className="about-hero__image-wrap">
-            <img
-              className="about-hero__image"
-              src="/images/prod-patchwork-denim.jpg"
-              alt="Thiết kế denim patchwork của REWEAR"
-            />
-            <figcaption>Denim tái thiết kế / độc bản</figcaption>
-          </figure>
-
-          <div className="about-orbit" aria-hidden="true">
-            <div className="about-orbit__text">
-              <span>MẶC</span><span>LẠI</span><span>YÊU</span><span>THÊM</span>
-            </div>
-            <Recycle size={28} strokeWidth={1.3} />
-          </div>
-        </div>
-
-        <div className="about-hero__index" aria-hidden="true">
-          <span>GIỚI THIỆU</span><span>001—006</span>
-        </div>
-      </section>
+      <EditorialHero title={'Cũ là\nkhởi đầu.'} eyebrow="GIỚI THIỆU REWEAR / THỜI TRANG TUẦN HOÀN" description="Một vòng đời mới bắt đầu từ điều đã có. Cùng nhìn lại cách chúng ta lựa chọn, gìn giữ và mặc tiếp những món đồ." primaryHref="#our-cycle" primaryLabel="Khám phá hành trình" secondaryHref="/new-in" secondaryLabel="Khám phá tủ đồ" paused={motionPaused} slides={[
+        { src: '/images/editorial/wardrobe.jpg', alt: 'Những món đồ với sắc độ tự nhiên trên giá treo', companion: '/images/prod-patchwork-denim.jpg' },
+        { src: '/images/prod-patchwork-denim.jpg', alt: 'Cảm hứng thiết kế từ những mảng denim khác nhau', companion: '/images/editorial/wardrobe.jpg' },
+      ]} />
+      <div className="about-chapters"><nav aria-label="Nội dung giới thiệu"><a href="#our-cycle">Hành trình</a><a href="#our-design">Thiết kế</a><a href="#about-help">Bắt đầu từ đâu?</a></nav><button type="button" onClick={() => setMotionPaused(value => !value)} aria-pressed={motionPaused}>{motionPaused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}<span>{motionPaused ? 'Tiếp tục chuyển động' : 'Tạm dừng chuyển động'}</span></button></div>
 
       <div className="about-marquee" aria-hidden="true">
         <div className="about-marquee__track">
@@ -196,24 +174,28 @@ export default function AboutPage() {
 
         <div className="about-cycle__line" aria-hidden="true"><span /></div>
 
-        <div className="about-cycle__steps">
-          {circularSteps.map(({ number, title, description, icon: Icon }) => (
-            <article className="about-cycle__step" key={number} data-about-reveal>
-              <div className="about-cycle__step-top">
+        <div className="about-cycle__steps" role="group" aria-label="Khám phá các bước trong hành trình">
+          {circularSteps.map(({ number, title, description, icon: Icon }, index) => (
+            <button type="button" className={`about-cycle__step ${activeStep === index ? 'is-active' : ''}`} key={number} onClick={() => setActiveStep(index)} aria-pressed={activeStep === index} aria-controls="about-cycle-detail">
+              <span className="about-cycle__step-top">
                 <span>{number}</span>
                 <Icon size={30} strokeWidth={1.25} aria-hidden="true" />
-              </div>
-              <h3>{title}</h3>
-              <p>{description}</p>
-            </article>
+              </span>
+              <span className="about-cycle__step-title">{title}</span>
+              <span className="about-cycle__step-copy">{description}</span>
+            </button>
           ))}
+        </div>
+        <div className="about-cycle-detail" id="about-cycle-detail">
+          <img src={circularSteps[activeStep].image} alt="Cảm hứng chất liệu và thiết kế REWEAR" loading="lazy" />
+          <div aria-live="polite" aria-atomic="true"><span className="about-cycle-detail__number">BƯỚC {circularSteps[activeStep].number} / 04</span><h3>{circularSteps[activeStep].title}</h3><p>{circularSteps[activeStep].detail}</p><Link to={activeStep < 2 ? '/profile?tab=sourcing' : '/new-in'}>{activeStep < 2 ? 'Đến mục Bán đồ cũ' : 'Khám phá tủ đồ'}<ArrowUpRight size={18} aria-hidden="true" /></Link></div>
         </div>
       </section>
 
-      <section className="about-editorial">
+      <section className="about-editorial" id="our-design">
         <div className="about-editorial__heading" data-about-reveal>
           <div className="about-section-label"><span>03</span><span>Ngôn ngữ thiết kế</span></div>
-          <h2>TỪ NHỮNG GÌ<br />ĐÃ TỒN TẠI.</h2>
+          <h2>Từ những gì<br />đã tồn tại.</h2>
           <p>
             Những mảng vải, đường may và bề mặt khác nhau được đặt cạnh nhau để tạo ra nhịp điệu
             mới. Sự không đồng nhất chính là dấu ấn của sản phẩm.
@@ -222,11 +204,11 @@ export default function AboutPage() {
 
         <div className="about-editorial__gallery">
           <figure className="about-editorial__image about-editorial__image--large" data-about-reveal>
-            <img src="/images/prod-charcoal-wool.jpg" alt="Thiết kế áo khoác màu than của REWEAR" />
+            <img src="/images/prod-charcoal-wool.jpg" alt="Cảm hứng phom áo khoác màu than" loading="lazy" decoding="async" />
             <figcaption><span>Chất liệu 01</span><span>Bề mặt / Kết cấu</span></figcaption>
           </figure>
           <figure className="about-editorial__image about-editorial__image--small" data-about-reveal>
-            <img src="/images/prod-side-profile.jpg" alt="Chi tiết phom dáng sản phẩm REWEAR" />
+            <img src="/images/prod-side-profile.jpg" alt="Cảm hứng phom áo khoác nhìn từ bên cạnh" loading="lazy" decoding="async" />
             <figcaption><span>Chất liệu 02</span><span>Phom dáng / Công năng</span></figcaption>
           </figure>
         </div>
@@ -235,7 +217,7 @@ export default function AboutPage() {
       <section className="about-principles" aria-labelledby="about-principles-title">
         <div className="about-principles__header" data-about-reveal>
           <div className="about-section-label"><span>04</span><span>Nguyên tắc của chúng tôi</span></div>
-          <h2 id="about-principles-title">NHỮNG ĐIỀU<br />CHÚNG TÔI TIN.</h2>
+          <h2 id="about-principles-title">Những điều<br />chúng tôi tin.</h2>
         </div>
 
         <div className="about-principles__list">
@@ -250,18 +232,24 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="about-help" id="about-help" aria-labelledby="about-help-title"><div><p className="about-eyebrow">CÙNG BẮT ĐẦU</p><h2 id="about-help-title">Một bước nhỏ.<br />Một hành trình mới.</h2></div><div className="about-help__questions">
+        <details><summary>Tôi muốn tìm một món đồ phù hợp <span aria-hidden="true">+</span></summary><p>Trong tủ đồ REWEAR, bạn có thể tìm theo tên, màu hoặc kích cỡ; sắp xếp theo giá và xem chi tiết từng sản phẩm.</p><Link to="/new-in">Khám phá sản phẩm <ArrowUpRight size={16} /></Link></details>
+        <details><summary>Tôi muốn gửi món đồ không còn mặc <span aria-hidden="true">+</span></summary><p>Đăng nhập tài khoản, mở mục Bán đồ cũ để tạo yêu cầu và theo dõi trạng thái. Chuẩn bị hình ảnh và mô tả tình trạng món đồ.</p><Link to="/profile?tab=sourcing">Mở mục Bán đồ cũ <ArrowUpRight size={16} /></Link></details>
+        <details><summary>Tôi muốn xem lại đơn mua <span aria-hidden="true">+</span></summary><p>Trong tài khoản, mục Đơn mua giúp bạn tìm đơn hàng và xem thông tin chi tiết.</p><Link to="/profile?tab=orders">Đến đơn mua <ArrowUpRight size={16} /></Link></details>
+      </div></section>
+
       <section className="about-cta">
-        <div className="about-cta__rings" aria-hidden="true"><span /><span /><span /></div>
+        <img className="about-cta__image" src="/images/editorial/wardrobe.jpg" alt="" loading="lazy" decoding="async" />
         <div className="about-cta__content" data-about-reveal>
           <p>MÓN ĐỒ TIẾP THEO CÓ THỂ ĐÃ Ở ĐÂU ĐÓ.</p>
-          <h2>MẶC TIẾP<br />CÂU CHUYỆN.</h2>
+          <h2>Mặc tiếp<br />câu chuyện.</h2>
           <div className="about-cta__actions">
             <Link to="/new-in">Khám phá sản phẩm <ArrowUpRight size={17} /></Link>
             <Link to="/profile?tab=sourcing">Gửi đồ cũ <Recycle size={17} /></Link>
           </div>
         </div>
       </section>
-
+      <RainsFooter />
     </main>
   );
 }

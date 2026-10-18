@@ -1,0 +1,56 @@
+/* This wrapper is never rendered on Home. Keep shared storefront fixes here. */
+.rw-storefront-quality { min-width: 0; }
+.rw-storefront-quality :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+.rw-storefront-quality .rw-nav { background: transparent; }
+.rw-storefront-quality .rw-nav-inner { box-sizing: border-box; }
+.rw-storefront-quality .rw-nav-pill { text-decoration: none; }
+.rw-storefront-quality .rains-pdp { overflow: clip; }
+.rw-storefront-quality .rains-top-nav { height: auto; min-height: 0; margin-bottom: 0; pointer-events: auto; }
+.rw-storefront-quality .rains-top-nav .rw-nav-inner { width: 100%; }
+.rw-storefront-quality .rains-hero-viewport { margin-top: 0; }
+.rw-storefront-quality button:disabled { cursor: not-allowed; }
+.rw-storefront-quality :is(.checkout-page, .pp-page) { overflow-wrap: anywhere; }
+@media (max-width: 1100px) {
+  .rw-storefront-quality .rw-nav-inner { flex-wrap: wrap; }
+  .rw-storefront-quality .rw-nav-left { display: contents; }
+  .rw-storefront-quality .rw-nav-menu {
+    display: flex;
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border-radius: 9999px;
+    scrollbar-width: none;
+    box-sizing: border-box;
+  }
+  .rw-storefront-quality .rw-nav-right { margin-left: auto; }
+}
+.rw-storefront-quality .rw-nav-menu::-webkit-scrollbar { display: none; }
+@media (max-width: 600px) {
+  .rw-storefront-quality .rw-nav-inner { gap: 8px; padding: 6px 8px; }
+  .rw-storefront-quality .rw-nav-right { gap: 4px; }
+  .rw-storefront-quality .rw-nav-right .rw-nav-pill { width: 38px; min-width: 38px; height: 38px; padding: 0; justify-content: center; font-size: 10px; }
+  .rw-storefront-quality .rw-nav-right .rw-nav-pill > span { display: none; }
+  .rw-storefront-quality .rw-nav-right svg { flex-shrink: 0; }
+  .rw-storefront-quality .rw-nav-right .rw-nav-pill[aria-label] { overflow: hidden; white-space: nowrap; }
+}
+@media (max-width: 768px) {
+  .rw-storefront-quality .rains-hero-viewport { height: auto; }
+  .rw-storefront-quality .rains-floating-widget { position: relative; inset: auto; transform: none; width: 100%; max-width: none; margin: 0; padding: 16px; }
+  .rw-storefront-quality .rains-gallery-pause { position: relative; inset: auto; margin: 12px 16px; }
+  .rw-storefront-quality .rains-scroll-down-hint { display: none; }
+  .rw-storefront-quality .rains-glass-card { background: rgba(255,255,255,.95); }
+}
+.rw-storefront-quality .store-locator__map-controls button { width: 44px; height: 44px; }
+.rw-storefront-quality .store-locator__larger-map { min-height: 44px; }
+@media (prefers-reduced-motion: reduce) {
+  .rw-storefront-quality *, .rw-storefront-quality *::before, .rw-storefront-quality *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

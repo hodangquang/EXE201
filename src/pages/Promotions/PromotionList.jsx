@@ -98,7 +98,7 @@ export const PromotionList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -111,7 +111,7 @@ export const PromotionList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            CAMPAIGNS & REWARDS
+            KHUYẾN MÃI & ĐIỂM THƯỞNG
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Mã giảm giá & Ưu đãi quyên góp
@@ -129,11 +129,11 @@ export const PromotionList = () => {
       </div>
 
       <div className="flat-card">
-        <Table dataSource={promotions} columns={columns} rowKey="id" pagination={false} />
+        <Table scroll={{ x: 'max-content' }} dataSource={promotions} columns={columns} rowKey="id" pagination={false} />
       </div>
 
       {/* Modal */}
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Tạo mã khuyến mãi / Voucher mới"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}

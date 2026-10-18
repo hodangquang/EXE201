@@ -47,7 +47,7 @@ export const ProductDetail = () => {
   const gallery = imgs.length > 0 ? imgs.map(img => img.imageUrl || img.url || img) : ['https://images.unsplash.com/photo-1544816155-12df9643f363?w=600'];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       {/* Top Navigation & Breadcrumb */}
       <div style={{ marginBottom: '20px' }}>
         <button
@@ -132,7 +132,7 @@ export const ProductDetail = () => {
               <div className="editorial-sub">GIÁ NIÊM YẾT</div>
               <div
                 style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontFamily: "var(--font-ui)",
                   fontSize: '36px',
                   fontWeight: 600,
                   color: '#10100f',
@@ -145,7 +145,7 @@ export const ProductDetail = () => {
             <Divider style={{ margin: '16px 0' }} />
 
             {/* Spec grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '24px' }}>
+            <div className="rw-spec-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginBottom: '24px' }}>
               <div>
                 <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Mã sản phẩm</span>
                 <span style={{ fontWeight: 600, fontFamily: 'monospace' }}>{product.id}</span>
@@ -165,7 +165,7 @@ export const ProductDetail = () => {
                 <span style={{ fontWeight: 600 }}>{product.brandName || product.brand || '-'}</span>
               </div>
               <div>
-                <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Kích cỡ (Size)</span>
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Kích cỡ</span>
                 <span style={{ fontWeight: 600 }}>{product.size || '-'}</span>
               </div>
               <div>
@@ -178,7 +178,7 @@ export const ProductDetail = () => {
 
             {/* Original Material Source */}
             <div style={{ marginBottom: '20px' }}>
-              <div className="editorial-sub" style={{ marginBottom: '6px' }}>MÔ TẢ (DESCRIPTION)</div>
+              <div className="editorial-sub" style={{ marginBottom: '6px' }}>MÔ TẢ</div>
               <div style={{ fontSize: '14px', fontWeight: 500, color: '#10100f', backgroundColor: '#f7f7f6', padding: '10px 14px', borderLeft: '3px solid #10100f' }}>
                 {product.description || product.originalMaterial || 'Không có mô tả'}
               </div>

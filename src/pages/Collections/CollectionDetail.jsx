@@ -51,7 +51,7 @@ export const CollectionDetail = () => {
   };
 
   return (
-    <div>
+    <div className="rw-admin-page">
       {/* Top Bar */}
       <div style={{ marginBottom: '24px' }}>
         <button
@@ -148,17 +148,17 @@ export const CollectionDetail = () => {
                 Cập nhật trạng thái đợt thu gom:
               </span>
               <Select
-                value={request.status}
+                aria-label="Trạng thái thu gom" value={request.status}
                 onChange={handleStatusChange}
                 style={{ width: '100%' }}
               >
-                <Option value={COLLECTION_STATUS.PENDING}>Pending (Chờ duyệt)</Option>
-                <Option value={COLLECTION_STATUS.APPROVED}>Approved (Đã duyệt)</Option>
-                <Option value={COLLECTION_STATUS.PICKUP_SCHEDULED}>Pickup Scheduled (Đã xếp lịch)</Option>
-                <Option value={COLLECTION_STATUS.COLLECTED}>Collected (Đã nhận đồ)</Option>
-                <Option value={COLLECTION_STATUS.INSPECTING}>Inspecting (Đang kiểm định)</Option>
-                <Option value={COLLECTION_STATUS.ACCEPTED}>Accepted (Đã chấp nhận)</Option>
-                <Option value={COLLECTION_STATUS.REJECTED}>Rejected (Từ chối)</Option>
+                <Option value={COLLECTION_STATUS.PENDING}>Chờ duyệt</Option>
+                <Option value={COLLECTION_STATUS.APPROVED}>Đã duyệt</Option>
+                <Option value={COLLECTION_STATUS.PICKUP_SCHEDULED}>Đã xếp lịch</Option>
+                <Option value={COLLECTION_STATUS.COLLECTED}>Đã nhận đồ</Option>
+                <Option value={COLLECTION_STATUS.INSPECTING}>Đang kiểm định</Option>
+                <Option value={COLLECTION_STATUS.ACCEPTED}>Đã chấp nhận</Option>
+                <Option value={COLLECTION_STATUS.REJECTED}>Từ chối</Option>
               </Select>
             </div>
 
@@ -167,7 +167,7 @@ export const CollectionDetail = () => {
                 Phân công nhân viên lấy hàng:
               </span>
               <Select
-                value={request.assignedStaff}
+                aria-label="Nhân viên phụ trách" value={request.assignedStaff}
                 onChange={handleAssignStaff}
                 style={{ width: '100%' }}
               >
@@ -179,7 +179,7 @@ export const CollectionDetail = () => {
               </Select>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #f0f0ef' }}>
+            <div className="rw-spec-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #f0f0ef' }}>
               <div>
                 <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Ngày gửi yêu cầu</span>
                 <span style={{ fontWeight: 500, fontSize: '13px' }}>{formatShortDate(request.requestDate)}</span>
@@ -203,7 +203,7 @@ export const CollectionDetail = () => {
           <div className="flat-card" style={{ padding: '28px', height: '100%' }}>
             <div className="editorial-sub" style={{ marginBottom: '16px' }}>CHI TIẾT KIỆN ĐỒ QUYÊN GÓP</div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginBottom: '24px' }}>
+            <div className="rw-spec-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginBottom: '24px' }}>
               <div style={{ padding: '16px', border: '1px solid #e5e5e4', backgroundColor: '#fafafa' }}>
                 <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Tổng số lượng món</span>
                 <span style={{ fontSize: '24px', fontWeight: 600, color: '#10100f' }}>{request.clothesCount} chiếc</span>
@@ -258,7 +258,7 @@ export const CollectionDetail = () => {
       </Row>
 
       {/* Reward Points Modal */}
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Tặng điểm REWEAR Points cho khách quyên góp"
         open={rewardModalOpen}
         onCancel={() => setRewardModalOpen(false)}

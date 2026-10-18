@@ -128,7 +128,7 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       {/* Editorial Header */}
       <div 
         style={{ 
@@ -142,7 +142,7 @@ export const Dashboard = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            OVERVIEW & ANALYTICS
+            TỔNG QUAN & PHÂN TÍCH
           </div>
           <h1 
             className="editorial-title"
@@ -174,7 +174,7 @@ export const Dashboard = () => {
 
       {/* 6 KPI Cards Grid */}
       <Row gutter={[16, 16]} style={{ marginBottom: '32px' }}>
-        <Col xs={24} sm={12} lg={4}>
+        <Col xs={24} sm={12} lg={8} xxl={4}>
           <KPICard
             title="Doanh thu"
             value={formatCurrency(mockKPIs.revenue)}
@@ -183,7 +183,7 @@ export const Dashboard = () => {
             subtitle="so với tháng trước"
           />
         </Col>
-        <Col xs={24} sm={12} lg={4}>
+        <Col xs={24} sm={12} lg={8} xxl={4}>
           <KPICard
             title="Đơn hàng"
             value={mockKPIs.ordersCount}
@@ -192,7 +192,7 @@ export const Dashboard = () => {
             subtitle="128 đơn hoàn tất"
           />
         </Col>
-        <Col xs={24} sm={12} lg={4}>
+        <Col xs={24} sm={12} lg={8} xxl={4}>
           <KPICard
             title="Đồ cũ thu gom"
             value={mockKPIs.collectedClothes}
@@ -202,7 +202,7 @@ export const Dashboard = () => {
             subtitle="từ 84 lượt đóng góp"
           />
         </Col>
-        <Col xs={24} sm={12} lg={4}>
+        <Col xs={24} sm={12} lg={8} xxl={4}>
           <KPICard
             title="Sản phẩm tái chế"
             value={mockKPIs.upcycledProducts}
@@ -212,7 +212,7 @@ export const Dashboard = () => {
             subtitle="đã qua kiểm duyệt QC"
           />
         </Col>
-        <Col xs={24} sm={12} lg={4}>
+        <Col xs={24} sm={12} lg={8} xxl={4}>
           <KPICard
             title="Sản phẩm đã bán"
             value={mockKPIs.productsSold}
@@ -222,7 +222,7 @@ export const Dashboard = () => {
             subtitle="tỷ lệ bán 80.8%"
           />
         </Col>
-        <Col xs={24} sm={12} lg={4}>
+        <Col xs={24} sm={12} lg={8} xxl={4}>
           <KPICard
             title="Khách hàng"
             value={mockKPIs.customersCount}
@@ -339,7 +339,7 @@ export const Dashboard = () => {
               </Button>
             </div>
 
-            <Table
+            <Table scroll={{ x: 'max-content' }}
               dataSource={mockOrders}
               columns={orderColumns}
               rowKey="id"
@@ -368,7 +368,7 @@ export const Dashboard = () => {
               </Button>
             </div>
 
-            <Table
+            <Table scroll={{ x: 'max-content' }}
               dataSource={mockCollectionRequests}
               columns={collectionColumns}
               rowKey="id"

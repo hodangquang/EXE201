@@ -89,7 +89,7 @@ export const InventoryList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -102,7 +102,7 @@ export const InventoryList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            LIFECYCLE MATERIAL TRACKING
+            THEO DÕI VÒNG ĐỜI VẬT LIỆU
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Quản lý Kho nguyên liệu & Thành phẩm tuần hoàn
@@ -114,7 +114,7 @@ export const InventoryList = () => {
         <Input
           prefix={<Search size={16} color="#70706f" style={{ marginRight: 6 }} />}
           placeholder="Tìm theo tên vật tư, vị trí kệ kho..."
-          value={searchText}
+          aria-label="Tìm kiếm trong danh sách" value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           style={{ maxWidth: '400px', borderRadius: 0 }}
         />
@@ -127,7 +127,7 @@ export const InventoryList = () => {
           items={tabItems}
           style={{ marginBottom: '16px' }}
         />
-        <Table dataSource={filteredItems} columns={columns} rowKey="id" pagination={false} />
+        <Table scroll={{ x: 'max-content' }} dataSource={filteredItems} columns={columns} rowKey="id" pagination={false} />
       </div>
     </div>
   );

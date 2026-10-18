@@ -1,5 +1,22 @@
 # Lịch sử context
 
+## 2026-10-18 — Đồng bộ footer Home và tách bộ ảnh Mới về/Nam/Nữ
+
+- Hoàn thiện giao diện ảnh lớn/chuyển cảnh cho Catalog/About/World: điều khiển ảnh, pause/reduced motion, journal cuộn mobile, CTA nền ảnh. Giữ các bộ lọc, flow API và business logic hiện tại.
+- Theo yêu cầu mới nhất, năm trang dùng lại `RainsFooter` của Home thay footer thử nghiệm; PDP/Profile đã dùng cùng component. Sửa reset CSS About ảnh hưởng footer và ngắt chữ Profile khiến logo lớn xuống dòng. Không thay Home hoặc component/CSS footer chung.
+- Thêm chín ảnh local, ba ảnh riêng cho mỗi trang Mới về/Nam/Nữ ở banner/journal/CTA; nội dung cảm hứng riêng, không trùng bộ ảnh giữa ba trang. Không thay ảnh sản phẩm API bằng ảnh stock. Nguồn ảnh lưu trong `editorial-ui-2026-10-18.md`.
+- Kiểm tra: production build đạt (4024 modules); 24 ca Chromium ở 375/768/1440px dùng Home làm chuẩn, bảy route storefront không tràn ngang/pageerror, footer không khác thuộc tính đã so sánh. Ảnh tải đủ, tập ảnh ba catalog không giao nhau; các thao tác slideshow/pause/reduced motion, tìm kiếm/reset, giỏ, About steps/FAQ, journal và link footer đạt với fixture. Chi tiết trong báo cáo editorial.
+- Còn mở: lint thiếu `eslint.config.*`; JS bundle khoảng 1,97 MB; sản phẩm thật có thể trùng giữa ba listing do chưa phân loại giới tính; footer mẫu còn placeholder/newsletter demo; chưa thử backend live, trình duyệt khác, thiết bị thật hoặc audit WCAG đầy đủ.
+
+## 2026-10-17 — QA toàn bộ UI ngoài Home và nâng cấp trải nghiệm
+
+- Hợp nhất ba listing thành CatalogPage: hero/editorial, thẻ sản phẩm, tìm không dấu, sort giá/tên, lọc màu/cỡ từ dữ liệu tải sẵn, chip/reset, xem thêm và empty recovery. About thêm hành trình tương tác, FAQ, mục lục và pause motion.
+- Sửa tràn ngang Profile, nav/PDP mobile, dialog/focus/bàn phím, checkout placeholder/thứ tự form, spinner payment; thống nhất admin table/form/modal/font/tiếng Việt và nhãn demo. Bỏ switchRole không tồn tại.
+- Không đổi Home, API services/hooks, CartContext/AuthContext, routes/guards hoặc logic tạo đơn/thanh toán.
+- Kiểm tra build thành công 4021 modules; 148 ca render (37 màn × 4 chiều rộng) không lỗi JS/tràn ngang với fixture; 15 ca tương tác nền tảng đạt. Các ca tương tác catalog/About và giới hạn chi tiết nằm trong ui-qa-2026-10-17.md. Home computed styles/geometry 261 phần tử ở bốn chiều rộng không thay đổi.
+- Còn mở: lint thiếu eslint.config.*, bundle lớn, backend/live mutation và payment chưa thử, màn Reports/Staff chưa có route, chưa audit WCAG/screen reader hoặc browser khác.
+
+
 ## 2026-10-07 — Đối chiếu guide thanh toán và khởi động polling từ checkout
 
 - Đọc `FE_INTEGRATION_GUIDE.md`: checkout trả `data.order.id` và checkoutUrl; tab REWEAR phải giữ orderId, mở PayOS ở tab riêng và gọi `GET /api/payments/{orderId}/status` mỗi 3 giây. Trước sửa frontend chuyển cùng tab sang PayOS, nên không còn component polling; callback phải suy ID từ PayOS orderCode và bỏ sót `paymentStatus: 2` dạng số.
@@ -372,3 +389,15 @@
 - Ghi checklist deploy backend, cấu hình MongoDB/JWT/Cloudinary/PayOS trong Render Environment, và nối URL public qua `VITE_API_BASE_URL`.
 - Kiểm tra: rà lại Dockerfile path, port và CORS middleware bằng đọc mã; chưa build Docker/.NET, chưa deploy Render, chưa xác minh URL backend public.
 - Còn mở: backend owner commit/deploy đúng repo, cung cấp API URL; frontend Render cần set env và redeploy.
+
+## 2026-10-17 — Cân chiều cao thanh điều hướng storefront
+
+- Đồng bộ nền menu, link active, logo và action pill về 44px; căn tâm trong nav 68px; giữ pill bo tròn khi cuộn nav trên màn hình hẹp. Chỉ áp dụng wrapper storefront ngoài Home.
+- Kiểm tra trực quan route Nữ ở 375/1024/1440/1893px; nav giữ trong viewport. Chưa chạy lại production build cho thay CSS thuần.
+
+
+## 2026-10-17 — Đồng bộ navbar ngoài Home theo Home
+
+- Bỏ CSS global thử nghiệm từng làm đổi Home và override navbar trắng/44px ngoài Home; listing, About, World, Profile, PDP trở lại pill 38px/menu 38px/link 30px và nền kính xám theo `HomePage.css`. PDP dùng class `rw-nav`, Profile/World bổ sung Search/Cart/Account; giữ back link PDP. Mobile ngoài Home dùng menu cuộn và action icon để đủ chỗ.
+- Kiểm tra: `npm.cmd run build` thành công (4021 modules, cảnh báo bundle lớn); Playwright fixture kiểm tra Home và 7 route storefront ở 375/1440px, không document overflow; đo màu/kích thước navbar, kiểm tra search PDP đến catalog, cart drawer trên catalog/Profile, không có pageerror trong lượt tương tác.
+- Còn mở: Home mobile hiện menu chỉ rộng khoảng 10px tại 375px; không chỉnh Home trong task này. API thật, thiết bị thật/Safari/Firefox chưa thử. Checkout/payment và admin giữ header/flow riêng. `npm.cmd run lint` chưa chạy được vì repo thiếu `eslint.config.*`.

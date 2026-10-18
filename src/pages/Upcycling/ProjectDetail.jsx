@@ -28,12 +28,12 @@ export const ProjectDetail = () => {
 
   // Steps definition for production flow
   const stepsItems = [
-    { title: 'Thu gom (Collected)' },
-    { title: 'Làm sạch (Cleaning)' },
-    { title: 'Thiết kế (Designing)' },
-    { title: 'May (Production)' },
+    { title: 'Thu gom' },
+    { title: 'Làm sạch' },
+    { title: 'Thiết kế' },
+    { title: 'May' },
     { title: 'Kiểm định (QC)' },
-    { title: 'Mở bán (Ready to Sell)' },
+    { title: 'Mở bán' },
   ];
 
   const getStepIndex = (status) => {
@@ -49,7 +49,7 @@ export const ProjectDetail = () => {
   };
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div style={{ marginBottom: '24px' }}>
         <button
           onClick={() => navigate('/upcycling')}
@@ -160,7 +160,7 @@ export const ProjectDetail = () => {
             <Divider style={{ margin: '16px 0' }} />
 
             <div style={{ marginBottom: '16px' }}>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block', marginBottom: '4px' }}>Ý tưởng thiết kế (Design Concept)</span>
+              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block', marginBottom: '4px' }}>Ý tưởng thiết kế</span>
               <p style={{ fontSize: '13px', color: '#40403f', lineHeight: 1.5, margin: 0 }}>
                 {project.designConcept}
               </p>

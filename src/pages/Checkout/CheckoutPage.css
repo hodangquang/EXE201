@@ -453,7 +453,7 @@
   color: #858585;
 }
 
-.checkout-summary-image-wrap > span {
+.checkout-summary-image-wrap > span:not(.checkout-summary-image-placeholder) {
   position: absolute;
   top: -6px;
   right: -6px;
@@ -701,7 +701,6 @@
 
   .checkout-summary {
     position: static;
-    grid-row: 1;
   }
 
   .checkout-summary-items {

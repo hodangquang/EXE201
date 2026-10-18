@@ -202,7 +202,7 @@ export const ProductList = () => {
                   okText="Xóa"
                   cancelText="Hủy"
                 >
-                  <Button type="text" danger icon={<Trash2 size={15} />} />
+                  <Button type="text" danger aria-label={`Xóa sản phẩm ${record.title || record.name || ''}`} icon={<Trash2 size={15} />} />
                 </Popconfirm>
               </>
             )
@@ -213,7 +213,7 @@ export const ProductList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       {/* Header */}
       <div 
         style={{ 
@@ -227,7 +227,7 @@ export const ProductList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            CATALOG MANAGEMENT
+            QUẢN LÝ SẢN PHẨM
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Tất cả sản phẩm tái chế
@@ -258,11 +258,11 @@ export const ProductList = () => {
           flexWrap: 'wrap',
         }}
       >
-        <div style={{ flex: 1, minWidth: '240px', display: 'flex', gap: 8 }}>
+        <div style={{ flex: 1, minWidth: 'min(240px, 100%)', display: 'flex', gap: 8 }}>
           <Input
             prefix={<Search size={16} color="#70706f" />}
             placeholder="Tìm theo tên sản phẩm hoặc mã ID..."
-            value={searchText}
+            aria-label="Tìm kiếm trong danh sách" value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             onPressEnter={fetchProducts}
             style={{ borderRadius: 0 }}
@@ -271,7 +271,7 @@ export const ProductList = () => {
         </div>
 
         <Select
-          value={categoryFilter}
+          aria-label="Lọc danh mục" value={categoryFilter}
           onChange={setCategoryFilter}
           style={{ width: 140 }}
         >
@@ -282,7 +282,7 @@ export const ProductList = () => {
         </Select>
 
         <Select
-          value={brandFilter}
+          aria-label="Lọc thương hiệu" value={brandFilter}
           onChange={setBrandFilter}
           style={{ width: 140 }}
         >
@@ -293,7 +293,7 @@ export const ProductList = () => {
         </Select>
 
         <Select
-          value={conditionFilter}
+          aria-label="Lọc tình trạng" value={conditionFilter}
           onChange={setConditionFilter}
           style={{ width: 140 }}
         >
@@ -304,7 +304,7 @@ export const ProductList = () => {
         </Select>
 
         <Select
-          value={statusFilter}
+          aria-label="Lọc trạng thái sản phẩm" value={statusFilter}
           onChange={setStatusFilter}
           style={{ width: 140 }}
         >
@@ -315,7 +315,7 @@ export const ProductList = () => {
         </Select>
 
         <Select
-          value={isActiveFilter}
+          aria-label="Lọc trạng thái hoạt động" value={isActiveFilter}
           onChange={setIsActiveFilter}
           style={{ width: 150 }}
         >
@@ -327,7 +327,7 @@ export const ProductList = () => {
 
       {/* Products Table */}
       <div className="flat-card" style={{ padding: '0px' }}>
-        <Table
+        <Table scroll={{ x: 'max-content' }}
           dataSource={products}
           loading={loading}
           columns={columns}

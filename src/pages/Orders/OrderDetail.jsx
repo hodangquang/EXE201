@@ -52,7 +52,7 @@ export const OrderDetail = () => {
             <div style={{ fontWeight: 600, color: '#10100f' }}>{item.name}</div>
             {item.isOneOfOne && (
               <span className="one-of-one-pill" style={{ fontSize: '9px', padding: '1px 6px' }}>
-                1-OF-1 ARCHIVE
+                SẢN PHẨM ĐỘC BẢN
               </span>
             )}
           </div>
@@ -79,7 +79,7 @@ export const OrderDetail = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div style={{ marginBottom: '24px' }}>
         <button
           onClick={() => navigate('/orders')}
@@ -114,7 +114,7 @@ export const OrderDetail = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ fontSize: '13px', color: '#70706f' }}>Đổi trạng thái:</span>
             <Select
-              value={order.orderStatus}
+              aria-label="Trạng thái đơn hàng" value={order.orderStatus}
               onChange={handleUpdateStatus}
               style={{ width: 180 }}
             >
@@ -135,7 +135,7 @@ export const OrderDetail = () => {
           {/* Order Items Table */}
           <div className="flat-card" style={{ padding: '24px', marginBottom: '24px' }}>
             <div className="editorial-sub" style={{ marginBottom: '16px' }}>DANH SÁCH SẢN PHẨM ĐẶT MUA</div>
-            <Table
+            <Table scroll={{ x: 'max-content' }}
               dataSource={order.items}
               columns={itemColumns}
               rowKey="productId"
@@ -167,7 +167,7 @@ export const OrderDetail = () => {
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '16px', fontWeight: 600, color: '#10100f' }}>Tổng cộng thanh toán:</span>
-              <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: '#10100f' }}>
+              <span style={{ fontFamily: "var(--font-ui)", fontSize: '24px', fontWeight: 700, color: '#10100f' }}>
                 {formatCurrency(order.total)}
               </span>
             </div>

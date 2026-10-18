@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, message, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import '../../styles/AdminQuality.css';
 import { ROLES } from '../../utils/constants';
 import { Lock, Mail, Sparkles, ArrowRight } from 'lucide-react';
 
@@ -28,7 +29,7 @@ export const Login = () => {
   };
 
   return (
-    <div
+    <div className="rw-login"
       style={{
         display: 'flex',
         minHeight: '100vh',
@@ -36,7 +37,7 @@ export const Login = () => {
       }}
     >
       {/* Editorial Left Hero - As per DESIGN (1).md Nordic catalog styling */}
-      <div
+      <div className="rw-login-hero"
         style={{
           flex: '1 1 50%',
           position: 'relative',
@@ -90,7 +91,7 @@ export const Login = () => {
               fontFamily: "'Barlow Condensed', sans-serif",
               fontSize: 'clamp(48px, 6vw, 84px)',
               fontWeight: 700,
-              lineHeight: 0.85,
+              lineHeight: 1.1,
               color: '#fffb85', // Butter cream accent
               letterSpacing: '2px',
               textTransform: 'uppercase',
@@ -98,7 +99,7 @@ export const Login = () => {
               textShadow: '0 4px 24px rgba(0,0,0,0.4)',
             }}
           >
-            UPCYCLED<br />STUDIO
+            THỜI TRANG<br />TUẦN HOÀN
           </div>
           <p
             style={{
@@ -116,12 +117,12 @@ export const Login = () => {
         </div>
 
         <div style={{ position: 'relative', zIndex: 1, fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#b3b3b2', letterSpacing: '0.5px' }}>
-          REWEAR VIETNAM © 2026 — CIRCULAR FASHION INITIATIVE
+          REWEAR VIỆT NAM © 2026 — THỜI TRANG TUẦN HOÀN
         </div>
       </div>
 
       {/* Right Login Form */}
-      <div
+      <div className="rw-login-form"
         style={{
           flex: '1 1 50%',
           display: 'flex',
@@ -143,11 +144,11 @@ export const Login = () => {
         >
           <div style={{ marginBottom: '32px' }}>
             <div className="editorial-sub" style={{ marginBottom: '8px' }}>
-              REWEAR PORTAL
+              CỔNG QUẢN TRỊ REWEAR
             </div>
-            <div
+            <h1
               style={{
-                fontFamily: "'Space Grotesk', sans-serif",
+                fontFamily: 'var(--font-ui)',
                 fontSize: '28px',
                 fontWeight: 600,
                 color: '#10100f',
@@ -155,9 +156,9 @@ export const Login = () => {
               }}
             >
               Đăng nhập quản trị
-            </div>
+            </h1>
             <Text type="secondary" style={{ fontSize: '13px', display: 'block', marginTop: '6px' }}>
-              Chọn vai trò và nhập thông tin để truy cập hệ thống
+              Nhập thông tin tài khoản để truy cập hệ thống
             </Text>
           </div>
 
@@ -178,7 +179,7 @@ export const Login = () => {
               label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Email</span>}
               rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
             >
-              <Input
+              <Input autoComplete="username"
                 prefix={<Mail size={16} color="#70706f" style={{ marginRight: 6 }} />}
                 placeholder="admin@rewear.vn"
                 style={{ height: '42px', borderRadius: 0 }}
@@ -190,20 +191,18 @@ export const Login = () => {
               label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Mật khẩu</span>}
               rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
             >
-              <Input.Password
+              <Input.Password autoComplete="current-password"
                 prefix={<Lock size={16} color="#70706f" style={{ marginRight: 6 }} />}
                 placeholder="••••••••"
                 style={{ height: '42px', borderRadius: 0 }}
               />
             </Form.Item>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox style={{ fontSize: '13px' }}>Ghi nhớ đăng nhập</Checkbox>
               </Form.Item>
-              <a href="#forgot" style={{ fontSize: '12px', color: '#10100f', textDecoration: 'underline' }}>
-                Quên mật khẩu?
-              </a>
+              <span style={{ fontSize: '12px', color: '#626260' }}>Khôi phục mật khẩu: chưa hỗ trợ tại đây</span>
             </div>
 
             <button

@@ -135,7 +135,7 @@ export const ProductForm = () => {
   };
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div style={{ marginBottom: '24px' }}>
         <button
           onClick={() => navigate('/products')}
@@ -155,7 +155,7 @@ export const ProductForm = () => {
           <ArrowLeft size={16} /> Quay lại danh sách sản phẩm
         </button>
 
-        <div className="editorial-sub">{isEdit ? 'EDIT RELEASE' : 'NEW RELEASE CREATION'}</div>
+        <div className="editorial-sub">{isEdit ? 'CẬP NHẬT SẢN PHẨM' : 'TẠO SẢN PHẨM MỚI'}</div>
         <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
           {isEdit ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm thời trang tái chế'}
         </h1>
@@ -184,7 +184,7 @@ export const ProductForm = () => {
               </Form.Item>
 
               <Row gutter={16}>
-                <Col span={12}>
+                <Col xs={24} sm={12}>
                   <Form.Item
                     name="CategoryId"
                     label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Danh mục</span>}
@@ -198,7 +198,7 @@ export const ProductForm = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col xs={24} sm={12}>
                   <Form.Item
                     name="BrandId"
                     label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Thương Hiệu</span>}
@@ -215,7 +215,7 @@ export const ProductForm = () => {
               </Row>
 
               <Row gutter={16}>
-                <Col span={8}>
+                <Col xs={24} sm={8}>
                   <Form.Item
                     name="Price"
                     label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Giá bán (VND)</span>}
@@ -230,7 +230,7 @@ export const ProductForm = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col xs={24} sm={8}>
                   <Form.Item
                     name="Size"
                     label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Kích cỡ</span>}
@@ -245,7 +245,7 @@ export const ProductForm = () => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col xs={24} sm={8}>
                   <Form.Item
                     name="Color"
                     label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Màu sắc</span>}
@@ -257,7 +257,7 @@ export const ProductForm = () => {
 
               <Form.Item
                 name="Condition"
-                label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Tình trạng đồ cũ (Condition)</span>}
+                label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Tình trạng đồ cũ</span>}
                 rules={[{ required: true, message: 'Vui lòng chọn tình trạng!' }]}
               >
                 <Select>

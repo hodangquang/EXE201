@@ -117,7 +117,7 @@ export const StaffList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -130,7 +130,7 @@ export const StaffList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            ORGANIZATION & ACCESS CONTROL
+            NHÂN SỰ & PHÂN QUYỀN
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Quản trị Nhân sự & Phân quyền
@@ -148,11 +148,11 @@ export const StaffList = () => {
       </div>
 
       <div className="flat-card">
-        <Table dataSource={staffList} columns={columns} rowKey="id" pagination={false} />
+        <Table scroll={{ x: 'max-content' }} dataSource={staffList} columns={columns} rowKey="id" pagination={false} />
       </div>
 
       {/* Modal */}
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Thêm nhân viên mới"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}

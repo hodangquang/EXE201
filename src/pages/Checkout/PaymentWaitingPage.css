@@ -37,10 +37,15 @@
 .payment-waiting-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
 .payment-waiting-actions a { padding: 12px 18px; border: 1px solid #171715; color: #171715; text-decoration: none; }
 .payment-waiting-actions a:first-child { background: #171715; color: #fff; }
-.is-spinning { animation: payment-waiting-spin 1s linear infinite; }
+.payment-waiting-page .is-spinning { animation: payment-waiting-spin 1s linear infinite; }
 
 @keyframes payment-waiting-spin { to { transform: rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .is-spinning { animation: none; }
+  .payment-waiting-page .is-spinning { animation: none; }
 }
+
+.payment-waiting-page { background: var(--color-fog); color: var(--color-ink); }
+.payment-waiting-card { min-width: 0; overflow-wrap: anywhere; box-shadow: 0 8px 30px rgb(16 16 15 / 4%); }
+.payment-waiting-card h1 { line-height: 1.25; letter-spacing: -.035em; margin-bottom: 16px; }
+.payment-waiting-card :is(.payment-waiting-open, .payment-waiting-retry, .payment-waiting-actions a) { border-radius: var(--radius-pill); min-height: 44px; }

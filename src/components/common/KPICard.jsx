@@ -25,7 +25,7 @@ export const KPICard = ({ title, value, prefix, suffix, icon: Icon, trend, subti
           </div>
           <div 
             style={{ 
-              fontFamily: "'Space Grotesk', sans-serif",
+              fontFamily: 'var(--font-ui)',
               fontSize: '28px',
               fontWeight: 600,
               color: '#10100f',

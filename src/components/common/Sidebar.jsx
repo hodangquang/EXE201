@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Shirt,
@@ -29,7 +29,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
     ...(isAdmin ? [{
       key: '/dashboard',
       icon: <LayoutDashboard size={17} strokeWidth={1.8} />,
-      label: 'Dashboard',
+      label: 'Tổng quan',
     }] : []),
 
     {
@@ -115,10 +115,16 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
     navigate(key);
   };
 
-  const selectedKey = location.pathname;
+  const paths = menuItems.flatMap(item => item.children || [item]).map(item => item.key);
+  const selectedKey = paths.sort((a, b) => b.length - a.length).find(path => location.pathname === path || location.pathname.startsWith(`${path}/`));
 
   return (
     <Sider
+      id="rw-admin-sidebar"
+      inert={collapsed}
+      trigger={null}
+      breakpoint="lg"
+      collapsedWidth={0}
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
@@ -136,7 +142,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       }}
     >
       {/* Brand Header */}
-      <div
+      <Link className="rw-admin-brand" to={isAdmin ? '/dashboard' : '/collections'} aria-label="REWEAR — Quản trị"
         style={{
           height: 64,
           display: 'flex',
@@ -146,7 +152,6 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
           borderBottom: '1px solid #26292a',
           cursor: 'pointer',
         }}
-        onClick={() => navigate(isAdmin ? '/dashboard' : '/collections')}
       >
         {collapsed ? (
           <div
@@ -186,11 +191,11 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
                 textTransform: 'uppercase',
               }}
             >
-              Upcycled Studio
+              Thời trang tuần hoàn
             </div>
           </div>
         )}
-      </div>
+      </Link>
 
       {/* Navigation Menu */}
       <div style={{ padding: '12px 8px' }}>

@@ -119,7 +119,7 @@ export const CollectionList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -132,7 +132,7 @@ export const CollectionList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            CIRCULAR INTAKE PIPELINE
+            TIẾP NHẬN ĐỒ CŨ
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Yêu cầu thu gom quần áo cũ
@@ -161,11 +161,11 @@ export const CollectionList = () => {
           flexWrap: 'wrap',
         }}
       >
-        <div style={{ flex: 1, minWidth: '240px' }}>
+        <div style={{ flex: 1, minWidth: 'min(240px, 100%)' }}>
           <Input
             prefix={<Search size={16} color="#70706f" style={{ marginRight: 6 }} />}
             placeholder="Tìm theo mã yêu cầu, tên khách, số điện thoại..."
-            value={searchText}
+            aria-label="Tìm kiếm trong danh sách" value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             style={{ borderRadius: 0 }}
           />
@@ -173,24 +173,24 @@ export const CollectionList = () => {
 
         <Select
           defaultValue="ALL"
-          value={statusFilter}
+          aria-label="Lọc trạng thái thu gom" value={statusFilter}
           onChange={setStatusFilter}
           style={{ width: 200 }}
         >
           <Option value="ALL">Tất cả trạng thái</Option>
-          <Option value={COLLECTION_STATUS.PENDING}>Pending (Chờ duyệt)</Option>
-          <Option value={COLLECTION_STATUS.APPROVED}>Approved (Đã duyệt)</Option>
-          <Option value={COLLECTION_STATUS.PICKUP_SCHEDULED}>Pickup Scheduled (Đã xếp lịch)</Option>
-          <Option value={COLLECTION_STATUS.COLLECTED}>Collected (Đã nhận đồ)</Option>
-          <Option value={COLLECTION_STATUS.INSPECTING}>Inspecting (Đang kiểm định)</Option>
-          <Option value={COLLECTION_STATUS.ACCEPTED}>Accepted (Đã chấp nhận)</Option>
-          <Option value={COLLECTION_STATUS.REJECTED}>Rejected (Từ chối)</Option>
+          <Option value={COLLECTION_STATUS.PENDING}>Chờ duyệt</Option>
+          <Option value={COLLECTION_STATUS.APPROVED}>Đã duyệt</Option>
+          <Option value={COLLECTION_STATUS.PICKUP_SCHEDULED}>Đã xếp lịch</Option>
+          <Option value={COLLECTION_STATUS.COLLECTED}>Đã nhận đồ</Option>
+          <Option value={COLLECTION_STATUS.INSPECTING}>Đang kiểm định</Option>
+          <Option value={COLLECTION_STATUS.ACCEPTED}>Đã chấp nhận</Option>
+          <Option value={COLLECTION_STATUS.REJECTED}>Từ chối</Option>
         </Select>
       </div>
 
       {/* Table */}
       <div className="flat-card">
-        <Table dataSource={filteredRequests} columns={columns} rowKey="id" pagination={{ pageSize: 8 }} />
+        <Table scroll={{ x: 'max-content' }} dataSource={filteredRequests} columns={columns} rowKey="id" pagination={{ pageSize: 8 }} />
       </div>
     </div>
   );

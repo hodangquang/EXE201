@@ -75,20 +75,20 @@ export const Brands = () => {
       key: 'actions',
       render: (_, r) => (
         <Space size="middle">
-          <a style={{ color: 'var(--color-graphite)', fontWeight: 500, textDecoration: 'underline' }} onClick={() => handleViewDetail(r.id)}>
+          <button type="button" className="rw-table-action" style={{ color: 'var(--color-graphite)', fontWeight: 500, textDecoration: 'underline' }} onClick={() => handleViewDetail(r.id)}>
             Chi tiết
-          </a>
-          <a style={{ color: '#0055ff', fontWeight: 500, textDecoration: 'underline' }} onClick={() => { setEditingBrand(r); setOpen(true); }}>
+          </button>
+          <button type="button" className="rw-table-action" style={{ color: '#0055ff', fontWeight: 500, textDecoration: 'underline' }} onClick={() => { setEditingBrand(r); setOpen(true); }}>
             Sửa
-          </a>
+          </button>
           {(!r.isDeleted && r.isActive !== false) && (
             <Popconfirm title="Bạn có chắc muốn xóa thương hiệu này?" onConfirm={() => handleDelete(r.id)} okText="Xóa" cancelText="Hủy">
-              <a style={{ color: '#ff4d4f', fontWeight: 500, textDecoration: 'underline' }}>Xóa</a>
+              <button type="button" className="rw-table-action" style={{ color: '#991b1b', fontWeight: 500, textDecoration: 'underline' }}>Xóa</button>
             </Popconfirm>
           )}
           {(r.isDeleted || r.isActive === false) && (
             <Popconfirm title="Bạn có chắc muốn khôi phục thương hiệu này?" onConfirm={() => handleRestore(r.id)} okText="Khôi phục" cancelText="Hủy">
-              <a style={{ color: '#52c41a', fontWeight: 500, textDecoration: 'underline' }}>Khôi phục</a>
+              <button type="button" className="rw-table-action" style={{ color: '#287447', fontWeight: 500, textDecoration: 'underline' }}>Khôi phục</button>
             </Popconfirm>
           )}
         </Space>
@@ -97,7 +97,7 @@ export const Brands = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 28, paddingBottom: 20, borderBottom: '1px solid #e5e5e4' }}>
         <div>
           <div className="editorial-sub" style={{ marginBottom: 6 }}>DANH MỤC THƯƠNG HIỆU</div>
@@ -105,7 +105,7 @@ export const Brands = () => {
         </div>
         <Space>
           <Select
-            value={filter}
+            aria-label="Lọc trạng thái thương hiệu" value={filter}
             onChange={setFilter}
             style={{ width: 160 }}
             options={[
@@ -125,13 +125,13 @@ export const Brands = () => {
       </div>
 
       <div className="flat-card">
-        <Table dataSource={brands} columns={columns} rowKey="id" loading={loading} pagination={{ pageSize: 10 }} />
+        <Table scroll={{ x: 'max-content' }} dataSource={brands} columns={columns} rowKey="id" loading={loading} pagination={{ pageSize: 10 }} />
       </div>
 
       <BrandModal open={open} onClose={() => setOpen(false)} onCreated={load} initialData={editingBrand} />
 
       {/* Detail Modal */}
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Chi tiết thương hiệu"
         open={detailModal.open}
         onCancel={() => setDetailModal({ ...detailModal, open: false })}

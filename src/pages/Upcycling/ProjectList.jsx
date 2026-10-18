@@ -110,7 +110,7 @@ export const ProjectList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -123,10 +123,10 @@ export const ProjectList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            CREATIVE ATELIER
+            XƯỞNG THIẾT KẾ
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
-            Dự án Tái chế & May mẫu (Upcycling Projects)
+            Dự án tái chế & May mẫu
           </h1>
         </div>
 
@@ -167,7 +167,7 @@ export const ProjectList = () => {
 
         <Select
           defaultValue="ALL"
-          value={statusFilter}
+          aria-label="Lọc giai đoạn sản xuất" value={statusFilter}
           onChange={setStatusFilter}
           style={{ width: 220 }}
         >
@@ -181,11 +181,11 @@ export const ProjectList = () => {
       </div>
 
       <div className="flat-card">
-        <Table dataSource={filteredProjects} columns={columns} rowKey="id" pagination={false} />
+        <Table scroll={{ x: 'max-content' }} dataSource={filteredProjects} columns={columns} rowKey="id" pagination={false} />
       </div>
 
       {/* Create Project Modal */}
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Khởi tạo dự án Tái chế mới"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
@@ -201,7 +201,7 @@ export const ProjectList = () => {
           <Form.Item name="originalMaterials" label="Vật liệu đồ cũ đưa vào tái chế" rules={[{ required: true }]}>
             <Input placeholder="Ví dụ: 2 quần jeans cũ + 1 áo khoác kaki" style={{ borderRadius: 0 }} />
           </Form.Item>
-          <Form.Item name="designConcept" label="Ý tưởng thiết kế (Concept)">
+          <Form.Item name="designConcept" label="Ý tưởng thiết kế">
             <Input.TextArea rows={3} placeholder="Phối mảng ghép, phong cách Boro..." style={{ borderRadius: 0 }} />
           </Form.Item>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: '20px' }}>

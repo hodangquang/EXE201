@@ -4,7 +4,9 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
 }
-.pp-page .rw-nav { position: sticky; top: 0; background: rgba(245,245,243,.92); backdrop-filter: blur(12px); }
+
+/* Keep the Home footer wordmark intact; account text may wrap anywhere. */
+.pp-page .rw-footer-rains { overflow-wrap: normal; }
 
 .pp-layout {
   max-width: 1480px;
@@ -17,7 +19,7 @@
 }
 
 /* Sidebar */
-.pp-sidebar { position: sticky; top: 90px; padding: 22px 16px; border: 1px solid #e8e8e5; border-radius: 20px; background: #fff; }
+.pp-sidebar { min-width: 0; position: sticky; top: 90px; padding: 22px 16px; border: 1px solid #e8e8e5; border-radius: 20px; background: #fff; }
 .pp-user { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid #e3e3e0; margin-bottom: 14px; }
 .pp-user strong { display: block; font-size: 14px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pp-avatar-sm {
@@ -227,10 +229,10 @@
 
 /* Responsive */
 @media (max-width: 900px) {
-  .pp-layout { grid-template-columns: 1fr; padding: 20px 14px 60px; }
+  .pp-layout { grid-template-columns: minmax(0, 1fr); padding: 20px 14px 60px; }
   .pp-sidebar { position: static; padding: 18px; }
   .pp-menu { flex-direction: row; overflow-x: auto; }
-  .pp-menu button { width: auto; white-space: nowrap; }
+  .pp-menu button { width: auto; flex-shrink: 0; white-space: nowrap; }
   .pp-menu .logout { margin-top: 0; }
   .pp-profile-grid { grid-template-columns: 1fr; }
   .pp-profile-loading { max-width: none; }
@@ -304,6 +306,8 @@
   font-size: 18px;
 }
 .pp-modal-close {
+  min-width: 44px;
+  min-height: 44px;
   background: none;
   border: none;
   font-size: 24px;

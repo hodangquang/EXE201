@@ -195,7 +195,7 @@ const SourcingRequests = () => {
           <div>
             <div style={{ fontWeight: 600 }}>{text}</div>
             <div style={{ fontSize: '12px', color: '#666' }}>
-              Size: {record.size || '-'} | Color: {record.color || '-'}
+              Kích cỡ: {record.size || '-'} | Màu sắc: {record.color || '-'}
             </div>
             <div style={{ fontSize: '12px', color: '#666' }}>
               Giá mong muốn: {record.customerExpectedPrice ? record.customerExpectedPrice.toLocaleString() + ' đ' : 'Chưa nhập'}
@@ -209,7 +209,7 @@ const SourcingRequests = () => {
       dataIndex: 'declaredCondition',
       key: 'declaredCondition',
       render: (cond) => {
-        const labels = { 1: '1 - Like New', 2: '2 - Good', 3: '3 - Fair' };
+        const labels = { 1: '1 - Như mới', 2: '2 - Tốt', 3: '3 - Khá' };
         return labels[cond] || cond;
       }
     },
@@ -237,7 +237,7 @@ const SourcingRequests = () => {
           <Button type="link" size="small" onClick={() => handleViewDetail(record.id)}>Chi tiết</Button>
           {(record.status === 'Pending' || record.status === 0 || record.status === '0') && (
             <Button type="primary" size="small" onClick={() => handleStartReview(record.id)}>
-              Bắt đầu review
+              Bắt đầu xem xét
             </Button>
           )}
           {(record.status === 'UnderReview' || record.status === 1 || record.status === '1') && (
@@ -251,7 +251,7 @@ const SourcingRequests = () => {
             </Button>
           )}
           {(record.status === 'Accepted' || record.status === 3 || record.status === '3') && (
-            <Button type="primary" size="small" style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }} onClick={() => handleReceived(record.id)}>
+            <Button type="primary" size="small" style={{ backgroundColor: '#287447', borderColor: '#287447' }} onClick={() => handleReceived(record.id)}>
               Đã nhận hàng
             </Button>
           )}
@@ -262,7 +262,7 @@ const SourcingRequests = () => {
           )}
           {(record.status === 'Approved' || record.status === 5 || record.status === '5') && (
             <Button type="primary" size="small" style={{ backgroundColor: '#eb2f96', borderColor: '#eb2f96' }} onClick={() => setConvertModal({ open: true, id: record.id, sellingPrice: 0 })}>
-              Đăng bán (Convert)
+              Đăng bán
             </Button>
           )}
         </Space>
@@ -272,12 +272,12 @@ const SourcingRequests = () => {
 
   return (
     <Card 
-      title="Duyệt yêu cầu đồ cũ (Sourcing Requests)"
+      title={<h1 className="editorial-title" style={{ fontSize: 26, margin: 0 }}>Duyệt yêu cầu đồ cũ</h1>}
       extra={
         <Space>
           <span style={{ fontSize: '14px', fontWeight: 500 }}>Bộ lọc trạng thái:</span>
           <Select
-            value={statusFilter}
+            aria-label="Lọc trạng thái yêu cầu" value={statusFilter}
             onChange={(val) => setStatusFilter(val)}
             style={{ width: 150 }}
             options={[
@@ -297,7 +297,7 @@ const SourcingRequests = () => {
         </Space>
       }
     >
-      <Table
+      <Table scroll={{ x: 'max-content' }}
         dataSource={data}
         columns={columns}
         rowKey="id"
@@ -305,8 +305,8 @@ const SourcingRequests = () => {
         pagination={{ pageSize: 10 }}
       />
 
-      <Modal
-        title="Chi tiết Yêu cầu Sourcing"
+      <Modal rootClassName="rw-admin-modal"
+        title="Chi tiết yêu cầu đồ cũ"
         open={detailModal.open}
         onCancel={() => setDetailModal({ open: false, data: null, loading: false })}
         footer={null}
@@ -322,7 +322,7 @@ const SourcingRequests = () => {
               <Descriptions.Item label="Tên sản phẩm"><strong>{detailModal.data.title}</strong></Descriptions.Item>
               <Descriptions.Item label="Mô tả">{detailModal.data.description || 'Không có'}</Descriptions.Item>
               <Descriptions.Item label="Tình trạng (Condition)">{detailModal.data.declaredCondition}</Descriptions.Item>
-              <Descriptions.Item label="Size / Color">
+              <Descriptions.Item label="Kích cỡ / Màu sắc">
                 {detailModal.data.size || '-'} / {detailModal.data.color || '-'}
               </Descriptions.Item>
               <Descriptions.Item label="Giá KH mong muốn">
@@ -362,7 +362,7 @@ const SourcingRequests = () => {
         )}
       </Modal>
 
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Định giá yêu cầu"
         open={offerModal.open}
         onOk={handleOffer}
@@ -373,20 +373,20 @@ const SourcingRequests = () => {
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Giá đề xuất (VNĐ)</label>
+            <label htmlFor="sourcing-offer" style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Giá đề xuất (VNĐ)</label>
             <input 
               type="number" 
               className="ant-input" 
-              value={offerModal.offeredPrice} 
+              id="sourcing-offer" value={offerModal.offeredPrice}
               onChange={e => setOfferModal({ ...offerModal, offeredPrice: e.target.value })}
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Ghi chú của Admin</label>
+            <label htmlFor="sourcing-offer-note" style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Ghi chú của quản trị viên</label>
             <textarea 
               className="ant-input" 
               rows={4}
-              value={offerModal.adminNote} 
+              id="sourcing-offer-note" value={offerModal.adminNote}
               onChange={e => setOfferModal({ ...offerModal, adminNote: e.target.value })}
               placeholder="Nhập ghi chú hoặc lý do định giá..."
             />
@@ -394,7 +394,7 @@ const SourcingRequests = () => {
         </div>
       </Modal>
 
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Từ chối Yêu cầu"
         open={rejectModal.open}
         onOk={handleReject}
@@ -406,11 +406,11 @@ const SourcingRequests = () => {
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Lý do từ chối *</label>
+            <label htmlFor="sourcing-reject" style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Lý do từ chối *</label>
             <textarea 
               className="ant-input" 
               rows={4}
-              value={rejectModal.rejectReason} 
+              id="sourcing-reject" value={rejectModal.rejectReason}
               onChange={e => setRejectModal({ ...rejectModal, rejectReason: e.target.value })}
               placeholder="Nhập lý do từ chối yêu cầu này..."
             />
@@ -418,7 +418,7 @@ const SourcingRequests = () => {
         </div>
       </Modal>
 
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Kiểm định yêu cầu"
         open={inspectModal.open}
         onOk={handleInspect}
@@ -429,10 +429,10 @@ const SourcingRequests = () => {
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Tình trạng thực tế</label>
+            <label htmlFor="sourcing-condition" style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Tình trạng thực tế</label>
             <Select 
               style={{ width: '100%' }}
-              value={inspectModal.inspectedCondition}
+              id="sourcing-condition" value={inspectModal.inspectedCondition}
               onChange={val => setInspectModal({ ...inspectModal, inspectedCondition: val })}
             >
               <Option value={1}>1 - Như mới</Option>
@@ -441,11 +441,11 @@ const SourcingRequests = () => {
             </Select>
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Ghi chú của Admin (Không bắt buộc)</label>
+            <label htmlFor="sourcing-inspect-note" style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Ghi chú của quản trị viên (Không bắt buộc)</label>
             <textarea 
               className="ant-input" 
               rows={4}
-              value={inspectModal.adminNote} 
+              id="sourcing-inspect-note" value={inspectModal.adminNote}
               onChange={e => setInspectModal({ ...inspectModal, adminNote: e.target.value })}
               placeholder="Nhập ghi chú sau khi kiểm định..."
             />
@@ -453,8 +453,8 @@ const SourcingRequests = () => {
         </div>
       </Modal>
 
-      <Modal
-        title="Đăng bán sản phẩm (Convert to Product)"
+      <Modal rootClassName="rw-admin-modal"
+        title="Đăng bán sản phẩm"
         open={convertModal.open}
         onOk={handleConvert}
         onCancel={() => setConvertModal({ open: false, id: null, sellingPrice: 0 })}
@@ -465,11 +465,11 @@ const SourcingRequests = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <p style={{ margin: 0, color: '#555' }}>Sản phẩm này đã vượt qua kiểm định. Vui lòng nhập giá bán niêm yết trên cửa hàng.</p>
           <div>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Giá bán ra (VNĐ)</label>
+            <label htmlFor="sourcing-price" style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Giá bán ra (VNĐ)</label>
             <input 
               type="number" 
               className="ant-input" 
-              value={convertModal.sellingPrice} 
+              id="sourcing-price" value={convertModal.sellingPrice}
               onChange={e => setConvertModal({ ...convertModal, sellingPrice: e.target.value })}
               placeholder="VD: 500000"
             />

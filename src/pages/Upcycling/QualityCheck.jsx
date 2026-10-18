@@ -102,7 +102,7 @@ export const QualityCheck = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -115,10 +115,10 @@ export const QualityCheck = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            STANDARDS & INTEGRITY
+            TIÊU CHUẨN CHẤT LƯỢNG
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
-            Kiểm tra chất lượng thành phẩm (Quality Check)
+            Kiểm tra chất lượng thành phẩm
           </h1>
         </div>
 
@@ -152,11 +152,11 @@ export const QualityCheck = () => {
       </div>
 
       <div className="flat-card">
-        <Table dataSource={records} columns={columns} rowKey="id" pagination={false} />
+        <Table scroll={{ x: 'max-content' }} dataSource={records} columns={columns} rowKey="id" pagination={false} />
       </div>
 
       {/* QC Form Modal */}
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title="Biên bản kiểm tra chất lượng sản phẩm tái chế (QC)"
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
@@ -165,7 +165,7 @@ export const QualityCheck = () => {
       >
         <Form form={form} layout="vertical" onFinish={handleCreateQC} style={{ marginTop: '16px' }}>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="projectId" label="Dự án may mẫu cần QC" rules={[{ required: true }]}>
                 <Select placeholder="Chọn dự án">
                   {mockUpcyclingProjects.map((p) => (
@@ -174,7 +174,7 @@ export const QualityCheck = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="productName" label="Tên sản phẩm dự kiến" rules={[{ required: true }]}>
                 <Input placeholder="Tên sản phẩm..." style={{ borderRadius: 0 }} />
               </Form.Item>
@@ -182,12 +182,12 @@ export const QualityCheck = () => {
           </Row>
 
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="inspector" label="Nhân viên QC phụ trách" rules={[{ required: true }]}>
                 <Input placeholder="Đỗ Quốc Việt (QC Lead)" style={{ borderRadius: 0 }} />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="cleaningStatus" label="Trạng thái tiệt trùng & khử khuẩn" rules={[{ required: true }]}>
                 <Select>
                   <Option value="Đạt (Khử trùng tia UV & Giặt sinh học)">Đạt (Khử trùng tia UV & Giặt sinh học)</Option>
@@ -198,12 +198,12 @@ export const QualityCheck = () => {
           </Row>
 
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="stitchingQuality" label="Chất lượng đường may (Stitching)" rules={[{ required: true }]}>
                 <Input placeholder="Chỉ kép đồng đều, không chỉ thừa..." style={{ borderRadius: 0 }} />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="materialQuality" label="Độ bền cơ học của mảng ghép" rules={[{ required: true }]}>
                 <Input placeholder="Vải chắc chắn, chịu lực tốt..." style={{ borderRadius: 0 }} />
               </Form.Item>
@@ -211,12 +211,12 @@ export const QualityCheck = () => {
           </Row>
 
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="visualQuality" label="Thẩm mỹ & Phom dáng" rules={[{ required: true }]}>
                 <Input placeholder="Màu sắc hài hòa, không nhăn nhúm..." style={{ borderRadius: 0 }} />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="sizeAccuracy" label="Độ chuẩn kích cỡ (Bảng size)" rules={[{ required: true }]}>
                 <Input placeholder="Đạt chuẩn size L..." style={{ borderRadius: 0 }} />
               </Form.Item>

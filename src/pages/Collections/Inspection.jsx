@@ -124,7 +124,7 @@ export const Inspection = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -137,7 +137,7 @@ export const Inspection = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            MATERIAL INTAKE & TRIAGE
+            KIỂM ĐỊNH & PHÂN LOẠI
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Bàn kiểm định & Phân loại quần áo cũ
@@ -147,14 +147,14 @@ export const Inspection = () => {
         <div style={{ display: 'flex', gap: 12 }}>
           <Select
             defaultValue="ALL"
-            value={filterResult}
+            aria-label="Lọc kết quả kiểm định" value={filterResult}
             onChange={setFilterResult}
             style={{ width: 220 }}
           >
             <Option value="ALL">Tất cả kết quả kiểm định</Option>
             <Option value={INSPECTION_RESULT.ACCEPTED_UPCYCLING}>Chấp nhận để tái thiết kế</Option>
             <Option value={INSPECTION_RESULT.ACCEPTED_MATERIAL}>Chấp nhận làm nguyên liệu</Option>
-            <Option value={INSPECTION_RESULT.REJECTED}>Rejected (Từ chối)</Option>
+            <Option value={INSPECTION_RESULT.REJECTED}>Từ chối</Option>
           </Select>
         </div>
       </div>
@@ -174,14 +174,14 @@ export const Inspection = () => {
           Quy tắc phân loại & Kiểm định đồ cũ của REWEAR:
         </div>
         <p style={{ margin: 0, fontSize: '13px', color: '#555554' }}>
-          • <b>Accepted for Upcycling:</b> Chất liệu tốt, kết cấu sợi vững, màu sắc phù hợp đưa trực tiếp vào may thành phẩm 1-of-1.<br />
-          • <b>Accepted for Material:</b> Quần áo có vết ố hoặc rách cục bộ, chuyển sang kho cắt mảng ghép Boro hoặc làm phụ liệu lót.<br />
-          • <b>Rejected:</b> Hỏng nặng màng nhựa/PU mục nát hoặc không an toàn vệ sinh. Đồ bị từ chối <b>tuyệt đối không được đưa vào dự án tái chế</b>.
+          • <b>Chấp nhận để tái thiết kế:</b> Chất liệu tốt, kết cấu sợi vững, màu sắc phù hợp đưa trực tiếp vào may thành phẩm 1-of-1.<br />
+          • <b>Chấp nhận làm nguyên liệu:</b> Quần áo có vết ố hoặc rách cục bộ, chuyển sang kho cắt mảng ghép Boro hoặc làm phụ liệu lót.<br />
+          • <b>Từ chối:</b> Hỏng nặng màng nhựa/PU mục nát hoặc không an toàn vệ sinh. Đồ bị từ chối <b>tuyệt đối không được đưa vào dự án tái chế</b>.
         </p>
       </div>
 
       <div className="flat-card">
-        <Table
+        <Table scroll={{ x: 'max-content' }}
           dataSource={filteredItems}
           columns={columns}
           rowKey="id"

@@ -18,19 +18,19 @@ export const NotFound = () => {
       }}
     >
       <div className="editorial-sub" style={{ marginBottom: '12px' }}>
-        ERROR 404 — PAGE NOT FOUND
+        LỖI 404 — KHÔNG TÌM THẤY TRANG
       </div>
       <div
         style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontSize: 'clamp(64px, 10vw, 120px)',
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(36px, 6vw, 72px)',
           fontWeight: 600,
           color: '#10100f',
-          lineHeight: 0.9,
+          lineHeight: 1.15,
           marginBottom: '20px',
         }}
       >
-        OUT OF ARCHIVE
+        Không tìm thấy trang
       </div>
       <p style={{ maxWidth: '420px', color: '#70706f', fontSize: '14px', marginBottom: '32px' }}>
         Trang bạn đang tìm kiếm không tồn tại hoặc đã được chuyển vào kho lưu trữ tuần hoàn của REWEAR.

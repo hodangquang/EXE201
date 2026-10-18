@@ -45,6 +45,20 @@ export default function StoreProductPage() {
   const [isAdding, setIsAdding] = useState(false);
   const [addedSuccess, setAddedSuccess] = useState(false);
   const [zoomImage, setZoomImage] = useState(null);
+  const lightboxRef = useRef(null);
+  useEffect(() => {
+    if (!zoomImage) return;
+    const trigger = document.activeElement;
+    const dialog = lightboxRef.current;
+    dialog?.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      dialog?.close();
+      document.body.style.overflow = previousOverflow;
+      trigger?.focus();
+    };
+  }, [zoomImage]);
   const [manualOffset, setManualOffset] = useState(0);
 
   const [descriptionOpen, setDescriptionOpen] = useState(true);
@@ -109,7 +123,7 @@ export default function StoreProductPage() {
   };
 
   const scrollToProductSection = (sectionId) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: "start" });
   };
 
   // Duplicate images for infinite seamless loop
@@ -117,8 +131,8 @@ export default function StoreProductPage() {
   const baseImages = galleryImages.length <= 3 ? [...galleryImages, ...galleryImages] : galleryImages;
   const loopedImages = [...baseImages, ...baseImages];
 
-  if (loading) return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#e5e5e4' }}>Đang tải sản phẩm...</div>;
-  if (!product) return <div style={{ padding: '100px', textAlign: 'center' }}>Không tìm thấy sản phẩm</div>;
+  if (loading) return <div className="rains-pdp-state" role="status">Đang tải sản phẩm...</div>;
+  if (!product) return <main className="rains-pdp-state"><h1>Không tìm thấy sản phẩm</h1><p>Sản phẩm có thể không còn hiển thị hoặc chưa tải được.</p><Link to="/new-in">Xem sản phẩm mới</Link></main>;
 
   return (
     <div className={`rains-pdp ${showQuickBar && !cartOpen && !zoomImage ? "rains-pdp--quickbar-visible" : ""}`}>
@@ -133,54 +147,51 @@ export default function StoreProductPage() {
           </div>
         </div>
       )}
-      <nav className="rains-top-nav">
-        <div className="rains-top-nav-inner">
+      <nav className="rains-top-nav rw-nav" aria-label="Điều hướng chính">
+        <div className="rw-nav-inner">
           {/* Left: Brand pill & Menu links */}
-          <div className="rains-top-nav-left">
-            <Link to="/" className="rains-logo-pill" title="Về trang chủ">
+          <div className="rw-nav-left">
+            <Link to="/" className="rw-logo-pill" title="Về trang chủ">
               REWEAR
             </Link>
 
-            <div className="rains-nav-menu">
-              <Link to="/#new-in" className="rains-nav-link">
+            <div className="rw-nav-menu">
+              <Link to="/new-in" className="rw-nav-lk">
                 Mới về
               </Link>
-              <Link to="/women" className="rains-nav-link">
+              <Link to="/women" className="rw-nav-lk">
                 Nữ
               </Link>
-              <Link to="/men" className="rains-nav-link">
+              <Link to="/men" className="rw-nav-lk">
                 Nam
               </Link>
-              <Link to="/world" className="rains-nav-link">
+              <Link to="/world" className="rw-nav-lk">
                 Thế giới REWEAR
               </Link>
-              <Link to="/about" className="rains-nav-link rains-nav-link--about">
+              <Link to="/about" className="rw-nav-lk">
                 Giới thiệu
               </Link>
             </div>
           </div>
 
           {/* Right: Search & Cart pills */}
-          <div className="rains-top-nav-right">
-            <Link to="/about" className="rains-nav-link rains-nav-about-mobile">
-              Giới thiệu
-            </Link>
-            <Link to="/" className="rains-back-pill" title="Quay lại trang chủ">
+          <div className="rw-nav-right">
+            <Link to="/" className="rw-nav-pill pdp-back-pill" title="Quay lại trang chủ" aria-label="Quay lại trang chủ">
               <ArrowLeft size={13} />
               <span>Quay lại</span>
             </Link>
 
-            <button
-              className="rains-pill-btn"
-              onClick={() => alert("Tính năng tìm kiếm đang được hoàn thiện.")}
-              title="Tìm trong bộ sưu tập"
+            <Link
+              to="/new-in#catalog-tools"
+              className="rw-nav-pill"
+              title="Tìm kiếm sản phẩm"
             >
               <Search size={14} />
               <span>Tìm kiếm</span>
-            </button>
+            </Link>
 
             <button
-              className="rains-pill-btn rains-pill-btn--cart"
+              className="rw-nav-pill"
               onClick={openCart}
               title="Xem giỏ hàng"
             >
@@ -188,7 +199,7 @@ export default function StoreProductPage() {
               <span>Giỏ hàng ({cartItemCount})</span>
             </button>
 
-            <AccountMenu className="rains-pill-btn" withSpan />
+            <AccountMenu className="rw-nav-pill" withSpan />
           </div>
         </div>
       </nav>
@@ -227,6 +238,7 @@ export default function StoreProductPage() {
           HERO STAGE: CONTINUOUS CONVEYOR BELT + FLOATING CARD
       ══════════════════════════════════════════ */}
       <section className="rains-hero-viewport" ref={heroSectionRef}>
+        <button type="button" className="rains-gallery-pause" aria-pressed={!isPlaying} onClick={() => setIsPlaying(value => !value)}>{isPlaying ? 'Dừng chuyển ảnh' : 'Tiếp tục chuyển ảnh'}</button>
         <main className="rains-conveyor-viewport">
           {/* Conveyor Track Container */}
           <div
@@ -306,7 +318,7 @@ export default function StoreProductPage() {
           className="rains-scroll-down-hint"
           onClick={(e) => {
             e.preventDefault();
-            document.getElementById("product-details")?.scrollIntoView({ behavior: "smooth" });
+            scrollToProductSection("product-details");
           }}
           title="Cuộn để xem chi tiết sản phẩm"
         >
@@ -405,6 +417,7 @@ export default function StoreProductPage() {
                     type="button"
                     className={`rains-detail-switch-btn ${detailImage === img.src ? "rains-detail-switch-btn--active" : ""}`}
                     onClick={() => setDetailImage(img.src)}
+                    aria-pressed={detailImage === img.src}
                   >
                     {idx === 0 ? "Ảnh 1" : idx === 1 ? "Ảnh 2" : "Ảnh 3"}
                   </button>
@@ -427,6 +440,8 @@ export default function StoreProductPage() {
                 <button
                   type="button"
                   className="rains-accordion-header"
+                  aria-expanded={descriptionOpen}
+                  aria-controls="product-description-content"
                   onClick={() => setDescriptionOpen(value => !value)}
                 >
                   <span className="rains-acc-title rains-acc-title--main">Mô tả</span>
@@ -435,7 +450,7 @@ export default function StoreProductPage() {
                   </span>
                 </button>
                 {descriptionOpen && (
-                  <div className="rains-accordion-content">
+                  <div className="rains-accordion-content" id="product-description-content">
                     <p>{product.description}</p>
                   </div>
                 )}
@@ -457,7 +472,7 @@ export default function StoreProductPage() {
         <div className="rains-rec-slider-wrap">
           <div className="rains-rec-grid">
             {RECOMMENDED_PRODUCTS.map((item, idx) => (
-              <div key={item.id} className="rains-rec-card">
+              <Link key={item.id} className="rains-rec-card" to={`/product/${item.id}`}>
                 <div className="rains-rec-img-container">
                   <img
                     src={item.img}
@@ -490,7 +505,7 @@ export default function StoreProductPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -514,7 +529,7 @@ export default function StoreProductPage() {
           FULLSCREEN ZOOM LIGHTBOX
       ══════════════════════════════════════════ */}
       {zoomImage && (
-        <div className="rains-lightbox-backdrop" onClick={() => setZoomImage(null)}>
+        <dialog ref={lightboxRef} className="rains-lightbox-backdrop" aria-label="Ảnh sản phẩm phóng to" onCancel={() => setZoomImage(null)} onClick={e => { if (e.target === e.currentTarget) setZoomImage(null); }}>
           <button
             className="rains-lightbox-close"
             onClick={() => setZoomImage(null)}
@@ -528,7 +543,7 @@ export default function StoreProductPage() {
             className="rains-lightbox-img"
             onClick={(e) => e.stopPropagation()}
           />
-        </div>
+        </dialog>
       )}
     </div>
   );

@@ -26,12 +26,12 @@ export const SettingsPage = () => {
           <Input style={{ borderRadius: 0 }} />
         </Form.Item>
         <Row gutter={16}>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item name="email" label={<span style={{ fontWeight: 600, fontSize: '12px' }}>EMAIL LIÊN HỆ</span>}>
               <Input style={{ borderRadius: 0 }} />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={12}>
             <Form.Item name="phone" label={<span style={{ fontWeight: 600, fontSize: '12px' }}>HOTLINE TỔNG ĐÀI</span>}>
               <Input style={{ borderRadius: 0 }} />
             </Form.Item>
@@ -57,7 +57,7 @@ export const SettingsPage = () => {
           <div style={{ fontWeight: 600 }}>Cổng VietQR / Chuyển khoản ngân hàng tự động</div>
           <div style={{ fontSize: '12px', color: '#70706f' }}>Quét mã QR thanh toán nhanh qua Napas247</div>
         </div>
-        <Switch defaultChecked />
+        <Switch aria-label="Bật hoặc tắt cấu hình minh họa" defaultChecked />
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid #f0f0ef' }}>
@@ -65,7 +65,7 @@ export const SettingsPage = () => {
           <div style={{ fontWeight: 600 }}>Thanh toán khi nhận hàng (COD)</div>
           <div style={{ fontSize: '12px', color: '#70706f' }}>Thu tiền mặt trực tiếp khi shipper giao đến</div>
         </div>
-        <Switch defaultChecked />
+        <Switch aria-label="Bật hoặc tắt cấu hình minh họa" defaultChecked />
       </div>
 
       <Divider style={{ margin: '24px 0' }} />
@@ -76,7 +76,7 @@ export const SettingsPage = () => {
           <div style={{ fontWeight: 600 }}>Giao Hàng Tiết Kiệm (GHTK)</div>
           <div style={{ fontSize: '12px', color: '#70706f' }}>Tự động bắn đơn sang app đối tác khi chuyển sang trạng thái Shipping</div>
         </div>
-        <Switch defaultChecked />
+        <Switch aria-label="Bật hoặc tắt cấu hình minh họa" defaultChecked />
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
@@ -84,7 +84,7 @@ export const SettingsPage = () => {
           <div style={{ fontWeight: 600 }}>Viettel Post (Thu gom ngoại tỉnh)</div>
           <div style={{ fontSize: '12px', color: '#70706f' }}>Đến tận nhà khách nhận kiện quần áo cũ</div>
         </div>
-        <Switch defaultChecked />
+        <Switch aria-label="Bật hoặc tắt cấu hình minh họa" defaultChecked />
       </div>
 
       <button onClick={handleSave} className="pill-btn-filled" style={{ height: '40px', cursor: 'pointer' }}>
@@ -94,7 +94,7 @@ export const SettingsPage = () => {
   );
 
   const rolesTab = (
-    <div style={{ maxWidth: 720 }}>
+    <div className="rw-table-scroll" tabIndex={0} role="region" aria-label="Bảng phân quyền" style={{ maxWidth: 720 }}>
       <div className="editorial-sub" style={{ marginBottom: '16px' }}>MA TRẬN PHÂN QUYỀN HỆ THỐNG</div>
       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
         <thead>
@@ -136,7 +136,7 @@ export const SettingsPage = () => {
   );
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -149,7 +149,7 @@ export const SettingsPage = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            SYSTEM PREFERENCES
+            CÀI ĐẶT HỆ THỐNG
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Cài đặt hệ thống REWEAR

@@ -47,7 +47,7 @@ export const BrandModal = ({ open, onClose, onCreated, initialData }) => {
   };
 
   return (
-    <Modal title={initialData ? "Cập nhật thương hiệu" : "Thêm thương hiệu mới"} open={open} onCancel={onClose} footer={null} destroyOnClose>
+    <Modal rootClassName="rw-admin-modal" title={initialData ? "Cập nhật thương hiệu" : "Thêm thương hiệu mới"} open={open} onCancel={onClose} footer={null} destroyOnClose>
       <Form form={form} layout="vertical" onFinish={handleSave} style={{ marginTop: 16 }}>
         <Form.Item name="name" label="Tên thương hiệu" rules={[{ required: true, message: 'Vui lòng nhập tên thương hiệu' }]}>
           <Input placeholder="Ví dụ: Nike" style={{ borderRadius: 0 }} />

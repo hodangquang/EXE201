@@ -59,7 +59,7 @@ export const ReportsPage = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -72,7 +72,7 @@ export const ReportsPage = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            SUSTAINABILITY & FINANCIAL AUDIT
+            BÁO CÁO TÀI CHÍNH & MÔI TRƯỜNG
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Báo cáo Doanh số & Tác động Môi trường
@@ -81,7 +81,7 @@ export const ReportsPage = () => {
 
         <div style={{ display: 'flex', gap: 12 }}>
           <Select
-            value={timeRange}
+            aria-label="Khoảng thời gian báo cáo" value={timeRange}
             onChange={setTimeRange}
             style={{ width: 160 }}
           >
@@ -116,7 +116,7 @@ export const ReportsPage = () => {
             <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: '#fffb85' }}>
               REWEAR ENVIRONMENTAL, SOCIAL & GOVERNANCE (ESG)
             </div>
-            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 600 }}>
+            <div style={{ fontFamily: "var(--font-ui)", fontSize: '24px', fontWeight: 600 }}>
               Chỉ số Giảm thiểu Rác thải Thời trang
             </div>
           </div>
@@ -130,7 +130,7 @@ export const ReportsPage = () => {
           <Col xs={24} sm={6}>
             <div style={{ borderLeft: '2px solid #26292a', paddingLeft: '16px' }}>
               <div style={{ fontSize: '12px', color: '#b3b3b2' }}>Tổng vải cứu khỏi bãi rác</div>
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 700, color: '#fffb85' }}>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: '32px', fontWeight: 700, color: '#fffb85' }}>
                 185.4 <span style={{ fontSize: '16px' }}>KG</span>
               </div>
             </div>
@@ -138,7 +138,7 @@ export const ReportsPage = () => {
           <Col xs={24} sm={6}>
             <div style={{ borderLeft: '2px solid #26292a', paddingLeft: '16px' }}>
               <div style={{ fontSize: '12px', color: '#b3b3b2' }}>Quần áo cũ thu nhận</div>
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 700 }}>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: '32px', fontWeight: 700 }}>
                 {mockKPIs.collectedClothes} <span style={{ fontSize: '16px' }}>chiếc</span>
               </div>
             </div>
@@ -146,7 +146,7 @@ export const ReportsPage = () => {
           <Col xs={24} sm={6}>
             <div style={{ borderLeft: '2px solid #26292a', paddingLeft: '16px' }}>
               <div style={{ fontSize: '12px', color: '#b3b3b2' }}>Đã tái chế thành sản phẩm</div>
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 700 }}>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: '32px', fontWeight: 700 }}>
                 {mockKPIs.upcycledProducts} <span style={{ fontSize: '16px' }}>mẫu</span>
               </div>
             </div>
@@ -154,7 +154,7 @@ export const ReportsPage = () => {
           <Col xs={24} sm={6}>
             <div style={{ borderLeft: '2px solid #26292a', paddingLeft: '16px' }}>
               <div style={{ fontSize: '12px', color: '#b3b3b2' }}>Điểm thưởng đã tri ân</div>
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '32px', fontWeight: 700, color: '#fffb85' }}>
+              <div style={{ fontFamily: "var(--font-ui)", fontSize: '32px', fontWeight: 700, color: '#fffb85' }}>
                 4,820 <span style={{ fontSize: '16px' }}>PTS</span>
               </div>
             </div>
@@ -196,7 +196,7 @@ export const ReportsPage = () => {
                 Sản phẩm độc bản dẫn đầu
               </div>
             </div>
-            <Table dataSource={topProducts} columns={topColumns} rowKey="id" pagination={false} size="small" />
+            <Table scroll={{ x: 'max-content' }} dataSource={topProducts} columns={topColumns} rowKey="id" pagination={false} size="small" />
           </div>
         </Col>
       </Row>

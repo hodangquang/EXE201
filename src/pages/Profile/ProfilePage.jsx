@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { User, MapPin, Package, History, LogOut, Camera, ChevronRight, Search, PlusCircle, UploadCloud, Pencil } from 'lucide-react';
+import { User, MapPin, Package, History, LogOut, Camera, ChevronRight, Search, ShoppingBag, PlusCircle, UploadCloud, Pencil } from 'lucide-react';
+import { useCart } from '../../contexts/CartContext';
 import RainsFooter from '../../components/common/RainsFooter';
 import AccountMenu from '../../components/common/AccountMenu';
 import { getSession, clearSession, onAuthChange, profileApi, ordersApi, updateSessionUser, getAvatarUrl, authFetch } from '../../services/auth';
@@ -883,6 +884,7 @@ function SourcingSection({ notify }) {
 
 /* ───────────────────────── Page ───────────────────────── */
 export default function ProfilePage() {
+  const { openCart, cartItemCount } = useCart();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
   const section = MENU.some((m) => m.key === params.get('tab')) ? params.get('tab') : 'profile';
@@ -907,7 +909,7 @@ export default function ProfilePage() {
     <div className="rw pp-page">
       <div className="rw-announcement"><div className="rw-announcement-inner"><span>Thời trang tuần hoàn, thêm vòng đời mới</span></div></div>
 
-      <nav className="rw-nav">
+      <nav className="rw-nav" aria-label="Điều hướng chính">
         <div className="rw-nav-inner">
           <div className="rw-nav-left">
             <a href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }} className="rw-logo-pill">REWEAR</a>
@@ -918,7 +920,9 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="rw-nav-right">
-            <AccountMenu className="rw-nav-pill" />
+            <Link to="/new-in#catalog-tools" className="rw-nav-pill" aria-label="Tìm kiếm sản phẩm"><Search size={15} aria-hidden="true" /><span>Tìm kiếm</span></Link>
+            <button className="rw-nav-pill" type="button" onClick={openCart} aria-label={`Giỏ hàng, ${cartItemCount} sản phẩm`}><ShoppingBag size={15} aria-hidden="true" /><span>Giỏ hàng ({cartItemCount})</span></button>
+            <AccountMenu className="rw-nav-pill" withSpan />
           </div>
         </div>
       </nav>
@@ -953,7 +957,7 @@ export default function ProfilePage() {
         </main>
       </div>
 
-      {toast && <div className={`pp-toast ${toast.type}`} key={toast.id}>{toast.text}</div>}
+      {toast && <div role="status" className={`pp-toast ${toast.type}`} key={toast.id}>{toast.text}</div>}
 
       <RainsFooter />
     </div>

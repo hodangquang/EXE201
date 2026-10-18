@@ -98,7 +98,7 @@ export const CustomerList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -111,7 +111,7 @@ export const CustomerList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            PATRON DIRECTORY
+            DANH SÁCH KHÁCH HÀNG
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Cộng đồng Khách hàng & Điểm thưởng
@@ -123,14 +123,14 @@ export const CustomerList = () => {
         <Input
           prefix={<Search size={16} color="#70706f" style={{ marginRight: 6 }} />}
           placeholder="Tìm khách hàng theo tên, email hoặc số điện thoại..."
-          value={searchText}
+          aria-label="Tìm kiếm trong danh sách" value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           style={{ maxWidth: '400px', borderRadius: 0 }}
         />
       </div>
 
       <div className="flat-card">
-        <Table 
+        <Table scroll={{ x: 'max-content' }}
           dataSource={filteredCustomers} 
           columns={columns} 
           rowKey={(r) => r.id || r.userId || r.email} 
@@ -139,7 +139,7 @@ export const CustomerList = () => {
         />
       </div>
 
-      <Modal
+      <Modal rootClassName="rw-admin-modal"
         title={null}
         open={detailModalVisible}
         onCancel={() => {

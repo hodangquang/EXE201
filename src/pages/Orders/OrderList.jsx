@@ -118,7 +118,7 @@ export const OrderList = () => {
   ];
 
   return (
-    <div>
+    <div className="rw-admin-page">
       <div 
         style={{ 
           display: 'flex', 
@@ -131,7 +131,7 @@ export const OrderList = () => {
       >
         <div>
           <div className="editorial-sub" style={{ marginBottom: '6px' }}>
-            ORDER FULFILLMENT
+            QUẢN LÝ ĐƠN HÀNG
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
             Quản lý đơn hàng REWEAR
@@ -150,11 +150,11 @@ export const OrderList = () => {
           flexWrap: 'wrap',
         }}
       >
-        <div style={{ flex: 1, minWidth: '240px' }}>
+        <div style={{ flex: 1, minWidth: 'min(240px, 100%)' }}>
           <Input
             prefix={<Search size={16} color="#70706f" style={{ marginRight: 6 }} />}
             placeholder="Tìm theo mã đơn (#RW...), tên khách hoặc số điện thoại..."
-            value={searchText}
+            aria-label="Tìm kiếm trong danh sách" value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             style={{ borderRadius: 0 }}
           />
@@ -162,7 +162,7 @@ export const OrderList = () => {
 
         <Select
           defaultValue="ALL"
-          value={statusFilter}
+          aria-label="Lọc trạng thái đơn hàng" value={statusFilter}
           onChange={setStatusFilter}
           style={{ width: 220 }}
         >
@@ -177,7 +177,7 @@ export const OrderList = () => {
       </div>
 
       <div className="flat-card">
-        <Table dataSource={filteredOrders} columns={columns} rowKey="id" pagination={{ pageSize: 8 }} />
+        <Table scroll={{ x: 'max-content' }} dataSource={filteredOrders} columns={columns} rowKey="id" pagination={{ pageSize: 8 }} />
       </div>
     </div>
   );

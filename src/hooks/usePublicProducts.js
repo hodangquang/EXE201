@@ -50,26 +50,42 @@ const parseProductPrice = value => {
   return Number.isFinite(parsed) ? parsed : null;
 };
 
+const getFallbackProductImage = (title = '', category = '') => {
+  const text = `${title} ${category}`.toLowerCase();
+  if (text.includes('jean') || text.includes('quần') || text.includes('pant') || text.includes('denim')) {
+    return 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800';
+  }
+  if (text.includes('khoác') || text.includes('jacket') || text.includes('outerwear') || text.includes('coat')) {
+    return 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800';
+  }
+  if (text.includes('tote') || text.includes('túi') || text.includes('bag')) {
+    return 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800';
+  }
+  return 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800';
+};
+
 const mapApiProductToStoreProduct = (p) => {
   const productId = readProductField(p, 'id', 'productId');
   const productName = readProductField(p, 'title', 'name');
+  const categoryName = readProductField(p, 'categoryName', 'category');
   const description = readProductField(p, 'description');
   const rawPrice = parseProductPrice(readProductField(p, 'price'));
   const color = readProductField(p, 'color');
   const size = readProductField(p, 'size');
   const rawImages = readProductField(p, 'images', 'imageUrls');
   const imgs = Array.isArray(rawImages) ? rawImages : rawImages ? [rawImages] : [];
-  const defaultImg = 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800';
+  const defaultImg = getFallbackProductImage(productName, categoryName);
   const getImageUrl = image => typeof image === 'string'
     ? image
     : readProductField(image, 'imageUrl', 'url', 'src');
-  const hasImage = imgs.some(image => Boolean(getImageUrl(image)));
-  const mainImg = imgs.length > 0 ? (getImageUrl(imgs[0]) || defaultImg) : defaultImg;
+  const validImgs = imgs.map(getImageUrl).filter(Boolean);
+  const hasCustomImage = validImgs.length > 0;
+  const mainImg = hasCustomImage ? validImgs[0] : defaultImg;
   
-  const mappedImages = imgs.length > 0 
-    ? imgs.map((img, idx) => ({ 
+  const mappedImages = hasCustomImage
+    ? validImgs.map((src, idx) => ({ 
         id: `img-${idx}`, 
-        src: getImageUrl(img) || defaultImg, 
+        src, 
         alt: productName || '' 
       }))
     : [{ id: 'img-0', src: defaultImg, alt: productName || '' }];
@@ -96,7 +112,8 @@ const mapApiProductToStoreProduct = (p) => {
     ] : [],
     features: [],
     images: mappedImages,
-    hasImage,
+    hasImage: Boolean(mainImg),
+    hasCustomImage,
     description: description ?? '',
     subtitle: description ?? '',
     originalMaterial: readProductField(p, 'originalMaterial') || '',

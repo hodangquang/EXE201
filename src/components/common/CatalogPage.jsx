@@ -14,6 +14,50 @@ import '../../pages/Store/NewInPage.css';
 const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLocaleLowerCase('vi').trim();
 const navigation = [['/new-in', 'Mới về'], ['/women', 'Nữ'], ['/men', 'Nam'], ['/world', 'Thế giới REWEAR'], ['/about', 'Giới thiệu']];
 
+const LAYOUT_OPTIONS = [
+  {
+    id: 'two',
+    label: '2 cột',
+    shortLabel: '2',
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <rect x="1" y="2" width="6" height="12" rx="1" />
+        <rect x="9" y="2" width="6" height="12" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    id: 'four',
+    label: '4 cột',
+    shortLabel: '4',
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <rect x="0.5" y="2" width="2.5" height="12" rx="0.5" />
+        <rect x="4.5" y="2" width="2.5" height="12" rx="0.5" />
+        <rect x="8.5" y="2" width="2.5" height="12" rx="0.5" />
+        <rect x="12.5" y="2" width="2.5" height="12" rx="0.5" />
+      </svg>
+    ),
+  },
+  {
+    id: 'eight',
+    label: '8 cột',
+    shortLabel: '8',
+    icon: (
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <rect x="0" y="2" width="1.2" height="12" rx="0.4" />
+        <rect x="2.1" y="2" width="1.2" height="12" rx="0.4" />
+        <rect x="4.2" y="2" width="1.2" height="12" rx="0.4" />
+        <rect x="6.3" y="2" width="1.2" height="12" rx="0.4" />
+        <rect x="8.4" y="2" width="1.2" height="12" rx="0.4" />
+        <rect x="10.5" y="2" width="1.2" height="12" rx="0.4" />
+        <rect x="12.6" y="2" width="1.2" height="12" rx="0.4" />
+        <rect x="14.7" y="2" width="1.2" height="12" rx="0.4" />
+      </svg>
+    ),
+  },
+];
+
 export default function CatalogPage({ title, description, route, slides, stories, circularImage }) {
   const { products, loading } = usePublicProducts();
   const { openCart, cartItemCount } = useCart();
@@ -85,7 +129,25 @@ export default function CatalogPage({ title, description, route, slides, stories
         <button type="button" onClick={reset}>Đặt lại lựa chọn <X size={16} aria-hidden="true" /></button>
       </div>
       <div className="catalog-results-bar"><p role="status" aria-live="polite">{loading ? 'Đang tải tủ đồ…' : <><strong>{filtered.length}</strong> sản phẩm{query.trim() && ` cho “${query.trim()}”`}</>}</p>
-        <div className="new-in-layout-toggles" role="group" aria-label="Số cột sản phẩm trên màn hình lớn"><span className="toggle-group-label">Bố cục</span>{[['two', 'Hai'], ['four', 'Bốn'], ['eight', 'Tám']].map(([value, label]) => <button type="button" key={value} className={`layout-option ${columns === value ? 'active' : ''}`} aria-pressed={columns === value} onClick={() => setColumns(value)}>{label}</button>)}</div>
+        <div className="new-in-layout-toggles" role="group" aria-label="Số cột sản phẩm trên màn hình lớn">
+          <span className="toggle-group-label">Bố cục</span>
+          <div className="layout-segmented-control">
+            {LAYOUT_OPTIONS.map(opt => (
+              <button
+                type="button"
+                key={opt.id}
+                className={`layout-option ${columns === opt.id ? 'active' : ''}`}
+                aria-pressed={columns === opt.id}
+                onClick={() => setColumns(opt.id)}
+                title={`Bố cục ${opt.label}`}
+                aria-label={`Hiển thị ${opt.label}`}
+              >
+                <span className="layout-option-icon" aria-hidden="true">{opt.icon}</span>
+                <span className="layout-option-label">{opt.shortLabel}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
       {(query || color || size) && <div className="catalog-active-filters">{[[query, () => setQuery(''), 'Tìm kiếm'], [color, () => setColor(''), 'Màu'], [size, () => setSize(''), 'Cỡ']].map(([value, clear, label]) => value && <button type="button" key={label} onClick={clear} aria-label={`Bỏ ${label.toLowerCase()}: ${value}`}>{label}: {value}<X size={14} aria-hidden="true" /></button>)}<button type="button" onClick={reset}>Xóa tất cả</button></div>}
       {!loading && filtered.length === 0 && (query || color || size) ? <div className="catalog-empty"><Search size={32} aria-hidden="true" /><h3>Chưa tìm thấy món đồ phù hợp</h3><p>Thử từ khóa khác hoặc bỏ bớt bộ lọc để xem thêm lựa chọn.</p><button type="button" className="catalog-cta" onClick={reset}>Xem tất cả sản phẩm <ArrowUpRight size={18} /></button></div> : <ProductListingGrid products={filtered.slice(0, limit)} loading={loading} columns={columns} />}

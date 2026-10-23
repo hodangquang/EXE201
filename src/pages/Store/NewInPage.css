@@ -1,4 +1,4 @@
-﻿/* Catalog styles are scoped: Home and shared cart presentation stay unchanged. */
+/* Catalog styles are scoped: Home and shared cart presentation stay unchanged. */
 .new-in-page { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-ui); min-height: 100vh; }
 .new-in-page .catalog-workspace :is(button, input, select) { font: inherit; }
 .new-in-page .rw-nav-pill { font-size: 12px; font-weight: 800; line-height: normal; }
@@ -37,10 +37,17 @@
 .catalog-results-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
 .catalog-results-bar > p { font-size: 12px; color: #62625b; margin: 0; overflow-wrap: anywhere; }
 .catalog-results-bar strong { color: #10100f; }
-.new-in-page .new-in-layout-toggles { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.new-in-page .toggle-group-label { font-size: 11px; color: #65655f; margin-right: 8px; }
-.new-in-page .layout-option { min-width: 44px; min-height: 44px; border: 1px solid #e1e1d9; border-radius: 6px; background: white; color: #55554d; padding: 6px 10px; font-size: 11px; }
-.new-in-page .layout-option.active { background: #10100f; color: white; border-color: #10100f; }
+.new-in-page .new-in-layout-toggles { display: inline-flex; align-items: center; gap: 10px; }
+.new-in-page .toggle-group-label { font-size: 11px; font-weight: 650; text-transform: uppercase; letter-spacing: .08em; color: #727269; user-select: none; }
+.new-in-page .layout-segmented-control { display: inline-flex; align-items: center; background: #f0f0ec; padding: 3px; border-radius: 999px; border: 1px solid #e1e1da; gap: 2px; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03); }
+.new-in-page .layout-option { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; min-width: 44px; padding: 0 10px; border: none; border-radius: 999px; background: transparent; color: #686860; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .2s cubic-bezier(.2, .7, .2, 1); outline: none; user-select: none; }
+.new-in-page .layout-option-icon { display: flex; align-items: center; justify-content: center; opacity: .7; transition: opacity .2s ease, transform .2s ease; }
+.new-in-page .layout-option-label { font-size: 11px; font-weight: 600; letter-spacing: .02em; }
+.new-in-page .layout-option:hover { color: #10100f; background: rgba(255, 255, 255, 0.65); }
+.new-in-page .layout-option:hover .layout-option-icon { opacity: 1; transform: scale(1.05); }
+.new-in-page .layout-option.active { background: #10100f; color: #ffffff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16); }
+.new-in-page .layout-option.active .layout-option-icon { opacity: 1; }
+.new-in-page .layout-option:focus-visible { outline: 2px solid #10100f; outline-offset: 1px; }
 .catalog-active-filters { display: flex; flex-wrap: wrap; gap: 8px; padding-bottom: 20px; }
 .catalog-active-filters button { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; overflow-wrap: anywhere; min-height: 44px; background: #eeeeda; color: #10100f; border: 0; border-radius: 999px; padding: 8px 14px; font-size: 12px; }
 .catalog-active-filters button:last-child { background: transparent; text-decoration: underline; }
@@ -101,6 +108,7 @@
   .catalog-filter-toggle { padding-inline: 12px; }
   .catalog-results-bar { gap: 10px; }
   .new-in-page .toggle-group-label { display: none; }
+  .new-in-page .layout-option { min-width: 38px; padding: 0 8px; gap: 4px; }
   .new-in-page .new-in-grid:is(.grid-two, .grid-four, .grid-eight) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
   .new-in-page .new-in-product-info { padding-top: 12px; }
   .new-in-page .new-in-name { font-size: 12px; }

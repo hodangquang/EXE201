@@ -2,6 +2,45 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Shirt } from 'lucide-react';
 
+function ProductCardImage({ product }) {
+  const [hasError, setHasError] = React.useState(false);
+  const primarySrc = product.img || product.images?.[0]?.src;
+
+  if (!primarySrc || hasError) {
+    return (
+      <div className="catalog-image-placeholder">
+        <Shirt size={32} aria-hidden="true" />
+        <span>Ảnh đang cập nhật</span>
+      </div>
+    );
+  }
+
+  const secondarySrc = product.images?.[1]?.src;
+  const hasAlternate = secondarySrc && secondarySrc !== primarySrc;
+
+  return (
+    <>
+      <img
+        src={primarySrc}
+        alt={product.name || 'Sản phẩm REWEAR'}
+        loading="lazy"
+        decoding="async"
+        onError={() => setHasError(true)}
+      />
+      {hasAlternate && (
+        <img
+          className="catalog-product-alternate"
+          src={secondarySrc}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+    </>
+  );
+}
+
 // Presentation only: catalog selection and loading still belong to the existing hook.
 export default function ProductListingGrid({ products, loading, columns }) {
   return (
@@ -11,7 +50,7 @@ export default function ProductListingGrid({ products, loading, columns }) {
         : products.map(p => (
           <Link className="new-in-product-card" key={p.id} to={`/product/${p.id}`}>
             <div className="new-in-product-img-wrapper">
-              {p.hasImage ? <><img src={p.img} alt={p.name} loading="lazy" decoding="async" />{p.images?.[1]?.src && p.images[1].src !== p.img && <img className="catalog-product-alternate" src={p.images[1].src} alt="" aria-hidden="true" loading="lazy" decoding="async" />}</> : <div className="catalog-image-placeholder"><Shirt size={32} aria-hidden="true" /><span>Ảnh đang cập nhật</span></div>}
+              <ProductCardImage product={p} />
               <span className="catalog-card-arrow" aria-hidden="true"><ArrowUpRight size={18} /></span>
             </div>
             <div className="new-in-product-info">

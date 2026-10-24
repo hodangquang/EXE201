@@ -1,5 +1,12 @@
 # Lịch sử context
 
+## 2026-10-23 — Sửa hiển thị ảnh sản phẩm catalog và thiết kế lại cụm nút bố cục lưới
+
+- **Khắc phục ảnh sản phẩm ở trang tổng quát (Catalog/NewIn)**: Phát hiện các sản phẩm có `imageUrls: []` từ API (như Levi's 501 Vintage Jeans, Filter Test Product Updated) trên trang chi tiết PDP vẫn hiển thị ảnh sản phẩm (nhờ fallback vào ảnh mặc định theo phong cách editorial), nhưng tại listing `ProductListingGrid` bị logic `p.hasImage ? ... : placeholder` chặn lại khiến thẻ chỉ hiện khung xám "Ảnh đang cập nhật". Đã cập nhật `usePublicProducts.js` với `getFallbackProductImage` phân bổ ảnh minh họa chuẩn theo danh mục/tên (quần jeans/denim, áo khoác, áo thun, túi xách) và gán `hasImage: true`, `img: mainImg`. Cập nhật `ProductListingGrid.jsx` với component `ProductCardImage` có cơ chế `onError` tự động bắt lỗi ảnh tải thất bại để fallback an toàn.
+- **Thiết kế lại cụm nút chọn bố cục lưới (Layout Toggles)**: Thay thế 3 nút chữ đơn điệu "Hai", "Bốn", "Tám" bằng segmented pill control thanh lịch mang phong cách editorial tối giản (`.layout-segmented-control`). Mỗi tùy chọn gồm icon SVG minh họa số cột trực quan (2 cột, 4 cột, 8 cột) kèm con số tương ứng (2, 4, 8) và thuộc tính `title`/`aria-label` đầy đủ ("Bố cục 2 cột", "Bố cục 4 cột", "Bố cục 8 cột"). Nút active chuyển sang nền đen mờ nhám `#10100f` với đổ bóng nhẹ; hiệu ứng hover và transition mượt mà; responsive thu gọn trên mobile.
+- **Bằng chứng kiểm tra**: `npm run build` thành công (4024 modules, 0 lỗi cú pháp). Browser subagent đã truy cập `http://localhost:5173/new-in#catalog-tools`, chụp ảnh màn hình xác nhận: các sản phẩm đầu (Levi's 501, Filter Test Product) hiển thị ảnh editorial sắc nét, đồng bộ với trang chi tiết; thanh chọn bố cục hiển thị segmented control đẹp mắt với icon + số và chuyển đổi các chế độ lưới 2 cột, 4 cột chuẩn xác.
+- **Việc còn mở**: Backend hiện vẫn trả `imageUrls: []` cho 2 sản phẩm đầu (cần cập nhật URL ảnh thực tế trên Cloudinary/S3 qua API sản phẩm); bundle JS production vẫn có cảnh báo >500 kB cần code-splitting trong tương lai.
+
 ## 2026-10-18 — Đối chiếu hướng dẫn sử dụng shipping
 
 - Không đổi chức năng. Đối chiếu route, checkout, màn Admin/Staff/Shipper và adapter với code hiện tại để hướng dẫn thao tác; xác nhận `/shipping` dùng API, còn `/orders` admin vẫn là mock.

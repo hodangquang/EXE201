@@ -4,7 +4,8 @@ import { ArrowLeft, CreditCard, ImageOff, MapPin, ShieldCheck, ShoppingBag } fro
 import { toast } from 'react-toastify';
 import AccountMenu from '../../components/common/AccountMenu';
 import { useCart } from '../../contexts/CartContext';
-import { getSession, onAuthChange, profileApi, authFetch, paymentsApi } from '../../services/auth';
+import { getSession, onAuthChange, profileApi, authFetch, paymentsApi, shippingApi } from '../../services/auth';
+import { shippingRates } from '../../services/shipping';
 import { formatCurrency } from '../../utils/formatters';
 import './CheckoutPage.css';
 
@@ -146,7 +147,10 @@ export default function CheckoutPage() {
   const [addresses, setAddresses] = useState([]);
   const [addressStatus, setAddressStatus] = useState('idle');
   const [selectedAddressId, setSelectedAddressId] = useState('');
-  const shippingMethod = 0;
+  const [shippingMethod, setShippingMethod] = useState(0);
+  const [rateOptions, setRateOptions] = useState([]);
+  const [ratesStatus, setRatesStatus] = useState('loading');
+  const [ratesReload, setRatesReload] = useState(0);
   const [note, setNote] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [checkoutResult, setCheckoutResult] = useState(null);
@@ -155,6 +159,19 @@ export default function CheckoutPage() {
   const selectedItems = useMemo(() => cartItems.filter(item => item.isSelected), [cartItems]);
 
   useEffect(() => onAuthChange(() => setSession(getSession())), []);
+
+  useEffect(() => {
+    let active = true;
+    setRatesStatus('loading');
+    shippingApi.rates().then(response => {
+      if (!active) return;
+      const options = shippingRates(response);
+      setRateOptions(options);
+      setShippingMethod(previous => options.some(option => option.method === previous) ? previous : (options[0]?.method ?? 0));
+      setRatesStatus(options.length ? 'ready' : 'empty');
+    }).catch(() => { if (active) setRatesStatus('error'); });
+    return () => { active = false; };
+  }, [ratesReload, session?.token]);
 
   const openPaymentAndWait = (orderId, rawPaymentUrl) => {
     const paymentUrl = validatePaymentUrl(rawPaymentUrl);
@@ -278,6 +295,7 @@ export default function CheckoutPage() {
     && Boolean(selectedAddressId)
     && !hasUnpricedSelectedItems
     && addressStatus === 'ready'
+    && ratesStatus === 'ready'
     && !cartLoading
     && !cartError
     && !submitting
@@ -358,11 +376,13 @@ export default function CheckoutPage() {
                     <span className="checkout-section-icon"><ShoppingBag size={18} /></span>
                     <div><span className="checkout-step-label">BƯỚC 02</span><h2 id="checkout-delivery-title">Giao hàng</h2></div>
                   </div>
-                  <div className="checkout-shipping-method">
-                    <span className="checkout-shipping-dot" aria-hidden="true" />
-                    <div><strong>Phương thức giao hàng mặc định</strong><span>Phí giao hàng sẽ được xác nhận khi tạo đơn.</span></div>
-                    <span className="checkout-method-tag">REWEAR</span>
-                  </div>
+                  {ratesStatus === 'loading' ? <div className="checkout-state" role="status">Đang tải phương thức giao hàng…</div>
+                    : ratesStatus !== 'ready' ? <div className="checkout-state checkout-state-error" role="alert">Chưa tải được bảng giá vận chuyển.<button type="button" onClick={() => setRatesReload(value => value + 1)}>Thử lại</button></div>
+                      : rateOptions.map(option => <label className="checkout-shipping-method" key={option.method}>
+                        <input type="radio" name="shippingMethod" value={option.method} checked={shippingMethod === option.method} onChange={() => setShippingMethod(option.method)} />
+                        <div><strong>{option.label}</strong><span>Miễn phí vận chuyển</span></div>
+                        <span className="checkout-method-tag">0 ₫</span>
+                      </label>)}
                   <label className="checkout-note-label" htmlFor="checkout-note">Ghi chú cho đơn hàng <span>Tùy chọn</span></label>
                   <textarea
                     id="checkout-note"
@@ -410,8 +430,8 @@ export default function CheckoutPage() {
 
             <div className="checkout-summary-totals">
               <div><span>Tạm tính</span><span>{selectedCartSubtotal === null ? '—' : formatCurrency(selectedCartSubtotal)}</span></div>
-              <div><span>Phí giao hàng</span><span>Tính khi tạo đơn</span></div>
-              <div className="checkout-grand-total"><strong>Tổng tiền sản phẩm</strong><strong>{selectedCartSubtotal === null ? '—' : formatCurrency(selectedCartSubtotal)}</strong></div>
+              <div><span>Phí giao hàng</span><span>{ratesStatus === 'ready' ? '0 ₫' : '—'}</span></div>
+              <div className="checkout-grand-total"><strong>Tổng dự kiến</strong><strong>{selectedCartSubtotal === null || ratesStatus !== 'ready' ? '—' : formatCurrency(selectedCartSubtotal)}</strong></div>
               <p>Hàng được giữ chỗ trong tối đa 15 phút sau khi tạo đơn.</p>
             </div>
 

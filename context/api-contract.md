@@ -2,6 +2,22 @@
 
 **Phạm vi:** workspace frontend không chứa backend. Hầu hết contract bên dưới suy ra từ mã client; riêng flow checkout/payment đã đối chiếu mã backend chạy ngoài workspace và Swagger live ngày 2026-10-07. Ngoại lệ: người dùng đã cung cấp schema Swagger cho `PUT /api/Products/{id}` ngày 2026-10-06; các endpoint cart, orders và payment session ngày 2026-10-07. GET cart được mô tả trả giỏ kèm thông tin sản phẩm đầy đủ; response schema cart, count và một số orders vẫn chưa được kiểm thử bằng dữ liệu tài khoản thật; checkout/session đã đối chiếu mã backend, xem `payment-checkout-audit.md`. Backend đặt thời hạn session 15 phút theo cấu hình; chưa thử thành công với PayOS thật. Các response khác thường được chuẩn hóa tại page bằng `Array.isArray(res) ? res : res.data || []`, detail bằng `res.data || res`; cần xác nhận shape thật.
 
+## Shipping (Swagger do người dùng cung cấp ngày 2026-10-18)
+
+Frontend gọi qua `shippingApi` trong `src/services/auth.js`; adapter ở `src/services/shipping.js`. Các endpoint, tham số và quyền bên dưới lấy từ ảnh/mô tả Swagger người dùng gửi, **chưa kiểm chứng bằng response backend live** (localhost:5000 không phản hồi lúc kiểm tra). Response thành công được mô tả là `{success,message,data,errorCode}` nhưng schema `data` chỉ ghi `string`; client nhận JSON hoặc text JSON và chuẩn hóa một số dạng list/object có thể có. Không coi tên field suy đoán trong adapter là contract backend đã xác nhận.
+
+| Endpoint | Sử dụng hiện tại |
+| --- | --- |
+| `GET /api/shipping/rates` | Checkout tải lựa chọn Standard `0`/Express `1`. REWEAR miễn phí toàn bộ nên UI hiển thị `0 ₫`; khi response thành công mà `data` chưa có shape rõ, dùng hai method đã được mô tả trong Swagger/guide. Nếu request lỗi, khóa tạo đơn và cho thử lại. |
+| `GET /api/shipping/{orderId}` | Customer mở chi tiết Đơn mua; trang vận chuyển Admin/Staff/Shipper mở chi tiết. HTTP 404 hiển thị chưa có vận chuyển. Chỉ backend mới đảm bảo khách xem đúng đơn của mình. |
+| `POST /api/shipping/{orderId}` | Admin/Staff phân công từ `/shipping`; query `shipperId` (bắt buộc với Admin/Staff), `method` số `0` hoặc `1` (mặc định `0`), `carrier` tùy chọn. Chỉ backend cho tạo khi đơn đã thanh toán; client không suy PAID từ order status. |
+| `PUT /api/shipping/{orderId}/status` | Shipper cập nhật JSON `{status:number,note:string,trackingNumber:string,attemptCount:number}`; tải lại dữ liệu sau thành công. Backend được mô tả đồng bộ Order.Status và ghi timeline; client không tự thay payment status. |
+| `GET /api/shipping/queue` | Admin/Staff lấy đơn Confirmed chưa gán shipper. |
+| `GET /api/shipping/my-orders?status=&shipperId=` | Shipper lấy đơn được giao và lọc status; Admin/Staff có tab xem theo shipper ID. UI Shipper không gửi `shipperId`. Filter status cho phép mã `0–4`. |
+| `GET /api/shipping/all?status=` | Admin xem toàn bộ vận chuyển, filter mã `0–4`. |
+
+Swagger còn hiển thị `PUT /api/shipping/{orderId}` nhưng người dùng chưa cung cấp request body/ý nghĩa cập nhật nên frontend chưa gọi endpoint này. Mô tả status nêu `Pending / InTransit / Delivered / Failed`, nhưng filter chấp nhận **5 mã 0–4**; chưa đủ căn cứ để gán tên cho từng mã. UI giữ mã số nguyên và chỉ dịch tên khi backend trả string đã rõ. Cần backend xác nhận enum, response shape của rates/list/detail và quyền update trước khi dùng các nhãn trạng thái đầy đủ.
+
 ## Cơ chế chung
 
 Orders: `GET /api/orders` do người dùng cung cấp với query `Status` (0–5), `PageSize`, `Page`; `GET /api/orders/{id}` và `GET /api/orders/code/{orderCode}` do người dùng cung cấp để lấy chi tiết đơn của customer hiện tại. Người dùng cũng cung cấp mapping từ `OrderStatus.cs`: 0 AwaitingPayment, 1 Confirmed, 2 Shipping, 3 Delivered, 4 Cancelled, 5 PaymentExpired. Frontend gọi qua `ordersApi`/`authFetch`; nút Chi tiết ưu tiên tra bằng orderCode, dùng id nội bộ khi danh sách không có mã. Response schema chưa được cung cấp; wrapper/field alias trong adapter chỉ là giả định cần đối chiếu backend. Đơn mua phân trang 10 bản ghi/request; Lịch sử đọc tối đa 50 bản ghi/request. Trạng thái thanh toán vẫn là field riêng, không suy ra từ status đơn.
@@ -14,7 +30,7 @@ Orders: `GET /api/orders` do người dùng cung cấp với query `Status` (0�
 
 | Nhóm | Endpoint và method | Nơi gọi / mục đích |
 | --- | --- | --- |
-| Auth | `POST /api/Auth/login` | Admin login và customer modal; body `{email,password}`. Admin chỉ nhận ADMIN/STAFF. |
+| Auth | `POST /api/Auth/login` | Cổng vận hành và customer modal; body `{email,password}`. Cổng `/login` nhận ADMIN/STAFF/SHIPPER theo role response; quyền thật do backend kiểm tra. |
 | Auth | `POST /api/Auth/register`, `/forgot-password`, `/verify-otp`, `/reset-password` | `AuthModal`; payload từ từng form. |
 | Products | `GET /api/Products?IsActive=true&Status=0` | `usePublicProducts`; chỉ trạng thái 0 được đưa lên storefront. |
 | Products | `GET /api/Products` với `CategoryId`, `BrandId`, `Status`, `Condition`, `IsActive`, `Search` | ProductList admin. |

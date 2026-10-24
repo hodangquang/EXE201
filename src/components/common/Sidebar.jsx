@@ -6,6 +6,7 @@ import {
   Shirt,
   Recycle,
   ShoppingBag,
+  Truck,
   Users,
   Boxes,
   TicketPercent,
@@ -82,6 +83,11 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       key: '/orders',
       icon: <ShoppingBag size={17} strokeWidth={1.8} />,
       label: 'Đơn hàng',
+    },
+    {
+      key: '/shipping',
+      icon: <Truck size={17} strokeWidth={1.8} />,
+      label: 'Vận chuyển',
     },
 
     ...(isAdmin ? [{

@@ -26,4 +26,6 @@ Các màn `/collections`, `/collections/inspection`, `/upcycling*` mô phỏng m
 
 ## Định hướng chưa triển khai
 
-Định hướng shipper/giao hàng và trách nhiệm backend payOS được ghi tại `future-plan-delivery-payment.md`. Frontend đã có client checkout/payment-status như mô tả phía trên; repo không chứa triển khai backend hoặc webhook. Chưa có route shipper hay flow cập nhật giao hàng theo quyền shipper.
+Định hướng shipper/giao hàng và trách nhiệm backend payOS được ghi tại `future-plan-delivery-payment.md`. Frontend đã có client checkout/payment-status như mô tả phía trên; repo không chứa triển khai backend hoặc webhook. Từ 2026-10-18, frontend có route `/shipper/orders` và thao tác `PUT /api/shipping/{orderId}/status` theo Swagger người dùng cung cấp; quyền/response server chưa kiểm chứng live.
+
+Checkout tải `GET /api/shipping/rates`, hiển thị Standard/Express với phí vận chuyển 0 ₫ và gửi method đã chọn khi tạo order; lỗi rates cho thử lại và khóa tạo đơn. Customer mở chi tiết Đơn mua sẽ gọi `GET /api/shipping/{orderId}`, 404 nghĩa là chưa có shipping. Admin/Staff vào `/shipping` xem queue, nhập shipper ID rồi POST tạo shipping; ADMIN còn xem all. Shipper đăng nhập bằng role SHIPPER và vào `/shipper/orders` để xem my-orders, lọc status, đọc chi tiết và PUT cập nhật status/note/tracking/attemptCount. Sau mutation frontend tải lại server. Trang `/orders` admin vẫn mock, không đại diện dữ liệu shipping thật.

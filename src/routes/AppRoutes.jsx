@@ -23,6 +23,7 @@ import ProjectDetail from '../pages/Upcycling/ProjectDetail';
 import QualityCheck from '../pages/Upcycling/QualityCheck';
 import OrderList from '../pages/Orders/OrderList';
 import OrderDetail from '../pages/Orders/OrderDetail';
+import ShippingPage from '../pages/Shipping/ShippingPage';
 import CustomerList from '../pages/Customers/CustomerList';
 import CustomerDetail from '../pages/Customers/CustomerDetail';
 import InventoryList from '../pages/Inventory/InventoryList';
@@ -66,8 +67,12 @@ export const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/payment/waiting" element={<PaymentWaitingPage />} />
 
+      <Route element={<ProtectedRoute requiredRole={ROLES.SHIPPER} />}>
+        <Route path="/shipper/orders" element={<ShippingPage />} />
+      </Route>
+
       {/* Protected routes inside AdminLayout */}
-      <Route element={<ProtectedRoute />}>
+      <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.STAFF]} />}>
         <Route element={<AdminLayout />}>
           {/* Admin-only routes */}
           <Route element={<ProtectedRoute requiredRole={ROLES.ADMIN} />}>
@@ -98,6 +103,7 @@ export const AppRoutes = () => {
 
           <Route path="/orders" element={<OrderList />} />
           <Route path="/orders/:id" element={<OrderDetail />} />
+          <Route path="/shipping" element={<ShippingPage />} />
 
           <Route path="/inventory" element={<InventoryList />} />
 

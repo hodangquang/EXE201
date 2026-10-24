@@ -1,5 +1,17 @@
 # Lịch sử context
 
+## 2026-10-18 — Đối chiếu hướng dẫn sử dụng shipping
+
+- Không đổi chức năng. Đối chiếu route, checkout, màn Admin/Staff/Shipper và adapter với code hiện tại để hướng dẫn thao tác; xác nhận `/shipping` dùng API, còn `/orders` admin vẫn là mock.
+- Bằng chứng: đọc `AppRoutes.jsx`, `ShippingPage.jsx`, `CheckoutPage.jsx`, `ProfilePage.jsx` và API contract; chưa có backend live để thao tác thử. Còn mở: mapping enum status 0–4, body `PUT /api/shipping/{orderId}` và kiểm thử end-to-end.
+
+## 2026-10-18 — Tích hợp API shipping vào checkout, khách hàng và vận hành
+
+- Thêm `shippingApi` cho bảy endpoint được cung cấp: rates, chi tiết, tạo, cập nhật status, queue, my-orders, all; parser hỗ trợ envelope JSON/text JSON và giữ mã status khi chưa có enum. Checkout tải lựa chọn Standard/Express, hiển thị miễn phí 0 ₫ và gửi method được chọn. Chi tiết Đơn mua đọc shipping/timeline riêng.
+- Thêm `/shipping` cho Admin/Staff (queue, xem theo shipper ID, all cho Admin) và `/shipper/orders` cho SHIPPER; cổng login nhận role SHIPPER, guard tách quyền màn vận hành, mutation chỉ báo thành công sau phản hồi API rồi tải lại dữ liệu. Bỏ nút “Giao hàng” chỉ đổi state mock trong OrderList, thay bằng link sang quản lý vận chuyển. Không lấy payment state từ shipping và không dùng dữ liệu mock của `/orders` để phân công.
+- Kiểm tra: `npm.cmd run build` đạt (4027 modules, cảnh báo bundle khoảng 1.99 MB); adapter smoke test cho unwrap/list/rates/status đạt; `git diff --check` không thấy lỗi whitespace. Thử `localhost:5000/swagger/v1/swagger.json` bị timeout nên chưa thử request với backend hoặc xác nhận shape live.
+- Còn mở: schema `data` thực của shipping, mapping enum 0–4, quyền/trình tự backend và body cho `PUT /api/shipping/{orderId}` trong ảnh Swagger chưa được cung cấp; admin order pages vẫn mock. Đã hỏi người dùng phần body/enum còn thiếu.
+
 ## 2026-10-18 — Đồng bộ footer Home và tách bộ ảnh Mới về/Nam/Nữ
 
 - Hoàn thiện giao diện ảnh lớn/chuyển cảnh cho Catalog/About/World: điều khiển ảnh, pause/reduced motion, journal cuộn mobile, CTA nền ảnh. Giữ các bộ lọc, flow API và business logic hiện tại.

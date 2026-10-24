@@ -1,0 +1,13 @@
+.shipping-page { padding: 28px; }
+.shipping-page-shipper { min-height: 100vh; background: #f5f5f2; max-width: 900px; margin: 0 auto; }
+.shipping-header, .shipping-heading, .shipping-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.shipping-header { padding-bottom: 24px; }
+.shipping-heading { margin-bottom: 24px; }
+.shipping-heading h1 { margin: 8px 0 0; font-size: clamp(24px, 4vw, 34px); }
+.shipping-toolbar { justify-content: flex-start; margin-bottom: 18px; }
+.shipping-toolbar .ant-select { min-width: 210px; }
+.shipping-detail { border: 1px solid #e5e5e4; padding: 16px; margin: 18px 0; }
+.shipping-detail p { margin: 0 0 10px; }
+.shipping-detail p:last-child { margin-bottom: 0; }
+.shipping-detail ol { padding-left: 20px; }
+@media (max-width: 600px) { .shipping-page { padding: 18px; } .shipping-toolbar .ant-select { width: 100%; } }

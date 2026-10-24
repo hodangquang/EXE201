@@ -10,7 +10,7 @@
 ## Xác thực và state
 
 - `src/services/auth.js`: session trong `localStorage` key `auth_session`, phát event `auth-changed`; `getSession` kiểm tra JWT `exp` nếu token đọc được. `authFetch` thêm Bearer token, JSON header trừ FormData, parse JSON/text, xóa session khi HTTP 401, ném lỗi khi response không OK.
-- `src/contexts/AuthContext.jsx`: admin login POST `/api/Auth/login`, chỉ nhận role `ADMIN` hoặc `STAFF`. `ProtectedRoute` chưa đăng nhập → `/login`; sai quyền admin → `/collections`. Public modal `AuthModal` có đăng ký/login/OTP/reset và lưu session nhưng không kiểm tra role như admin login.
+- `src/contexts/AuthContext.jsx`: cổng vận hành POST `/api/Auth/login`, nhận role `ADMIN`, `STAFF` hoặc `SHIPPER` từ response. `ProtectedRoute` chưa đăng nhập → `/login`; `/shipper/orders` chỉ cho SHIPPER, các route trong `AdminLayout` chỉ cho ADMIN/STAFF, route dashboard vẫn chỉ ADMIN. Đây là guard UI; quyền API phải được backend kiểm tra. Public modal `AuthModal` có đăng ký/login/OTP/reset và lưu session nhưng không kiểm tra role như cổng vận hành.
 - `GlobalLoader` nghe event `global-loading` từ `authFetch`; mặc định mỗi request tăng/giảm bộ đếm. Loader giữ tối thiểu 2,5 giây, kể cả request ngắn. Payment status polling dùng `skipGlobalLoading` và trạng thái riêng ở PaymentWaitingPage để không che trang sau mỗi 3 giây; `AuthModal` có loading riêng.
 - Không có query cache cho sản phẩm; mỗi lần `usePublicProducts` được mount, hook tự gọi GET products. Giỏ hàng có state dùng chung trong `src/contexts/CartContext.jsx` cho các route storefront; admin không mount cart provider. Phần lớn state khác là `useState` tại page, mất khi reload.
 

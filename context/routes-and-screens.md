@@ -12,7 +12,7 @@ Nguồn dữ liệu: **API** là gọi server; **mock** là dữ liệu JS cố 
 | `/payment/waiting?orderId=...` | PaymentWaitingPage | Tab REWEAR tới route này ngay sau checkout; PayOS mở ở tab riêng. Lấy orderId từ URL/sessionStorage, polling `GET /api/payments/{orderId}/status` mỗi 3 giây trong tối đa 15 phút, kiểm tra ngay khi tab được focus lại. Nhận `isPaid: true`, `paymentStatus: "Paid"` hoặc số `2` là đã trả tiền; sau đó về home. Pending tiếp tục polling; Failed/Expired/Refunded/Cancelled có trạng thái riêng. Có link mở PayOS nếu popup bị chặn và nút kiểm tra lại khi cần. Callback PayOS chỉ có orderCode có thể thử tra đơn theo code, nhưng mã PayOS có thể không phải mã đơn REWEAR. |
 | `/world` | RainsWorldPage (tên file nội bộ), hiển thị “Thế giới REWEAR” | Hero ảnh chuyển cảnh, bộ ảnh cảm hứng local liên kết Nữ/Nam/About, CTA gửi đồ và RainsFooter dùng chung với Home; giữ StoreLocator với địa chỉ 124 Đường 160, Tăng Nhơn Phú A, TP. Thủ Đức, TP.HCM do người dùng cung cấp. Bản đồ tile ArcGIS định tâm gần khu vực phường; liên kết Google Maps tìm theo địa chỉ. Chưa lấy địa chỉ/tọa độ từ API. |
 | `/profile?tab=profile|addresses|orders|history|sourcing` | ProfilePage | Profile/addresses/sourcing dùng API; orders/history gọi `GET /api/orders`; nút Chi tiết ưu tiên `GET /api/orders/code/{orderCode}`, fallback theo ID qua `GET /api/orders/{id}` khi không có orderCode. Tab Đơn mua có loading/error/empty, tìm kiếm cục bộ, lọc trạng thái và phân trang. Response schema chưa xác minh. Page tự kiểm tra session và redirect home nếu thiếu. |
-| `/login` | Login admin/staff | POST Auth/login qua `AuthContext`; admin tới dashboard, staff tới collections. |
+| `/login` | Cổng vận hành | POST Auth/login qua `AuthContext`; ADMIN tới dashboard, STAFF tới collections, SHIPPER tới `/shipper/orders`. |
 | `/admin` | Shortcut | Redirect `/login`. |
 | `/dashboard` | Dashboard | ADMIN; toàn bộ KPI, biểu đồ, bảng gần đây là mock. |
 | `/products` | ProductList | ADMIN/STAFF; API list/filter/search, đổi publish status, xóa/restore. Quyền ghi chủ yếu ẩn bằng UI, cần backend kiểm soát. |
@@ -24,10 +24,15 @@ Nguồn dữ liệu: **API** là gọi server; **mock** là dữ liệu JS cố 
 | `/collections`, `/collections/:id`, `/collections/inspection` | Thu gom/kiểm định cũ | ADMIN/STAFF; mock và thay state local. |
 | `/upcycling`, `/upcycling/:id`, `/upcycling/qc` | Upcycling/QC | ADMIN/STAFF; mock và thay state local. Sidebar hiện không có mục Upcycling dù route có. |
 | `/orders`, `/orders/:id` | Đơn hàng admin | ADMIN/STAFF; mock và thay state local. |
+| `/shipping` | ShippingPage | ADMIN/STAFF; API `queue` để xem đơn chờ và tạo shipping với shipper ID, method, carrier; tab theo shipper ID dùng `my-orders`. ADMIN có thêm `all`; hai tab danh sách đã phân công có filter status. GET chi tiết theo order ID; POST thành công tải lại danh sách. Dữ liệu shipping là server, màn `/orders` vẫn mock riêng. |
+| `/shipper/orders` | ShippingPage | SHIPPER; `GET /api/shipping/my-orders`, lọc mã status, GET chi tiết, PUT status/note/trackingNumber/attemptCount rồi tải lại. Cổng login đọc role từ response backend. |
+
 | `/customers`, `/customers/:id` | Khách hàng | ADMIN; API `/api/admin/users`; list có detail modal, route detail vẫn tồn tại. |
 | `/inventory` | Kho | ADMIN/STAFF; mock. |
 | `/promotions` | Khuyến mãi | ADMIN; mock. |
 | `/settings` | Cài đặt | ADMIN; UI form/switch, save chỉ hiện thông báo, chưa persist. |
+
+Checkout còn gọi `GET /api/shipping/rates` trước khi cho tạo đơn; tab Đơn mua gọi `GET /api/shipping/{orderId}` khi mở chi tiết. Các response shipping live vẫn chưa đối chiếu vì backend ngoài workspace không phản hồi trong lần kiểm tra.
 
 `ReportsPage` và `StaffList` được import trong router nhưng **chưa có route**. `*` NotFound chỉ nằm trong nhánh được bảo vệ của admin; URL public không khớp route không có catch-all riêng. Sidebar admin chỉ hiển thị một phần route đã khai báo.
 

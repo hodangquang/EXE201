@@ -21,9 +21,11 @@ Danh sách này là phát hiện từ frontend tại 2026-10-06, không phải l
 
 ## Điều hướng, UX và kỹ thuật
 
+- Shipping đã có client/màn hình từ Swagger người dùng cung cấp nhưng chưa có mẫu `data` thực tế hoặc backend live để xác nhận parser, enum 0–4, quyền shipper được phân công, bước status hợp lệ, timeline và điều kiện PAID khi tạo. `GET rates` dùng fallback Standard/Express khi response 200 có shape lạ vì hai method và phí 0 đã được mô tả. `PUT /api/shipping/{orderId}` trong ảnh chưa có body nên chưa tích hợp. Admin order pages vẫn mock riêng và chưa nối với shipping thật; không dùng trạng thái thanh toán mock để tạo shipping.
+
 1. Route `/product` redirect tới slug demo `suva-hardshell-jacket`, nhưng PDP hiện chỉ tìm ID trong API list nên có thể hiện Product not found. Public unknown URL chưa có 404 route riêng.
 2. Session admin và customer dùng chung key; role check admin dựa vào dữ liệu `localStorage` ở client. Quyền thật phải được backend xác thực. Không lưu token/response thật trong tài liệu.
-3. Đã bỏ mục “Chuyển quyền” và lời gọi switchRole không tồn tại trong Header; chỉ hiển thị role của phiên. Không đổi AuthContext/ProtectedRoute hoặc giả lập quyền server.
+3. Đã bỏ mục “Chuyển quyền” và lời gọi switchRole không tồn tại trong Header; chỉ hiển thị role của phiên. Tích hợp shipping đã thêm SHIPPER trong AuthContext và guard route theo role. Đây là điều hướng/ẩn UI, không thay thế kiểm quyền server.
 4. `GlobalLoader` giữ overlay tối thiểu 2,5 giây cho phần lớn `authFetch`; payment status polling dùng loading riêng và không bật overlay. Listing/filter vẫn có thể chậm. React StrictMode dev có thể gọi effect hai lần.
 5. Build thành công nhưng JS bundle khoảng 1.9 MB (warning >500 KB). `npm.cmd run lint` lỗi vì thiếu cấu hình ESLint flat config. Không có test suite trong package scripts.
 6. Chưa thấy backend/schema, nên method, response, enum và workflow sourcing chỉ là client expectations. Kiểm tra API thật hoặc hỏi owner khi thay đổi contract.
@@ -46,6 +48,6 @@ Backend deployment handoff: backend owner needs to commit and deploy the Dockerf
 
 - Browser QA dùng Chromium và API intercept với fixture tổng hợp, không xác nhận backend hoặc giao dịch thật. Chưa kiểm thử PayOS live, upload, auth/role thật, mutation lưu server, bản đồ/asset remote trên production.
 - ReportsPage/StaffList chưa có route: chỉ đọc/sửa source responsive, chưa render qua router. Chi tiết đơn admin giữ hành vi fallback về mock đầu tiên khi ID không khớp; không đổi nghiệp vụ demo.
-- AuthModal/CartDrawer/AccountMenu dùng chung Home được giữ nguyên nguồn; chưa coi đã hoàn tất kiểm thử accessibility cho mọi trạng thái của chúng. Login còn dữ liệu khởi tạo cũ và checkbox ghi nhớ chưa có persistence riêng.
+- AuthModal/CartDrawer/AccountMenu dùng chung Home được giữ nguyên nguồn; chưa coi đã hoàn tất kiểm thử accessibility cho mọi trạng thái của chúng. Login đã bỏ mật khẩu khởi tạo mẫu; checkbox ghi nhớ chưa có persistence riêng.
 - Không tuyên bố đạt WCAG đầy đủ: chưa audit screen reader, mọi contrast, mọi tổ hợp dữ liệu, Safari/Firefox hoặc thiết bị thật. Bundle ~1.96 MB và lint thiếu flat config còn mở.
 - Navbar Home gốc ở viewport 375px ép vùng menu chỉ còn khoảng 10px; các route ngoài Home dùng hàng menu cuộn riêng để giữ link sử dụng được. Task đồng bộ navbar không sửa Home theo phạm vi đã thống nhất; nếu muốn đồng nhất cả hành vi mobile, cần sửa responsive của Home ở task riêng.

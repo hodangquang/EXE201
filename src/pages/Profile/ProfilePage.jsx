@@ -4,7 +4,8 @@ import { User, MapPin, Package, History, LogOut, Camera, ChevronRight, Search, S
 import { useCart } from '../../contexts/CartContext';
 import RainsFooter from '../../components/common/RainsFooter';
 import AccountMenu from '../../components/common/AccountMenu';
-import { getSession, clearSession, onAuthChange, profileApi, ordersApi, updateSessionUser, getAvatarUrl, authFetch } from '../../services/auth';
+import { getSession, clearSession, onAuthChange, profileApi, ordersApi, shippingApi, updateSessionUser, getAvatarUrl, authFetch } from '../../services/auth';
+import { shippingData, shippingField, shippingStatus, shippingStatusLabel } from '../../services/shipping';
 import '../Home/HomePage.css';
 import './ProfilePage.css';
 
@@ -405,10 +406,24 @@ function OrderCard({ order }) {
   const [open, setOpen] = useState(false);
   const [detail, setDetail] = useState(null);
   const [detailStatus, setDetailStatus] = useState('idle');
+  const [shipment, setShipment] = useState(null);
+  const [shippingState, setShippingState] = useState('idle');
+  const loadShipping = async (idOverride) => {
+    const id = idOverride || detail?.requestId || order.requestId;
+    if (!id) { setShippingState('unavailable'); return; }
+    setShippingState('loading');
+    try {
+      setShipment(shippingData(await shippingApi.get(id)));
+      setShippingState('ready');
+    } catch (error) {
+      setShippingState(error.status === 404 ? 'unavailable' : 'error');
+    }
+  };
   const loadDetail = async () => {
     const id = order.requestId || order.id;
     if (!order.orderCode && (!id || id === '—')) return;
     setDetailStatus('loading');
+    if (order.requestId) loadShipping(order.requestId);
     try {
       const response = order.orderCode
         ? await ordersApi.getByCode(order.orderCode)
@@ -416,10 +431,12 @@ function OrderCard({ order }) {
       const normalized = normalizeOrder(unwrapOrder(response));
       setDetail({
         ...order,
+        requestId: normalized.requestId || order.requestId,
         ...Object.fromEntries(Object.entries(normalized).filter(([key, value]) => value !== undefined && value !== null && !['id', 'requestId', 'orderCode'].includes(key) && !(key === 'statusLabel' && normalized.status == null) && !(key === 'items' && value.length === 0) && !(key === 'timeline' && value.length === 0))),
         items: normalized.items.length ? normalized.items : order.items,
         timeline: normalized.timeline.length ? normalized.timeline : [],
       });
+      if (!order.requestId) loadShipping(normalized.requestId);
       setDetailStatus('ready');
     } catch {
       setDetailStatus('error');
@@ -432,6 +449,7 @@ function OrderCard({ order }) {
     }
     setOpen(true);
     if (!detail && detailStatus !== 'loading') loadDetail();
+    else if (detail) loadShipping();
   };
 
   return (
@@ -473,6 +491,15 @@ function OrderCard({ order }) {
           {detail.shippingFee !== undefined && <div><strong>Phí giao hàng</strong><span>{formatOrderMoney(detail.shippingFee) || '—'}</span></div>}
           {detail.note && <div><strong>Ghi chú</strong><span>{detail.note}</span></div>}
           {detail.timeline.map((event, index) => <div key={`event-${index}`}><strong>{event.label || 'Cập nhật đơn hàng'}</strong><span>{event.at ? fmtDate(event.at) : ''}</span></div>)}
+        </>}
+        {shippingState === 'loading' && <div role="status">Đang tải thông tin vận chuyển…</div>}
+        {shippingState === 'unavailable' && <div>Chưa có thông tin vận chuyển cho đơn này.</div>}
+        {shippingState === 'error' && <div role="alert">Không tải được thông tin vận chuyển.<button type="button" onClick={() => loadShipping()}>Thử lại</button></div>}
+        {shippingState === 'ready' && shipment && <>
+          <div><strong>Vận chuyển</strong><span>{shippingStatusLabel(shippingStatus(shipment))}</span></div>
+          {shippingField(shipment, 'carrier') && <div><strong>Đơn vị vận chuyển</strong><span>{shippingField(shipment, 'carrier')}</span></div>}
+          {shippingField(shipment, 'trackingNumber') && <div><strong>Mã vận đơn</strong><span>{shippingField(shipment, 'trackingNumber')}</span></div>}
+          {Array.isArray(shippingField(shipment, 'timeline', 'statusHistory', 'events')) && shippingField(shipment, 'timeline', 'statusHistory', 'events').map((event, index) => <div key={`shipping-event-${index}`}><strong>{shippingField(event, 'note', 'description', 'status') || 'Cập nhật vận chuyển'}</strong><span>{shippingField(event, 'createdAt', 'timestamp', 'date') ? fmtDate(shippingField(event, 'createdAt', 'timestamp', 'date')) : ''}</span></div>)}
         </>}
       </div>}
     </div>

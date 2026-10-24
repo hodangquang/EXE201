@@ -158,3 +158,36 @@ export const paymentsApi = {
   createSession: orderId => authFetch(`/api/payments/${encodeURIComponent(orderId)}/session`, { method: 'POST' }),
   getStatus: (orderId, options = {}) => authFetch(`/api/payments/${encodeURIComponent(orderId)}/status?_t=${Date.now()}`, { ...options, skipGlobalLoading: true }),
 };
+
+const shippingQuery = values => {
+  const query = new URLSearchParams();
+  Object.entries(values).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') query.set(key, String(value));
+  });
+  return query.size ? `?${query}` : '';
+};
+
+const shippingRequest = async (path, options) => {
+  let response = await authFetch(path, { ...options, headers: { Accept: 'application/json', ...options?.headers } });
+  if (typeof response === 'string') {
+    try { response = JSON.parse(response); } catch { return response; }
+  }
+  if (response?.success === false) throw new Error(response.message || 'Yêu cầu vận chuyển không thành công.');
+  return response;
+};
+
+export const shippingApi = {
+  rates: () => shippingRequest('/api/shipping/rates'),
+  get: orderId => shippingRequest(`/api/shipping/${encodeURIComponent(orderId)}`),
+  create: (orderId, { shipperId, method = 0, carrier } = {}) => shippingRequest(
+    `/api/shipping/${encodeURIComponent(orderId)}${shippingQuery({ shipperId, method, carrier })}`,
+    { method: 'POST' },
+  ),
+  updateStatus: (orderId, { status, note, trackingNumber, attemptCount }) => shippingRequest(
+    `/api/shipping/${encodeURIComponent(orderId)}/status`,
+    { method: 'PUT', body: JSON.stringify({ status, note, trackingNumber, attemptCount }) },
+  ),
+  queue: () => shippingRequest('/api/shipping/queue'),
+  myOrders: ({ status, shipperId } = {}) => shippingRequest(`/api/shipping/my-orders${shippingQuery({ status, shipperId })}`),
+  all: ({ status } = {}) => shippingRequest(`/api/shipping/all${shippingQuery({ status })}`),
+};

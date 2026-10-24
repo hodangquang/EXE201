@@ -28,12 +28,12 @@ export const AuthProvider = ({ children }) => {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.message || 'Đăng nhập thất bại');
       
-      // Check if admin or staff
+      // Chỉ các vai trò vận hành được vào cổng đăng nhập này.
       const rawRole = data.data?.role || data.role || '';
       const role = String(rawRole).toUpperCase();
       
-      if (role !== ROLES.ADMIN && role !== ROLES.STAFF) {
-        throw new Error('Bạn không có quyền truy cập hệ thống quản trị.');
+      if (role !== ROLES.ADMIN && role !== ROLES.STAFF && role !== ROLES.SHIPPER) {
+        throw new Error('Bạn không có quyền truy cập cổng vận hành.');
       }
       
       const sessionData = { ...(data.data || data), role };

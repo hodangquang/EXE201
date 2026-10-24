@@ -7,6 +7,8 @@ Tìm route trước ở `src/routes/AppRoutes.jsx`, rồi theo component tới A
 | Entry/config | `index.html`, `package.json`, `vite.config.js`, `src/main.jsx`, `src/App.jsx` | Mount app, dependencies/scripts, dev proxy, provider tree. |
 | Route/layout | `src/routes/AppRoutes.jsx`, `ProtectedRoute.jsx`, `src/layouts/AdminLayout.jsx` | URL, guard theo role, admin shell. |
 | Auth/API | `src/contexts/AuthContext.jsx`, `src/services/auth.js` | Session, admin login, fetch helper, profile API. |
+| Shipping API/adapter | `src/services/auth.js`, `src/services/shipping.js` | Helper bảy endpoint shipping, unwrap response và label khi enum còn thiếu schema. |
+| Shipping UI | `src/pages/Shipping/ShippingPage.jsx`, `ShippingPage.css` | Danh sách queue/all/my-orders, phân công, cập nhật status. Checkout và Profile có tích hợp rates/detail. |
 | Hook/utils | `src/hooks/usePublicProducts.js`, `useDebounce.js`, `src/utils/constants.js`, `formatters.js` | Adapter public product, placeholder debounce, trạng thái/role, định dạng. |
 | Shared UI | `src/components/common/{AccountMenu,AuthModal,GlobalLoader,Header,Sidebar,StatusBadge,KPICard,RainsFooter}.*` | Menu/login public, loader, admin nav/header/badge/KPI, footer. |
 | Data demo | `src/data/mockData.js`, `storeProducts.js`, `customerOrders.js` | Mock admin, catalog demo cũ dùng ảnh tham khảo bên ngoài, đơn hàng demo profile. |
@@ -15,7 +17,7 @@ Tìm route trước ở `src/routes/AppRoutes.jsx`, rồi theo component tới A
 | Public catalog | `src/pages/Store/{NewInPage,WomenPage,MenPage,RainsWorldPage,StoreProductPage}.jsx` và CSS cùng thư mục | Listing, editorial world, PDP; ba listing cấu hình `components/common/CatalogPage.jsx`, dùng `ProductListingGrid.jsx` và `NewInPage.css` + `HomePage.css`. |
 | Store locator | `src/components/common/StoreLocator.jsx`, `StoreLocator.css` | Tìm kiếm/lọc cửa hàng mẫu, chọn location để đổi map ArcGIS; được render giữa nội dung Thế giới REWEAR và footer. |
 | Customer account | `src/pages/Profile/ProfilePage.jsx`, `ProfilePage.css` | Profile, addresses, orders/history và sourcing API; response live vẫn cần đối chiếu. |
-| Admin login | `src/pages/Auth/Login.jsx` | Login ADMIN/STAFF. |
+| Cổng vận hành | `src/pages/Auth/Login.jsx` | Login ADMIN/STAFF/SHIPPER, điều hướng theo role response. |
 | Admin products | `src/pages/Products/{ProductList,ProductDetail,ProductForm,Categories,CategoryModal,Brands,BrandModal}.jsx` | Catalog API, publish, CRUD product/category/brand. |
 | Admin sourcing/collections | `src/pages/Collections/{SourcingRequests,CollectionList,CollectionDetail,Inspection}.jsx` | Sourcing API và pipeline mock riêng. |
 | Admin upcycling | `src/pages/Upcycling/{ProjectList,ProjectDetail,QualityCheck}.jsx` | Pipeline mock. |

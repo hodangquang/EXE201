@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Table, Input, Select, Space, Button, message } from 'antd';
+import { Table, Input, Select, Space, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { Search, Eye, ShoppingBag, Truck, CheckCircle2 } from 'lucide-react';
+import { Search, Eye } from 'lucide-react';
 import StatusBadge from '../../components/common/StatusBadge';
 import { mockOrders } from '../../data/mockData';
 import { ORDER_STATUS } from '../../utils/constants';
@@ -10,7 +10,7 @@ import { formatCurrency, formatShortDate } from '../../utils/formatters';
 const { Option } = Select;
 
 export const OrderList = () => {
-  const [orders, setOrders] = useState(mockOrders);
+  const [orders] = useState(mockOrders);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const navigate = useNavigate();
@@ -22,13 +22,6 @@ export const OrderList = () => {
     const matchesStatus = statusFilter === 'ALL' || o.orderStatus === statusFilter;
     return matchesSearch && matchesStatus;
   });
-
-  const handleUpdateStatus = (id, newStatus) => {
-    setOrders((prev) =>
-      prev.map((o) => (o.id === id ? { ...o, orderStatus: newStatus } : o))
-    );
-    message.success(`Đã cập nhật đơn hàng ${id} sang trạng thái: ${newStatus}`);
-  };
 
   const columns = [
     {
@@ -102,16 +95,6 @@ export const OrderList = () => {
             title="Xem chi tiết đơn hàng"
             onClick={() => navigate(`/orders/${record.id}`)}
           />
-          {record.orderStatus === ORDER_STATUS.PREPARING && (
-            <Button
-              type="text"
-              style={{ color: '#0369a1', fontWeight: 600 }}
-              title="Giao đơn cho shipper"
-              onClick={() => handleUpdateStatus(record.id, ORDER_STATUS.SHIPPING)}
-            >
-              Giao hàng →
-            </Button>
-          )}
         </Space>
       ),
     },
@@ -137,6 +120,7 @@ export const OrderList = () => {
             Quản lý đơn hàng REWEAR
           </h1>
         </div>
+        <Button onClick={() => navigate('/shipping')}>Quản lý vận chuyển</Button>
       </div>
 
       <div 

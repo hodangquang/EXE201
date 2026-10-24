@@ -1,5 +1,13 @@
 # Future plan: giao hàng bằng shipper riêng và thanh toán payOS
 
+## Trạng thái triển khai frontend ngày 2026-10-18
+
+Người dùng đã cung cấp Swagger cho bảy endpoint shipping: rates, chi tiết theo orderId, tạo shipping, cập nhật status, queue, my-orders và all. Frontend hiện có `/shipping` cho Admin/Staff, `/shipper/orders` cho SHIPPER, lựa chọn rates khi checkout và thông tin shipping trong chi tiết Đơn mua. Các màn này gọi API thật qua `shippingApi`, không lấy mock; backend không nằm trong repo và localhost:5000 không phản hồi lúc kiểm tra nên chưa xác minh dữ liệu, role server, enum status và thao tác end-to-end. `PUT /api/shipping/{orderId}` cũng xuất hiện trong ảnh Swagger nhưng chưa có body/contract nên chưa dùng. Trang `/orders` admin vẫn là mock độc lập.
+
+Flow tương lai bên dưới là **đề xuất gốc ngày 2026-10-07**, không phải mô tả chức năng đã chạy. Trong số đó `/shipper/orders` hiện đã có route frontend, và endpoint cập nhật thực tế được cung cấp là `PUT /api/shipping/{orderId}/status` thay cho `PATCH /api/shipments/:id/status` từng phác thảo. Các ý tưởng như lấy hàng, giao lại, hoàn trả, bằng chứng giao và webhook vẫn cần quyết định/backend riêng. Payment status vẫn tách khỏi shipping; chỉ backend chốt Paid và cho phép POST shipping sau thanh toán.
+
+## Kế hoạch gốc (snapshot 2026-10-07)
+
 **Trạng thái (cập nhật 2026-10-07):** frontend checkout nối theo các contract người dùng cung cấp; backend không nằm trong repo nên response thực tế chưa kiểm chứng. Luồng hiện gửi `POST /api/orders/checkout` với địa chỉ, `shippingMethod: 0` và ghi chú; kiểm tra checkout response trước vì contract mô tả backend tự tạo phiên; chỉ khi không có checkoutUrl mới gọi `POST /api/payments/{orderId}/session`, rồi chuyển hướng đến `checkoutUrl` PayOS hợp lệ. Người dùng mô tả phiên và giữ hàng có thời hạn 15 phút. Theo contract mới người dùng cung cấp, `GET /api/payments/{orderId}/status` khi payment Pending sẽ hỏi PayOS, đồng bộ DB và idempotent; tab REWEAR mở `/payment/waiting?orderId=...` ngay sau checkout, poll mỗi 3 giây tối đa 15 phút, hiểu Paid dạng string/số 2/isPaid, chỉ kết quả từ backend mới tự về home. Chưa kiểm thử logic poll-on-read trên backend live. Render Static Site cần rewrite `/*` → `/index.html` để route sâu không 404. Trang shipper và các flow vận chuyển vẫn chưa triển khai. Các state/endpoint tương lai bên dưới vẫn là đề xuất trừ endpoint checkout, payment session, payment status và orders đã thấy trong backend/Swagger hoặc contract người dùng cung cấp.
 
 ## Đánh giá hướng đi

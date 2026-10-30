@@ -1,3 +1,5 @@
+> Đính chính theo source local 25/10/2026: payment numeric là 0 Pending, **1 Paid, 2 Failed**, 3 Expired, 4 Refunded. Status endpoint trả chuỗi và requiresReconciliation; không suy trạng thái từ returnUrl. Sourcing accept cần offerVersion. Order thêm 7 ReturnRequested, 8 ReturnReceived, 9 Returned. Product PUT multipart. Hướng dẫn cũ bên dưới được giữ để đối chiếu; contract mới ở [báo cáo triển khai](context/implementation-report-2026-10-25.md). Chưa xác nhận backend deploy đã chạy bản này.
+
 # 📘 HƯỚNG DẪN TÍCH HỢP THANH TOÁN CHO FRONTEND
 
 > **Tài liệu này dành cho FE Developer (bạn tôi của bạn).**

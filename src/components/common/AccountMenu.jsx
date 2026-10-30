@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { User } from 'lucide-react';
 import AuthModal from './AuthModal';
 import { getSession, clearSession, onAuthChange, getAvatarUrl } from '../../services/auth';
+import { useNotificationCount } from './NotificationCenter';
 
 /**
  * Account button: "Account" pill when logged out, avatar + dropdown when logged in.
@@ -13,6 +14,7 @@ const AccountMenu = ({ className = '', withSpan = false }) => {
   const [session, setSession] = useState(getSession());
   const [authOpen, setAuthOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const unreadCount = useNotificationCount(Boolean(session?.token));
   const wrapRef = useRef(null);
 
   useEffect(() => onAuthChange(() => setSession(getSession())), []);
@@ -33,7 +35,8 @@ const AccountMenu = ({ className = '', withSpan = false }) => {
         <div ref={wrapRef} style={{ position: 'relative' }}>
           <button
             type="button"
-            title={name}
+            title={unreadCount ? `${name} · ${unreadCount} thông báo mới` : name}
+            aria-label={unreadCount ? `Tài khoản, ${unreadCount} thông báo mới` : 'Tài khoản'}
             onClick={() => setMenuOpen((v) => !v)}
             style={{
               width: 34, height: 34, borderRadius: '50%', border: '2px solid #111', padding: 0,
@@ -43,6 +46,7 @@ const AccountMenu = ({ className = '', withSpan = false }) => {
           >
             {avatar ? <img src={avatar} alt="Ảnh đại diện" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : initial}
           </button>
+          {unreadCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -7, right: -7, minWidth: 18, height: 18, borderRadius: 10, background: '#fff', border: '1px solid #111', color: '#111', fontSize: 10, lineHeight: '16px', textAlign: 'center', padding: '0 3px', boxSizing: 'border-box', pointerEvents: 'none' }}>{unreadCount > 9 ? '9+' : unreadCount}</span>}
           {menuOpen && (
             <div style={{
               position: 'absolute', right: 0, top: 'calc(100% + 8px)', minWidth: 190, background: '#fff', color: '#111',
@@ -51,8 +55,10 @@ const AccountMenu = ({ className = '', withSpan = false }) => {
               <div style={{ padding: '8px 12px', fontSize: 12, color: '#777', borderBottom: '1px solid #eee' }}>{name}</div>
               <MenuItem onClick={() => { setMenuOpen(false); navigate('/profile?tab=profile'); }}>Tài khoản của tôi</MenuItem>
               <MenuItem onClick={() => { setMenuOpen(false); navigate('/profile?tab=orders'); }}>Đơn mua</MenuItem>
+              <MenuItem onClick={() => { setMenuOpen(false); navigate('/profile?tab=notifications'); }}>Thông báo{unreadCount ? ` (${unreadCount} mới)` : ''}</MenuItem>
+              <MenuItem onClick={() => { setMenuOpen(false); navigate('/profile?tab=style'); }}>Theo dõi gu đồ</MenuItem>
               <MenuItem onClick={() => { setMenuOpen(false); navigate('/profile?tab=history'); }}>Lịch sử mua hàng</MenuItem>
-              <MenuItem onClick={() => { setMenuOpen(false); navigate('/profile?tab=sourcing'); }}>Bán / Quyên góp đồ cũ</MenuItem>
+              <MenuItem onClick={() => { setMenuOpen(false); navigate('/profile?tab=sourcing'); }}>Bán đồ cũ</MenuItem>
               <MenuItem onClick={() => { setMenuOpen(false); clearSession(); }}>Đăng xuất</MenuItem>
             </div>
           )}

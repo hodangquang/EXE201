@@ -13,9 +13,9 @@ import {
   ArrowRight
 } from 'lucide-react';
 import StatusBadge from '../../components/common/StatusBadge';
-import { mockProducts } from '../../data/mockData';
 import { formatCurrency, formatShortDate } from '../../utils/formatters';
 import { authFetch } from '../../services/auth';
+import { formatCatalogText } from '../../utils/catalogText';
 import { message } from 'antd';
 
 const { Title, Text, Paragraph } = Typography;
@@ -44,7 +44,7 @@ export const ProductDetail = () => {
   if (!product) return <div style={{ padding: '40px', textAlign: 'center' }}>Không tìm thấy sản phẩm</div>;
 
   const imgs = product.images || product.imageUrls || [];
-  const gallery = imgs.length > 0 ? imgs.map(img => img.imageUrl || img.url || img) : ['https://images.unsplash.com/photo-1544816155-12df9643f363?w=600'];
+  const gallery = imgs.map(img => img.imageUrl || img.url || img).filter(Boolean);
 
   return (
     <div className="rw-admin-page">
@@ -75,12 +75,12 @@ export const ProductDetail = () => {
               <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
                 {product.title || product.name}
               </h1>
-              {product.isOneOfOne && (
+              {product.isUnique && (
                 <span className="one-of-one-pill">
                   <Sparkles size={12} /> ĐỘC BẢN 1-OF-1
                 </span>
               )}
-              <StatusBadge status={product.status} />
+              {product.productType !== 'Upcycled' ? <Tag>Ngừng kinh doanh · dữ liệu cũ</Tag> : product.isPreview ? <Tag>Ý tưởng tái chế</Tag> : <StatusBadge status={product.status} />}
             </div>
           </div>
 
@@ -92,7 +92,7 @@ export const ProductDetail = () => {
         {/* Left Column: Product Images */}
         <Col xs={24} lg={12}>
           <div className="flat-card" style={{ padding: '0', overflow: 'hidden' }}>
-            <img
+            {gallery.length > 0 ? <img
               src={gallery[0]}
               alt={product.title || product.name}
               style={{
@@ -101,7 +101,7 @@ export const ProductDetail = () => {
                 objectFit: 'cover',
                 display: 'block',
               }}
-            />
+            /> : <div style={{ minHeight: 320, display: 'grid', placeItems: 'center', color: '#70706f' }}>Chưa có ảnh sản phẩm</div>}
           </div>
 
           {/* Sub Images Gallery */}
@@ -111,7 +111,7 @@ export const ProductDetail = () => {
                 <Col span={6} key={idx}>
                   <img
                     src={imgUrl}
-                    alt={`sub-${idx}`}
+                    alt={`${product.title || product.name} — góc ${idx + 1}`}
                     style={{
                       width: '100%',
                       height: '90px',
@@ -151,9 +151,9 @@ export const ProductDetail = () => {
                 <span style={{ fontWeight: 600, fontFamily: 'monospace' }}>{product.id}</span>
               </div>
               <div>
-                <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Tồn kho khả dụng</span>
-                <span style={{ fontWeight: 600, color: product.quantity > 0 ? '#1b4d2e' : '#991b1b' }}>
-                  {product.quantity} sản phẩm
+                <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Khả năng bán</span>
+                <span style={{ fontWeight: 600, color: !product.isPreview && [0, '0', 'Available'].includes(product.status) && product.stockQuantity > 0 ? '#1b4d2e' : '#991b1b' }}>
+                  {product.productType !== 'Upcycled' ? 'Ngừng kinh doanh' : product.isPreview ? 'Ý tưởng tái chế, chưa có thành phẩm' : [2, '2', 'Sold'].includes(product.status) ? 'Đã bán' : [1, '1', 'Reserved'].includes(product.status) ? 'Đang được giữ' : product.stockQuantity > 0 ? 'Có thể mua 1 món' : 'Không còn hàng'}
                 </span>
               </div>
               <div>
@@ -180,7 +180,7 @@ export const ProductDetail = () => {
             <div style={{ marginBottom: '20px' }}>
               <div className="editorial-sub" style={{ marginBottom: '6px' }}>MÔ TẢ</div>
               <div style={{ fontSize: '14px', fontWeight: 500, color: '#10100f', backgroundColor: '#f7f7f6', padding: '10px 14px', borderLeft: '3px solid #10100f' }}>
-                {product.description || product.originalMaterial || 'Không có mô tả'}
+                {formatCatalogText(product.description || product.originalMaterial) || 'Không có mô tả'}
               </div>
             </div>
 

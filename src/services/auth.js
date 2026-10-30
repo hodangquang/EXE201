@@ -145,10 +145,11 @@ export const profileApi = {
 };
 
 export const ordersApi = {
+  tracking: id => authFetch(`/api/orders/${encodeURIComponent(id)}/tracking`, { skipGlobalLoading: true }),
   list: ({ status, page = 1, pageSize = 10 } = {}) => {
     const query = new URLSearchParams({ Page: String(page), PageSize: String(pageSize) });
     if (status !== '' && status !== null && status !== undefined) query.set('Status', String(status));
-    return authFetch(`/api/orders?${query.toString()}`);
+    return authFetch(`/api/orders?${query.toString()}`, { skipGlobalLoading: true });
   },
   get: id => authFetch(`/api/orders/${encodeURIComponent(id)}`),
   getByCode: orderCode => authFetch(`/api/orders/code/${encodeURIComponent(orderCode)}`),
@@ -157,4 +158,47 @@ export const ordersApi = {
 export const paymentsApi = {
   createSession: orderId => authFetch(`/api/payments/${encodeURIComponent(orderId)}/session`, { method: 'POST' }),
   getStatus: (orderId, options = {}) => authFetch(`/api/payments/${encodeURIComponent(orderId)}/status?_t=${Date.now()}`, { ...options, skipGlobalLoading: true }),
+};
+
+const shippingQuery = values => {
+  const query = new URLSearchParams();
+  Object.entries(values).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') query.set(key, String(value));
+  });
+  return query.size ? `?${query}` : '';
+};
+
+const shippingRequest = async (path, options) => {
+  let response = await authFetch(path, { skipGlobalLoading: true, ...options, headers: { Accept: 'application/json', ...options?.headers } });
+  if (typeof response === 'string') {
+    try { response = JSON.parse(response); } catch { return response; }
+  }
+  if (response?.success === false) throw new Error(response.message || 'Yêu cầu vận chuyển không thành công.');
+  return response;
+};
+
+export const shippingApi = {
+  rates: () => shippingRequest('/api/shipping/rates'),
+  get: orderId => shippingRequest(`/api/shipping/${encodeURIComponent(orderId)}`),
+  create: (orderId, { shipperId, method = 0, carrier } = {}) => shippingRequest(
+    `/api/shipping/${encodeURIComponent(orderId)}${shippingQuery({ shipperId, method, carrier })}`,
+    { method: 'POST' },
+  ),
+  updateStatus: (orderId, { status, note, trackingNumber, failureCode }) => shippingRequest(
+    `/api/shipping/${encodeURIComponent(orderId)}/status`,
+    { method: 'PUT', body: JSON.stringify({ status, note, trackingNumber, failureCode }) },
+  ),
+  queue: () => shippingRequest('/api/shipping/queue'),
+  myOrders: ({ status, shipperId } = {}) => shippingRequest(`/api/shipping/my-orders${shippingQuery({ status, shipperId })}`),
+  all: ({ status } = {}) => shippingRequest(`/api/shipping/all${shippingQuery({ status })}`),
+  myPickups: () => shippingRequest('/api/shipping/my-pickups'),
+  updatePickupStatus: (id, { status, note }) => shippingRequest(
+    `/api/shipping/pickups/${encodeURIComponent(id)}/status`,
+    { method: 'PUT', body: JSON.stringify({ status, note }) }
+  ),
+  assignPickup: (id, payload) => authFetch(`/api/sourcing/${encodeURIComponent(id)}/assign-shipper`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
 };

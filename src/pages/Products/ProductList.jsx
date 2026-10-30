@@ -3,7 +3,6 @@ import { Table, Input, Select, Space, Button, Modal, message, Popconfirm } from 
 import { useNavigate } from 'react-router-dom';
 import { Search, Plus, Eye, Edit, Trash2, Globe, Sparkles, RefreshCcw } from 'lucide-react';
 import StatusBadge from '../../components/common/StatusBadge';
-import { mockProducts, mockCategories } from '../../data/mockData';
 import { PRODUCT_STATUS } from '../../utils/constants';
 import { formatCurrency, formatShortDate } from '../../utils/formatters';
 import { useAuth } from '../../contexts/AuthContext';
@@ -60,31 +59,11 @@ export const ProductList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryFilter, brandFilter, statusFilter, conditionFilter, isActiveFilter]);
 
-  // Chuyển Available <-> Reserved; sản phẩm Sold không được mở bán lại từ nút này.
-  const handleTogglePublish = async (record) => {
-    const status = Number(record.status);
-    if (status !== PRODUCT_STATUS.AVAILABLE && status !== PRODUCT_STATUS.RESERVED) return;
-    const newStatusInt = status === PRODUCT_STATUS.AVAILABLE
-      ? PRODUCT_STATUS.RESERVED
-      : PRODUCT_STATUS.AVAILABLE;
-    try {
-      await authFetch(`/api/Products/${record.id}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatusInt })
-      });
-      message.success(`Đã chuyển sản phẩm sang trạng thái ${newStatusInt === PRODUCT_STATUS.AVAILABLE ? 'Có sẵn để bán' : 'Đã đặt trước'}`);
-      fetchProducts();
-    } catch (err) {
-      message.error('Lỗi khi cập nhật trạng thái: ' + err.message);
-    }
-  };
-
   // Delete product
   const handleDelete = async (id) => {
     try {
       await authFetch(`/api/Products/${id}`, { method: 'DELETE' });
-      message.success('Đã xóa sản phẩm thành công');
+      message.success('Đã ẩn sản phẩm khỏi cửa hàng');
       fetchProducts();
     } catch (err) {
       message.error('Lỗi khi xóa sản phẩm: ' + err.message);
@@ -109,14 +88,14 @@ export const ProductList = () => {
       width: 80,
       render: (images, record) => {
         const imgs = images || record.imageUrls || [];
-        const firstImg = imgs.length > 0 ? (imgs[0].imageUrl || imgs[0].url || imgs[0]) : 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=100';
-        return (
+        const firstImg = imgs.length > 0 ? (imgs[0].imageUrl || imgs[0].url || imgs[0]) : '';
+        return firstImg ? (
           <img
             src={firstImg}
             alt="product"
             style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 0, border: '1px solid #e5e5e4' }}
           />
-        );
+        ) : <span style={{ display: 'inline-grid', width: 56, height: 56, placeItems: 'center', color: '#70706f', border: '1px solid #e5e5e4', fontSize: 11 }}>Chưa có ảnh</span>;
       },
     },
     {
@@ -158,7 +137,7 @@ export const ProductList = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => <StatusBadge status={status} />,
+      render: (status, record) => record.productType !== 'Upcycled' ? <span>Ngừng kinh doanh · dữ liệu cũ</span> : record.isPreview ? <span>Ý tưởng tái chế</span> : <StatusBadge status={status} />,
     },
     {
       title: 'Thao tác',
@@ -184,25 +163,18 @@ export const ProductList = () => {
                 <Button
                   type="text"
                   icon={<Edit size={15} />}
-                  title="Chỉnh sửa sản phẩm"
+                  title={record.isPreview ? 'Chỉnh sửa bản xem trước' : [1, 2, '1', '2', 'Reserved', 'Sold'].includes(record.status) ? 'Sản phẩm đang được giữ hoặc đã bán; không thể chỉnh sửa' : 'Chỉnh sửa sản phẩm'}
+                  disabled={[1, 2, '1', '2', 'Reserved', 'Sold'].includes(record.status)}
                   onClick={() => navigate(`/products/edit/${record.id}`)}
                 />
-                {(Number(record.status) === PRODUCT_STATUS.AVAILABLE || Number(record.status) === PRODUCT_STATUS.RESERVED) && (
-                  <Button
-                    type="text"
-                    icon={<Globe size={15} color={Number(record.status) === PRODUCT_STATUS.AVAILABLE ? '#1b4d2e' : '#70706f'} />}
-                    title={Number(record.status) === PRODUCT_STATUS.AVAILABLE ? 'Đánh dấu đã đặt trước' : 'Đưa về trạng thái có sẵn để bán'}
-                    onClick={() => handleTogglePublish(record)}
-                  />
-                )}
                 <Popconfirm
-                  title="Xóa sản phẩm?"
-                  description="Bạn có chắc muốn xóa sản phẩm tái chế này?"
+                  title="Ẩn sản phẩm?"
+                  description="Sản phẩm sẽ không còn hiển thị trên cửa hàng. Đơn đang giữ hàng không thể bị ẩn."
                   onConfirm={() => handleDelete(record.id)}
-                  okText="Xóa"
+                  okText="Ẩn"
                   cancelText="Hủy"
                 >
-                  <Button type="text" danger aria-label={`Xóa sản phẩm ${record.title || record.name || ''}`} icon={<Trash2 size={15} />} />
+                  <Button type="text" danger disabled={[1, '1', 'Reserved'].includes(record.status)} aria-label={`Ẩn sản phẩm ${record.title || record.name || ''}`} icon={<Trash2 size={15} />} />
                 </Popconfirm>
               </>
             )
@@ -230,20 +202,23 @@ export const ProductList = () => {
             QUẢN LÝ SẢN PHẨM
           </div>
           <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
-            Tất cả sản phẩm tái chế
+            Tất cả sản phẩm
           </h1>
         </div>
 
+        <Space wrap>
+          <Button icon={<Sparkles size={16} />} onClick={() => navigate('/products/drafts')}>Bản lưu ý tưởng</Button>
         {isAdmin && (
           <button 
             className="pill-btn-filled" 
             style={{ height: '38px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}
-            onClick={() => navigate('/products/new')}
+            onClick={() => navigate('/upcycling')}
           >
             <Plus size={16} />
-            <span>Thêm sản phẩm mới</span>
+            <span>Tạo sản phẩm từ dự án tái chế</span>
           </button>
         )}
+        </Space>
       </div>
 
       {/* Filter and Search Bar */}
@@ -298,9 +273,10 @@ export const ProductList = () => {
           style={{ width: 140 }}
         >
           <Option value="">Tất cả tình trạng</Option>
-          <Option value="1">1 - Như mới</Option>
-          <Option value="2">2 - Tốt</Option>
-          <Option value="3">3 - Khá</Option>
+          <Option value="0">Như mới</Option>
+          <Option value="1">Rất tốt</Option>
+          <Option value="2">Tốt</Option>
+          <Option value="3">Khá</Option>
         </Select>
 
         <Select

@@ -1,0 +1,7 @@
+.delivery-muted { color: #62675d; }
+.delivery-timeline { list-style: none; padding: 0 0 0 8px; }
+.delivery-timeline li { position: relative; margin-left: 5px; padding: 0 0 26px 25px; border-left: 1px solid #cad5c1; }
+.delivery-timeline li::before { content: ''; position: absolute; left: -5px; top: 5px; width: 9px; height: 9px; border-radius: 50%; background: #41623a; }
+.delivery-timeline li:last-child { border: 0; padding-bottom: 0; }
+.delivery-timeline time { display: block; color: #62675d; font-size: 13px; margin-top: 7px; }
+.delivery-timeline p { overflow-wrap: anywhere; }

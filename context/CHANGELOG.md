@@ -1,11 +1,228 @@
 # Lịch sử context
 
+## 2026-10-27 — Chỉ giữ luồng tái chế
+
+- Người dùng xác nhận bỏ nhánh bán lại nguyên trạng; sửa kho/QC/thu mua/catalog và chặn backend bán trực tiếp, tạo sản phẩm, mở preview bỏ qua dự án. Public/giỏ/checkout chỉ Upcycled; giữ lịch sử và hỗ trợ nguyên liệu QC cũ vào dự án. JSON còn 2 ý tưởng tái chế.
+- Kiểm tra: frontend build đạt; backend 70/70 test đạt với Mongo riêng; Chrome fixture 43 lượt đạt (42 tổng thể + 1 ghi chi phí) ở 1440/768/390 px, không có lỗi JavaScript.
+- Còn mở: deploy đồng bộ, kiểm toán nguồn gốc/hiện vật Upcycled cũ; không sửa dữ liệu hoặc tích hợp live. [Chi tiết](recycling-only-2026-10-27.md).
+
+## 2026-10-25 — Trung tâm thông báo chung
+
+- Thêm feed/read có phân quyền cho Member/Admin/Staff/Shipper; lưu sự kiện đơn, giao hàng, thu mua; gộp thông báo gu đồ và thêm badge/menu/màn xem. Không tạo dữ liệu thông báo lịch sử cũ.
+- Bằng chứng: API và Vite build thành công; NUnit 64/64 trên Mongo test riêng, ba bài notification chạy lại 3/3. [Thiết kế và giới hạn](notifications-2026-10-25.md).
+- Còn mở: deploy, browser với tài khoản thật, push/email tổng quát, phục hồi sự kiện sourcing khi lỗi ghi ngoài transaction, và đếm chưa đọc toàn lịch sử.
+
+## 2026-10-25 — Xác nhận phạm vi thông báo hiện tại
+
+- Đối chiếu Header, AccountMenu, tab Theo dõi gu đồ và API: chỉ thông báo món mới hợp gu đã chạy trong source local; chưa có hệ thông báo chung cho đơn/thu mua/giao hàng/Admin.
+- Bằng chứng: đọc source `StyleWatchController`, worker, `StyleWatchSection`, `AccountMenu`, `Header`; API/frontend local đang nghe cổng 5000/5173. Không chạy test mới vì chỉ phân tích.
+- Còn mở: SMTP/deploy chưa nghiệm thu; các nhóm thông báo khác cần thiết kế và backend riêng nếu triển khai.
+
+
+## 2026-10-25 — Triển khai Theo dõi gu đồ
+
+- Member lưu loại/cỡ/màu/khoảng giá, bật thông báo tài khoản và opt-in email. Worker quét mỗi 60 giây món độc bản mới; thông báo không trùng theo user/product và chỉ chủ tài khoản đọc/đánh dấu đã đọc. Thêm tab Profile, link menu/catalog và email sender qua SMTP.
+- Bằng chứng: Vite build 4039 modules; .NET build/publish Release; NUnit 61/61 trên Mongo test riêng; API local GET 6 Products, endpoint style-watch không đăng nhập 401, frontend route trả 200. [Báo cáo](style-watch-implementation-2026-10-25.md).
+- Còn mở: SMTP/email thật và browser Member/deploy chưa nghiệm thu; thông báo không tạo ngược cho món đã mở bán trước khi khách bật theo dõi.
+
+
+## 2026-10-25 — Đánh giá tính năng nổi bật
+
+- Đề xuất ưu tiên hồ sơ món đồ độc bản (số đo/vết lỗi/ảnh và hành trình xác minh), tiếp theo là theo dõi gu đồ và gửi lại món từng mua. Chưa sửa chức năng hoặc dữ liệu.
+- Bằng chứng: đối chiếu `ProductJourney`, DTO/API hành trình, catalog/đơn/thu mua trong source; tham khảo trang chính thức Depop và Patagonia; xem [báo cáo](feature-opportunities-2026-10-25.md). Không chạy build/test vì chỉ phân tích.
+- Còn mở: cần ảnh và hiện vật thật; chưa chọn phạm vi triển khai hay nghiệm thu tính năng mới.
+
+
+## 2026-10-25 — Rà soát nghiệp vụ toàn tuyến và sửa lệch trạng thái
+
+- Chuyển route Staff khỏi trang demo sang thu mua thật; bỏ chuông thông báo mẫu và lối vào khuyến mãi/cài đặt giả. Sửa chi tiết/danh sách sản phẩm, form tình trạng bắt buộc, bộ lọc Đơn mua và nhãn enum. Backend chặn ẩn món đang giữ trong đơn (409).
+- Bằng chứng: frontend build 4037 modules; backend publish Release; NUnit 57/57 trên MongoDB test riêng; API local bản mới GET 6 món (1 mở bán, 5 preview), mở bán không đăng nhập trả 401. Chi tiết ở [báo cáo](business-flow-audit-2026-10-25.md).
+- Còn mở: xác minh hiện vật/ảnh của túi tote đang bán, deploy, PayOS merchant, giao vận và hoàn tiền thật.
+
+
+## 2026-10-25 — Làm rõ trang Bản lưu ý tưởng
+
+- Đổi nhãn trang/nút từ Bộ sản phẩm đề xuất thành Bản lưu ý tưởng; giải thích đây là JSON tĩnh, sáu mẫu đã ở danh sách API. Bỏ câu nhập tồn, yêu cầu ảnh trước/sau và mô tả “chưa tạo sản phẩm” đã lỗi thời. Giữ gallery, lọc và tải JSON để đối chiếu nội dung gốc.
+- Bằng chứng: kiểm tra source CatalogDrafts/ProductList; frontend build 4042 modules thành công (lần đầu thiếu bộ nhớ, chạy lại đạt). Không gọi API ghi hoặc đổi database.
+- Còn mở: JSON tĩnh có thể khác thông tin sản phẩm đang bán; dùng Danh sách sản phẩm để xem trạng thái hiện tại.
+
+## 2026-10-25 — Rút gọn đăng bán đồ độc bản
+
+- Theo phản hồi người dùng, bỏ nhập tồn và yêu cầu ảnh trước/sau/mã biên bản khi mở bán. Form preview chỉ chọn tình trạng và đăng bán; API nhận JSON điều kiện, tự đặt độc bản/tồn 1, lưu người/thời gian và giữ ảnh/metadata nguồn ảnh. Tạo mới qua Products cũng luôn độc bản một món; danh sách bỏ cột tồn.
+- Bằng chứng: frontend build 4042 modules; backend build/publish đạt; NUnit 56/56 trên Mongo test riêng. API local 5000 đã cập nhật; GET qua 5173 thấy 6 preview/tồn 0, POST JSON chưa đăng nhập trả 401. Chưa gọi mutation cho sáu sản phẩm thật.
+- Còn mở: Admin chưa xác nhận sáu hiện vật, ảnh hiện có là nguồn đề xuất; chưa xác minh ảnh/hàng thật hoặc bản deploy hosting.
+
+## 2026-10-25 — Thêm nhập tồn và xác nhận mở bán preview
+
+- ProductForm gửi tồn người quản trị nhập khi tạo và sửa; bảng sản phẩm hiện tồn. Admin xác nhận hiện vật, tham chiếu kiểm định, tình trạng và ảnh thật để mở preview; Upcycled cần ảnh trước/sau. Backend lưu người/thời gian xác nhận. Journey hiện ảnh trước của hàng upcycling xác nhận trực tiếp nhưng không dựng lịch sử QC.
+- Bằng chứng: frontend build 4042 modules; backend build/publish thành công; NUnit 55/55 trên Mongo test riêng trước ràng buộc ảnh nhiều góc và 3/3 bài liên quan sau chỉnh. API local 5000 đã chạy bản mới; đọc qua 5000/5173 đều thấy 6 preview, tồn 0; endpoint mở bán trả 401 khi chưa đăng nhập. Không gọi API ghi trên sáu bản ghi thật.
+- Còn mở: sáu món vẫn preview/tồn 0 tới khi có hiện vật, ảnh và biên bản; chưa xác minh deploy hosting hoặc giao dịch mua live.
+
+## 2026-10-25 — Rà và siết luồng kiểm định thực tế
+
+- Tách shipper đã lấy đồ khỏi nhân viên kho đã nhận; yêu cầu liên hệ/địa chỉ/giờ hẹn thật, chặn nhảy/lùi trạng thái thu gom. Bỏ số điện thoại/giờ hẹn mẫu.
+- Bán lại bắt buộc QC hiện vật đạt với ảnh, dùng đúng ảnh/tình trạng đã kiểm định; bỏ đăng bán tắt ở màn nguồn hàng và giá/mô tả/tỷ lệ độ mới tính sẵn. Bổ sung ảnh kiểm định nguồn hàng, thông tin khách từ API và lược ghi chú nội bộ khỏi response member.
+- Bằng chứng: .NET build 0 lỗi/cảnh báo, NUnit 53/53 trên Mongo test riêng; frontend build 4042 modules, Chromium fixture QC 13/13 ở 1440/390px, không ghi dữ liệu thật. QA vận hành tổng quát cũ dừng ở nút Profile đơn hàng ngoài phạm vi QC.
+- Còn mở: xác minh hiện vật/chứng từ và deploy; xử lý kết thúc hàng QC không đạt sau chi trả, giải thích công khai khi giá đổi, kiểm toán hàng đã đăng bán trước guard. [Báo cáo](inspection-flow-audit-2026-10-25.md).
+
+## 2026-10-25 — Sửa chi tiết yêu cầu thu mua trên Profile
+
+- Tách phần thân modal thành `SourcingRequestDetail` với CSS riêng; nhãn/giá trị, báo giá thu mua, tình trạng khai báo/kiểm định, bản ghi chi trả và ảnh được trình bày rõ, ảnh không tràn khung. Giữ nguyên API và thao tác đồng ý/từ chối giá.
+- Đối chiếu source backend: `SourcingResponse` có `imageUrls`, hai tình trạng, hai giá và `PurchasePayout`; cập nhật các ghi chép cũ nói Profile map sai status hoặc sourcing chưa có bản ghi chi trả. Xác nhận chi trả là bản ghi thủ công, không phải xác nhận từ ngân hàng.
+- Bằng chứng: frontend build 4042 modules đạt; Chromium fixture 24/24 kiểm tra 1440/768/390/320px, gồm có/chưa có báo giá, chi trả, ảnh và nội dung dài; không gửi API ghi. Ảnh chụp và kết quả tại `Rewear_BackEnd/.artifacts/sourcing-detail-qa/`.
+- Còn mở: chưa kiểm tra với dữ liệu tài khoản thật hoặc bản deploy; nghiệp vụ chuyển khoản tự động không thuộc thay đổi này.
+
+## 2026-10-25 — Kiểm tra nơi tăng tồn kho trên giao diện
+
+- Rà ProductForm, Products và Operations/Inventory: chưa có ô nhập/tăng stock; form chỉ giữ existingStock từ API và gửi lại qua PUT. Không hướng dẫn người dùng tới một nút/ô chưa tồn tại.
+- Xác nhận tăng stock không đủ mở bán sáu preview do guard riêng IsPreview. Còn thiếu UI chỉnh tồn và thao tác mở bán có kiểm soát.
+- Bằng chứng: đối chiếu source ProductForm/Operations và contract/update service; không đổi code ứng dụng, không ghi DB, không chạy build/test vì chỉ phân tích.
+
+## 2026-10-25 — Bỏ chữ “Ảnh minh họa AI” khỏi giao diện
+
+- Theo yêu cầu người dùng, bỏ badge/dòng nhãn tại Home, lưới catalog, journey, trang bản nháp và trạng thái detail quản trị; alt ảnh dùng tên/góc chụp. Thêm formatter dùng chung để bỏ câu nhãn trong mô tả hiển thị, gồm mô tả upcycling và nội dung form/detail.
+- Giữ metadata nguồn ảnh chính xác, bốn góc, ảnh trước tái chế và trạng thái preview; không thay ảnh hoặc ghi database.
+- Kiểm tra: build thành công 4040 modules (còn cảnh báo bundle lớn); QA storefront thực tế 40/40 ở ba kích thước, không API ghi; rà formatter trên mô tả/journey của cả sáu sản phẩm đều không còn câu AI; diff-check đạt. Bằng chứng browser ở `.artifacts/catalog-storefront-qa/`.
+- Còn mở: trạng thái hàng thật/deploy hosting như trước; QA fixture bản nháp đã đổi assertion nhãn, chưa chạy lại toàn bộ. Ảnh vẫn là nguồn AI dù giao diện không hiện nhãn.
+
+## 2026-10-25 — Bổ sung bốn góc ảnh riêng cho từng sản phẩm
+
+- Tạo 18 ảnh AI có tham chiếu ảnh gốc, lưu PNG trong repo; upload Cloudinary thật và cập nhật sáu gallery hiện có (24 ảnh sản phẩm + 2 ảnh nguyên liệu). Giữ ID, ảnh mặt trước/ảnh trước tái chế và dữ liệu giá/tồn. Batch gallery có transaction, chống ghi đè đồng thời, snapshot và chạy lại không upload trùng.
+- API thêm imageLabels; PDP chọn cả bốn góc theo tên, detail mặc định cận cảnh, không nhân một ảnh thành nhiều góc giả. Nút 44px, hỗ trợ wrap, aria-pressed và phóng to; trang bản nháp cập nhật đầy đủ ảnh/tải file.
+- Kiểm tra: backend build 0 lỗi/cảnh báo, 3/3 test gallery; frontend build 4039 modules; 168/168 kiểm tra Chromium qua API/Cloudinary thật ở 1440/768/390 px. Lượt thiếu bộ nhớ ban đầu đã chạy lại tuần tự thành công. API local đang chạy build mới; Vite cổng 5173 đã khởi động lại.
+- Còn mở: ảnh vẫn là AI/preview, chưa xác nhận hiện vật/nhận đơn, chưa deploy hosting, chưa có responsive derivatives hoặc QA browser khác. [Report](catalog-gallery-2026-10-25.md), [prompts](catalog-gallery-prompts-2026-10-25.md).
+
+## 2026-10-25 — Thay catalog cũ bằng bộ REWEAR mới trên nguồn API website
+
+- Đã đối chiếu đúng DB/API, ẩn 12 sản phẩm cũ và nhập 6 sản phẩm mới; 8 ảnh đã upload Cloudinary thật. Giữ nguyên ID/tồn/trạng thái và lịch sử đơn cũ; transaction và marker batch ngăn nhập lặp. Khởi chạy API local bằng build mới, không deploy hosting.
+- Storefront/Home/PDP hiển thị nội dung API mới, nhãn AI và “Sắp mở bán”; Upcycled có ảnh trước/sau, SecondHand chỉ ảnh hiện tại. Bỏ ảnh Unsplash đoán theo tên. Preview chưa có hàng xác nhận nên tồn 0, condition null và không mua được ở cả FE/BE; không tạo QC/payout/project giả.
+- Bằng chứng: build backend 0 lỗi/cảnh báo; regression 47/47 và kiểm tra cart preview bổ sung 1/1; frontend build 4039 modules; Chromium 40/40 kiểm tra qua API thật ở 1440/768/390 px. Chạy lại lệnh nhập trả AlreadyApplied, không tạo/upload lặp. Ba test sourcing cũ chỉnh tham số OfferVersion cho khớp DTO hiện tại.
+- Còn mở: xác nhận hàng/tồn/giá/kích thước, quy trình chuyển preview thành hàng đã kiểm định, deploy hosting; không xác nhận payOS/SMTP. [Báo cáo và đường dẫn bằng chứng](catalog-replacement-2026-10-25.md).
+
+## 2026-10-25 — Tái thiết kế giao diện thanh công cụ tìm kiếm và lọc sản phẩm (Catalog Toolbar)
+
+- **Vấn đề trước khi sửa**:
+  - Khung `.catalog-tools` dùng nền xám vàng đục `#f7f7f3` với viền dày `#e3e3dc`, padding lớn 18px tạo cảm giác "hộp lồng trong hộp" thô kệch, thiếu tính thẩm mỹ tối giản của thương hiệu thời trang tuần hoàn REWEAR.
+  - Các ô tìm kiếm, sắp xếp và bộ lọc có kích thước và bo góc không đồng bộ, dùng mũi tên mặc định của trình duyệt cho select, các nhãn hiển thị rời rạc và thanh kết quả `8 sản phẩm` đơn điệu.
+- **Cải tiến & thiết kế mới**:
+  - Gộp thành thanh điều hướng tác vụ liền mạch (Action Bar) trên nền trắng tinh tế, viền mảnh cao cấp `#e7e7e0`, bo góc mềm mại 14px và đổ bóng nhẹ đa tầng (`box-shadow: 0 2px 8px -2px rgba(16, 16, 15, 0.04)`).
+  - Ô tìm kiếm: Chuyển sang pill input nền xám nhẹ dịu `#f8f8f4`, icon kính lúp màu mực trầm, tự động sáng nền và hiện viền tập trung đen sắc nét khi gõ; bổ sung nút "X" xóa nhanh từ khóa tìm kiếm.
+  - Dropdown "Sắp xếp": Bổ sung nhãn `Sắp xếp:`, che mũi tên mặc định của hệ điều hành, thay bằng icon chevron mỏng xoay chuyển nhẹ khi mở, viền và nền đồng bộ.
+  - Nút "Bộ lọc": Thiết kế dạng nút tương tác nổi bật, đảo màu nền đen tuyền sang trọng khi mở (`is-active`), badge đếm số lượng bộ lọc đang kích hoạt sắc nét.
+  - Ngăn kéo bộ lọc (Filter Drawer): Thiết kế lại panel mở rộng thành card trắng thanh lịch, hiệu ứng trượt êm ái, nhãn nhóm viết hoa tinh gọn (`MÀU SẮC`, `KÍCH CỠ`), select tùy biến che mũi tên mặc định, nút đặt lại dạng dashed viền mỏng.
+  - Dòng kết quả & Bố cục: Nâng cấp kiểu chữ đếm sản phẩm với số lượng in đậm sắc sảo (`font-feature-settings: "tnum"`), cân xứng hoàn hảo với cụm điều khiển chuyển cột `BỐ CỤC [2] [4] [8]`.
+  - Hỗ trợ toàn diện mobile & responsive: Tự động dàn dòng xếp chồng thông minh khi màn hình nhỏ hơn 767px.
+- **Bằng chứng kiểm tra**:
+  - File chỉnh sửa: [CatalogPage.jsx](file:///d:/EXE201/src/components/common/CatalogPage.jsx), [NewInPage.css](file:///d:/EXE201/src/pages/Store/NewInPage.css).
+  - Build Vite thành công (`npm.cmd run build -- --outDir Rewear_BackEnd/.artifacts/frontend-shipping`), không có lỗi cú pháp.
+  - Đã kiểm tra trực tiếp qua browser subagent trên trình duyệt thật tại `http://localhost:5173/new-in`, chụp ảnh màn hình xác nhận trạng thái đóng và mở ngăn kéo bộ lọc đẹp, đồng bộ với phong cách Editorial REWEAR.
+
+- Theo lựa chọn của người dùng: chuẩn bị sáu sản phẩm (hai Upcycled, bốn SecondHand), mô tả/giá/cỡ đề xuất và tám ảnh AI riêng. Không biến thành tồn kho thật hay tạo hồ sơ thu mua/QC giả.
+- Thêm trang Admin/Staff `/products/drafts`, nút từ danh sách sản phẩm, bộ lọc/tìm kiếm, modal ảnh trước-sau, tải ảnh/JSON và nhãn AI/bản nháp; ảnh và JSON lưu trong repo. Đổi tiêu đề danh sách thành “Tất cả sản phẩm” để bao gồm cả bán lại.
+- Kiểm tra: build Vite thành công (4039 modules), QA Chromium 54/54 kiểm tra đạt ở 1440/768/390 px; kết quả và ảnh chụp ở `.artifacts/catalog-drafts-qa`. [Chi tiết](catalog-drafts-2026-10-25.md), [prompt](catalog-image-prompts-2026-10-25.md).
+- Còn mở: xác nhận hàng/giá/tồn/kích thước, thay ảnh hiện vật khi bán thật, tối ưu PNG, nhập dữ liệu theo quy trình backend và deploy. Không có thay đổi backend hay ghi DB live. Xác minh lại vite.config hiện trỏ localhost:5000, khác ghi chú proxy Render cũ.
+
+## 2026-10-25 — Triển khai hoàn chỉnh tính năng Shipper thu gom đồ cũ tận nơi (Inbound Sourcing Pickup)
+
+- **Backend API & Data Model**:
+  - Entity `SourcingRequest`: Bổ sung các trường quản lý thu gom: `PickupAddress`, `SenderName`, `SenderPhone`, `PreferredPickupTime`, `PickupNote`, `AssignedShipperId`, `AssignedShipperName`, `PickupStatus`, `PickupAssignedAt`, `PickedUpAt`.
+  - Repository & Service: Thêm `GetByShipperIdAsync`, `AssignShipperAsync`, `GetPickupsByShipperAsync`, `UpdatePickupStatusAsync`. Khi Shipper bấm "Đã nhận đồ & Chở về kho" (`PickedUp`), hệ thống tự động đồng bộ sang `CircularFashionService.ReceiveAsync` để tạo bản ghi kho `InventoryItem` với `Custody = "Warehouse"` và chuyển trạng thái `SourcingStatus.Received`.
+  - Endpoints mới:
+    - `POST /api/sourcing/{id}/assign-shipper`: Staff/Admin phân công Shipper lấy đồ tận nơi cho yêu cầu thu gom đã chốt giá.
+    - `GET /api/shipping/my-pickups`: Shipper lấy danh sách cuốc thu gom đồ cũ được giao cho mình.
+    - `PUT /api/shipping/pickups/{id}/status`: Shipper cập nhật trạng thái (`OnTheWay` -> `PickedUp`).
+- **Frontend & UI**:
+  - `ShippingPage.jsx`: Xóa bỏ 100% cơ chế mock `localStorage`, kết nối trực tiếp `shippingApi.myPickups()` và `shippingApi.updatePickupStatus()`. Hiển thị loading, thông báo trống thân thiện khi chưa có đơn gom, hỗ trợ gọi điện thoại và chỉ đường Google Maps.
+  - `SourcingRequests.jsx`: Thêm nút và modal "Phân công Shipper" cho các yêu cầu thu gom ở trạng thái `Accepted`. Hỗ trợ chọn nhân viên giao hàng từ danh sách shipper thực tế và cập nhật địa chỉ, số điện thoại, khung giờ hẹn lấy.
+  - `src/services/auth.js`: Thêm `myPickups`, `updatePickupStatus`, `assignPickup` vào `shippingApi`.
+- **Bằng chứng kiểm tra**:
+  - Backend compile thành công (`dotnet build` 0 Warning, 0 Error).
+  - Backend API server khởi động thành công trên `http://localhost:5000`.
+  - Đã seed thử 2 nhiệm vụ thu gom mẫu có địa chỉ và số điện thoại thật vào DB cho tài khoản `shipper@gmail.com`.
+  - Frontend build thành công (`npm.cmd run build -- --outDir Rewear_BackEnd/.artifacts/frontend-shipping`), không có lỗi cú pháp.
+
+## 2026-10-25 — Tái thiết kế toàn diện UI Hồ sơ cá nhân (Profile) theo phong cách Editorial tối giản
+
+- **Cải tiến trực quan & thẩm mỹ**:
+  - Loại bỏ các đường cong bo tròn quá khổ (radius 20px/18px) tạo cảm giác nặng nề, đưa về chuẩn kiến trúc sang trọng tối giản (`border-radius: 12px` cho card, `8px` cho fields/inputs, `9999px` cho nút bấm).
+  - Tinh chỉnh typography: Tiêu đề chuyển sang font `Barlow Condensed` sắc nét, tỷ lệ cân đối (`32px`), loại bỏ cảm giác "hét chữ" trước đó; loại bỏ chấm vàng viền đen kiểu bia bắn ở eyebrow.
+  - Sidebar tài khoản: Thay thế pill đen thô lồi bằng menu tối giản, tinh tế, font 13.5px, hover êm dịu, avatar tròn đen/trắng thanh lịch đồng bộ với navbar storefront.
+  - Sổ địa chỉ (`Sổ địa chỉ`): Thay badge "Mặc định" từ màu vàng chuối sang badge đen/trắng tối giản cao cấp (`#10100f`); thẻ địa chỉ có viền mỏng 1px tinh tế, thông tin phân cấp rõ ràng (tên người nhận đậm, số điện thoại, địa chỉ, ghi chú nền xám nhạt); ẩn nút "Đặt làm mặc định" khi địa chỉ đã là mặc định để tránh dư thừa; nút "+ Thêm địa chỉ" chuẩn phong cách pill storefront.
+  - Form & Inputs: Viền mỏng 1px `#dcdcd6`, focus ring êm dịu, chiều cao tiêu chuẩn 44px dễ bấm.
+  - **Thêm mục quản lý riêng "Theo dõi giao hàng" trong Sidebar tài khoản**: Bổ sung tab độc lập `Theo dõi giao hàng` (`/profile?tab=delivery`) với icon `Truck`. Mục này cung cấp bảng điều khiển chuyên biệt để theo dõi tiến độ các kiện hàng: bộ lọc theo trạng thái (Tất cả, Đang vận chuyển/Chuẩn bị, Đã giao thành công), thẻ lộ trình kiện hàng chi tiết với mã vận đơn, đơn vị vận chuyển, tên shipper, ngày dự kiến giao, timeline thời gian thực và danh sách sản phẩm trong kiện.
+- **Bằng chứng kiểm tra**: Đã cập nhật [ProfilePage.jsx](file:///d:/EXE201/src/pages/Profile/ProfilePage.jsx) và [ProfilePage.css](file:///d:/EXE201/src/pages/Profile/ProfilePage.css). Vite HMR cập nhật trực tiếp tại `http://localhost:5173/profile?tab=delivery`.
+- **Việc còn mở**: Tiếp tục tối ưu hóa responsive các modal chi tiết trên mobile nhỏ (<360px).
+
+## 2026-10-25 — Bổ sung đầy đủ 2 công đoạn QC trước khi bán và Tạo sản phẩm hoàn thiện (Resale & Upcycling)
+
+- **Chuỗi nghiệp vụ hoàn chỉnh**: Bổ sung đầy đủ công đoạn 4 (Nghiệm thu QC trước khi bán) và công đoạn 5 (Product -> Storefront) cho cả 2 nhánh:
+  - **Nhánh Resale (Second-hand)**: Món đồ thu mua sau khi chi trả (`AvailableRaw`) chuyển sang kiểm định nghiệm thu QC làm sạch/khử khuẩn (`POST /api/operations/inventory/{id}/qc`). Nếu Đạt (`QCApproved`), mở nút "Đăng bán Storefront" (`POST /api/operations/inventory/{id}/publish`) kèm đầy đủ thông tin bán lẻ (Tên, Mô tả, Thương hiệu, Danh mục, Giá bán lẻ, Size, Màu sắc, Độ mới, Ảnh). Sản phẩm tự động tạo trên Storefront với loại `ProductType = "SecondHand"`, chuyển trạng thái kho sang `ReadyRetail`, hoàn tất SourcingRequest.
+  - **Nhánh Upcycling (Tái chế độc bản)**: Sau quá trình xưởng gia công (`InProgress`), thành phẩm được gửi QC (`QualityCheck`). Nhân viên QC duyệt nghiệm thu (`POST /api/operations/projects/{id}/qc`). Khi Đạt (`QCApproved`), mở nút "Đăng bán thành phẩm" (`POST /api/operations/projects/{id}/publish`) lên Storefront với loại `ProductType = "Upcycled"`, chuyển trạng thái dự án sang `Completed`.
+- **Backend & Controller**: Đã bổ sung DTO `PublishResaleRequest`, các phương thức `InspectInventoryAsync`, `PublishResaleAsync`, cùng các endpoint `POST /api/operations/inventory/{id}/qc`, `POST /api/operations/inventory/{id}/publish`, `GET /api/operations/inventory/{id}/inspections`.
+- **Frontend & Giao diện Admin**:
+  - `OperationsPage.jsx`: Thêm tab phân loại rõ ràng trong màn Kiểm định QC (`Thành phẩm Tái chế (Upcycling)` vs `Hiện vật Thu mua (Resale Second-hand)`). Trong Kho vòng đời, bổ sung trực tiếp các nút hành động theo trạng thái (`Nghiệm thu QC`, `Tạo dự án`, `Đăng bán Storefront`, `Lịch sử`). Modal hỗ trợ upload ảnh hiện vật/ảnh thành phẩm sau xử lý. Drawer chi tiết hiển thị toàn bộ lịch sử kiểm định QC và biến động kho.
+  - `SourcingRequests.jsx`: Bổ sung lựa chọn phân luồng `Resale` vs `Upcycling` ngay từ bước kiểm định thu mua; nút `Bán Second-hand` và `Chuyển Upcycling` (tự động điều hướng và điền sẵn mã đồ vào dự án mới).
+  - Sửa `vite.config.js` proxy trỏ về Backend local `http://localhost:5000`.
+- **Bằng chứng kiểm tra**:
+  - Backend build thành công: 0 Warning, 0 Error (`dotnet build Rewear_BackEnd/REWEAR.API/REWEAR.API.csproj`).
+  - Backend API server khởi động thành công trên `http://localhost:5000` (Kestrel dev environment).
+  - Frontend code sạch sẽ, đã thay `Drawer width` bằng `size="large"` để triệt tiêu Ant Design warning.
+- **Việc còn mở**: Thực hiện kiểm thử toàn bộ luồng nghiệp vụ end-to-end trên trình duyệt với tài khoản Staff/Admin và dữ liệu thực.
+
+## 2026-10-25 — Dùng lại UI Admin cho Shipper; gộp Lịch sử vào Đơn mua
+
+- Theo quyết định người dùng, bỏ portal riêng, dùng AdminLayout/Sidebar/Header/ShippingPage theo quyền; Shipper chỉ có Đơn giao của tôi. Member giữ một Đơn mua, mở theo dõi nội tuyến; link lịch sử cũ chuyển về orders. Tracking hiển thị thanh toán, Shipper, mã vận đơn, snapshot và thời gian backend; chi tiết mở cập nhật khi tab hiển thị.
+- Hoàn thiện pickup tương thích enum cũ, assignment/history, đổi phân công trước lấy hàng, failure code, idempotency, quyền đọc/ghi, custody kho và migration index v2 không sửa legacy. Sửa đăng ký sự kiện GlobalLoader; shipping dùng loading cục bộ.
+- Bằng chứng: 41/41 kiểm thử backend/Mongo đạt; browser test riêng qua API/JWT/Mongo local đạt 19 kiểm tra (390/768/1440px, phân công → lấy → giao → member, menu theo role, history alias, empty/error), không có runtime exception. Build frontend thành công trong output riêng; còn cảnh báo bundle lớn. Chi tiết ở [báo cáo giao hàng](shipping-acceptance-2026-10-25.md).
+- Còn mở: chưa deploy/migrate database thật, chưa merchant payOS/Cloudinary/SMTP live; Final Audit rộng và kiểm thử riêng CashEvents/Dashboard/Product Journey chưa hoàn tất. Kết quả local chưa chứng minh production ready.
+
+## 2026-10-25 — Triển khai luồng Jeans → Tote → giao hàng và báo cáo
+
+- Sửa auth/authorization, OTP/email, bỏ debug JWT/TLS bypass/IP gateway cố định; bổ sung Mongo transaction, reservation theo đơn, idempotency checkout/session/webhook và đối soát tiền trễ/sai/thêm. Phân biệt yêu cầu refund với chứng từ hoàn tiền; giữ số tiền đã hoàn độc lập.
+- Thêm payout, raw/finished inventory/movement, upcycling/cost/QC, trả người gửi và full-order return/inspection/quarantine. Chuyển inventory/upcycling/QC/orders/dashboard sang API; shipping chọn người giao và bước hợp lệ; Profile có timeline/đồng ý phiên bản giá/yêu cầu trả hàng.
+- Bằng chứng: backend build không warning/error; 36/36 NUnit/Mongo test + actual API startup/HTTP, frontend build và 37 lượt Chromium fixture responsive. Số đếm/chạy lại cụ thể ở [báo cáo triển khai](implementation-report-2026-10-25.md). Có migration additive versioned và test chạy lại/không sửa legacy data; Pkcs 10.0.13 restore thành công.
+- Còn mở: chưa deploy/migrate database thật, chưa merchant payOS/SMTP/Cloudinary live; partial/excess refunds, historical reconciliation, hiệu năng và regression toàn 16 phân hệ. Giữ phần demo ngoài luồng trọng tâm có nhãn. Không tự chuyển tiền hoặc bịa lịch sử dữ liệu cũ.
+
+## 2026-10-24 — Giải thích nghiệp vụ và đối chiếu backend mới trong workspace
+
+- Thêm `business-overview-2026-10-24.md`: vai trò, sourcing → product, catalog/cart/checkout, payment/order/shipping, hủy/refund và các module demo. Cập nhật README/architecture/API/flow/future plan/known gaps và context backend theo source hiện tại; không sửa mã ứng dụng.
+- Bằng chứng: đọc controllers/services/DTO/enums, repository reserve/release/commit, worker hết hạn và policy registration. Xác nhận paid handler chốt Sold ngay khi Paid; mặc định settings 15 phút, service fallback 5; backend có webhook/reconcile/reship/cancel-permanent.
+- Phát hiện còn mở: lệch enum sourcing/payment numeric, PUT product multipart/JSON, refund không release Sold, quyền đăng ký/ghi product/Staff shipping và guard chuyển status; source không có payout tự động trong sourcing đã đọc. Dashboard/đơn quản trị và nhiều module vận hành vẫn mock.
+- Kiểm tra: rà mã và đối chiếu contract, không build/backend/API live hoặc thanh toán thật; task chỉ tài liệu. Các tích hợp ngoài, race/idempotency và chính sách hủy giao thất bại cần xác minh/chốt riêng.
+
+## 2026-10-24 — Chỉnh UI trang Giới thiệu theo storefront
+
+- Dựng lại nội dung `/about`: câu chuyện + ảnh, ba nguyên tắc gọn, hành trình 4 bước trên nền sáng, FAQ và CTA dùng nút storefront. Bỏ marquee, chữ/section quá lớn, khối nền đen và CSS hero/orbit/ring/reveal cũ; pause vẫn có tại hero chung. Giữ các liên kết hành trình, sourcing và đơn mua; không đổi API, navbar hoặc footer chung.
+- Kiểm tra: `npm.cmd run build` thành công (4027 modules; cảnh báo bundle JS ~1,99 MB). Chromium 1440/1024/768/390/320px không có section overflow; bước/FAQ dùng Enter, focus visible, anchor dưới nav và mở cart đều đạt. Reduced motion dừng hero; không có runtime exception trong lượt QA. Bật/tắt About stylesheet trên Home/New In/World không đổi geometry/computed styles của 74/78/78 phần tử nav/hero/footer đã chọn. Ảnh chụp/số đo tạm tại `%TEMP%/rewear-about-ui-qa`.
+- Còn mở: backend và mutation không được kiểm thử; QA dùng guest + fixture chặn API chỉ để kiểm tra UI, chưa thử Safari/Firefox/thiết bị thật hay toàn bộ accessibility. Footer newsletter/link placeholder vẫn là demo chung. Lint hiện thiếu `eslint.config.*` theo context, chưa sửa trong task.
+
+## 2026-10-24 — Phân tích UI ngoài Home và navbar
+
+- Thêm `ui-audit-2026-10-24.md`: phân tích thứ bậc nội dung, banner đẩy sản phẩm xuống sâu, thẻ kính PDP, khung lồng Profile, typography và sự khác nhau giữa form/card; đề xuất thứ tự Catalog → PDP → Profile/Checkout → About/World. Chỉ sửa tài liệu.
+- Bằng chứng: đọc JSX/CSS và design system; Chromium 1440×900/390×900 trên 7 route bằng fixture chặn API. Đo lưới catalog bắt đầu y≈1377/1230px; chọn 8 cột mobile vẫn có 2 track; đối chiếu radius Profile 18px/Checkout 2px, CTA checkout empty thiếu style. Chưa duyệt riêng Women/Men, tablet hay mọi tab/state. Không chạy build/lint vì không sửa mã ứng dụng.
+- Đính chính context: hook hiện dùng ảnh stock fallback sau cập nhật ngày 23; không coi các ảnh đó là ảnh sản phẩm thật. Error catalog còn lẫn empty, loader giữ tối thiểu 2,5 giây.
+- Còn mở: triển khai thiết kế đề xuất, QA tương tác/dữ liệu thật/accessibility và hồi quy Home/navbar nếu sửa shared styles. Không tạo đơn, thanh toán hoặc xác nhận backend.
+
 ## 2026-10-23 — Sửa hiển thị ảnh sản phẩm catalog và thiết kế lại cụm nút bố cục lưới
 
 - **Khắc phục ảnh sản phẩm ở trang tổng quát (Catalog/NewIn)**: Phát hiện các sản phẩm có `imageUrls: []` từ API (như Levi's 501 Vintage Jeans, Filter Test Product Updated) trên trang chi tiết PDP vẫn hiển thị ảnh sản phẩm (nhờ fallback vào ảnh mặc định theo phong cách editorial), nhưng tại listing `ProductListingGrid` bị logic `p.hasImage ? ... : placeholder` chặn lại khiến thẻ chỉ hiện khung xám "Ảnh đang cập nhật". Đã cập nhật `usePublicProducts.js` với `getFallbackProductImage` phân bổ ảnh minh họa chuẩn theo danh mục/tên (quần jeans/denim, áo khoác, áo thun, túi xách) và gán `hasImage: true`, `img: mainImg`. Cập nhật `ProductListingGrid.jsx` với component `ProductCardImage` có cơ chế `onError` tự động bắt lỗi ảnh tải thất bại để fallback an toàn.
 - **Thiết kế lại cụm nút chọn bố cục lưới (Layout Toggles)**: Thay thế 3 nút chữ đơn điệu "Hai", "Bốn", "Tám" bằng segmented pill control thanh lịch mang phong cách editorial tối giản (`.layout-segmented-control`). Mỗi tùy chọn gồm icon SVG minh họa số cột trực quan (2 cột, 4 cột, 8 cột) kèm con số tương ứng (2, 4, 8) và thuộc tính `title`/`aria-label` đầy đủ ("Bố cục 2 cột", "Bố cục 4 cột", "Bố cục 8 cột"). Nút active chuyển sang nền đen mờ nhám `#10100f` với đổ bóng nhẹ; hiệu ứng hover và transition mượt mà; responsive thu gọn trên mobile.
 - **Bằng chứng kiểm tra**: `npm run build` thành công (4024 modules, 0 lỗi cú pháp). Browser subagent đã truy cập `http://localhost:5173/new-in#catalog-tools`, chụp ảnh màn hình xác nhận: các sản phẩm đầu (Levi's 501, Filter Test Product) hiển thị ảnh editorial sắc nét, đồng bộ với trang chi tiết; thanh chọn bố cục hiển thị segmented control đẹp mắt với icon + số và chuyển đổi các chế độ lưới 2 cột, 4 cột chuẩn xác.
 - **Việc còn mở**: Backend hiện vẫn trả `imageUrls: []` cho 2 sản phẩm đầu (cần cập nhật URL ảnh thực tế trên Cloudinary/S3 qua API sản phẩm); bundle JS production vẫn có cảnh báo >500 kB cần code-splitting trong tương lai.
+
+## 2026-10-18 — Đối chiếu hướng dẫn sử dụng shipping
+
+- Không đổi chức năng. Đối chiếu route, checkout, màn Admin/Staff/Shipper và adapter với code hiện tại để hướng dẫn thao tác; xác nhận `/shipping` dùng API, còn `/orders` admin vẫn là mock.
+- Bằng chứng: đọc `AppRoutes.jsx`, `ShippingPage.jsx`, `CheckoutPage.jsx`, `ProfilePage.jsx` và API contract; chưa có backend live để thao tác thử. Còn mở: mapping enum status 0–4, body `PUT /api/shipping/{orderId}` và kiểm thử end-to-end.
+
+## 2026-10-18 — Tích hợp API shipping vào checkout, khách hàng và vận hành
+
+- Thêm `shippingApi` cho bảy endpoint được cung cấp: rates, chi tiết, tạo, cập nhật status, queue, my-orders, all; parser hỗ trợ envelope JSON/text JSON và giữ mã status khi chưa có enum. Checkout tải lựa chọn Standard/Express, hiển thị miễn phí 0 ₫ và gửi method được chọn. Chi tiết Đơn mua đọc shipping/timeline riêng.
+- Thêm `/shipping` cho Admin/Staff (queue, xem theo shipper ID, all cho Admin) và `/shipper/orders` cho SHIPPER; cổng login nhận role SHIPPER, guard tách quyền màn vận hành, mutation chỉ báo thành công sau phản hồi API rồi tải lại dữ liệu. Bỏ nút “Giao hàng” chỉ đổi state mock trong OrderList, thay bằng link sang quản lý vận chuyển. Không lấy payment state từ shipping và không dùng dữ liệu mock của `/orders` để phân công.
+- Kiểm tra: `npm.cmd run build` đạt (4027 modules, cảnh báo bundle khoảng 1.99 MB); adapter smoke test cho unwrap/list/rates/status đạt; `git diff --check` không thấy lỗi whitespace. Thử `localhost:5000/swagger/v1/swagger.json` bị timeout nên chưa thử request với backend hoặc xác nhận shape live.
+- Còn mở: schema `data` thực của shipping, mapping enum 0–4, quyền/trình tự backend và body cho `PUT /api/shipping/{orderId}` trong ảnh Swagger chưa được cung cấp; admin order pages vẫn mock. Đã hỏi người dùng phần body/enum còn thiếu.
+
+## 2026-10-18 — Đồng bộ footer Home và tách bộ ảnh Mới về/Nam/Nữ
 
 - Hoàn thiện giao diện ảnh lớn/chuyển cảnh cho Catalog/About/World: điều khiển ảnh, pause/reduced motion, journal cuộn mobile, CTA nền ảnh. Giữ các bộ lọc, flow API và business logic hiện tại.
 - Theo yêu cầu mới nhất, năm trang dùng lại `RainsFooter` của Home thay footer thử nghiệm; PDP/Profile đã dùng cùng component. Sửa reset CSS About ảnh hưởng footer và ngắt chữ Profile khiến logo lớn xuống dòng. Không thay Home hoặc component/CSS footer chung.

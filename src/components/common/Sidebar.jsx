@@ -6,13 +6,13 @@ import {
   Shirt,
   Recycle,
   ShoppingBag,
+  Truck,
   Users,
   Boxes,
-  TicketPercent,
   BarChart3,
   UserCog,
-  Settings,
-  Inbox
+  Inbox,
+  Bell
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { ROLES } from '../../utils/constants';
@@ -24,8 +24,15 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
   const location = useLocation();
   const { user } = useAuth();
   const isAdmin = user?.role === ROLES.ADMIN;
+  const isShipper = user?.role === ROLES.SHIPPER;
 
-  const menuItems = [
+  const menuItems = isShipper ? [
+    { key: '/notifications', icon: <Bell size={17} strokeWidth={1.8} />, label: 'Thông báo' },
+    { key: '/shipper/orders', icon: <Truck size={17} strokeWidth={1.8} />, label: 'Đơn giao hàng (Bán lẻ)' },
+    { key: '/shipper/orders?mode=pickup', icon: <Boxes size={17} strokeWidth={1.8} />, label: 'Thu gom đồ cũ (Inbound)' },
+    { key: '/shipper/orders?mode=history', icon: <BarChart3 size={17} strokeWidth={1.8} />, label: 'Lịch sử & Hiệu suất' },
+  ] : [
+    { key: '/notifications', icon: <Bell size={17} strokeWidth={1.8} />, label: 'Thông báo' },
     ...(isAdmin ? [{
       key: '/dashboard',
       icon: <LayoutDashboard size={17} strokeWidth={1.8} />,
@@ -43,7 +50,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
         },
         ...(isAdmin ? [{
           key: '/products/new',
-          label: 'Thêm sản phẩm mới',
+          label: 'Tạo từ dự án tái chế',
         }] : []),
         {
           key: '/products/categories',
@@ -63,15 +70,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       children: [
         {
           key: '/collections/sourcing',
-          label: 'Duyệt yêu cầu đồ cũ',
-        },
-        {
-          key: '/collections',
-          label: 'Yêu cầu quyên góp',
-        },
-        {
-          key: '/collections/inspection',
-          label: 'Kiểm định đồ cũ',
+          label: 'Yêu cầu thu mua',
         },
       ],
     },
@@ -79,9 +78,19 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
 
 
     {
+      key: 'upcycling-group', icon: <Recycle size={17} strokeWidth={1.8} />, label: 'Tái chế và QC',
+      children: [{ key: '/upcycling', label: 'Dự án tái chế' }, { key: '/upcycling/qc', label: 'Kiểm định thành phẩm' }],
+    },
+
+    {
       key: '/orders',
       icon: <ShoppingBag size={17} strokeWidth={1.8} />,
       label: 'Đơn hàng',
+    },
+    {
+      key: '/shipping',
+      icon: <Truck size={17} strokeWidth={1.8} />,
+      label: 'Vận chuyển',
     },
 
     ...(isAdmin ? [{
@@ -96,19 +105,6 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       label: 'Kho vòng đời',
     },
 
-    ...(isAdmin ? [
-      {
-        key: '/promotions',
-        icon: <TicketPercent size={17} strokeWidth={1.8} />,
-        label: 'Khuyến mãi & Voucher',
-      },
-
-      {
-        key: '/settings',
-        icon: <Settings size={17} strokeWidth={1.8} />,
-        label: 'Cài đặt hệ thống',
-      },
-    ] : []),
   ];
 
   const handleMenuClick = ({ key }) => {
@@ -116,7 +112,8 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
   };
 
   const paths = menuItems.flatMap(item => item.children || [item]).map(item => item.key);
-  const selectedKey = paths.sort((a, b) => b.length - a.length).find(path => location.pathname === path || location.pathname.startsWith(`${path}/`));
+  const currentPath = location.pathname + location.search;
+  const selectedKey = paths.find(path => path === currentPath) || paths.sort((a, b) => b.length - a.length).find(path => location.pathname === path || location.pathname.startsWith(`${path}/`)) || paths[0];
 
   return (
     <Sider
@@ -142,7 +139,7 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       }}
     >
       {/* Brand Header */}
-      <Link className="rw-admin-brand" to={isAdmin ? '/dashboard' : '/collections'} aria-label="REWEAR — Quản trị"
+      <Link className="rw-admin-brand" to={isShipper ? '/shipper/orders' : isAdmin ? '/dashboard' : '/collections/sourcing'} aria-label={isShipper ? 'REWEAR — Giao hàng' : 'REWEAR — Quản trị'}
         style={{
           height: 64,
           display: 'flex',

@@ -1,11 +1,19 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { User, MapPin, Package, History, LogOut, Camera, ChevronRight, Search, ShoppingBag, PlusCircle, UploadCloud, Pencil } from 'lucide-react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { User, MapPin, Package, LogOut, Camera, ChevronRight, Search, ShoppingBag, PlusCircle, UploadCloud, Pencil, Truck, Bell } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
 import RainsFooter from '../../components/common/RainsFooter';
 import AccountMenu from '../../components/common/AccountMenu';
 import { getSession, clearSession, onAuthChange, profileApi, ordersApi, updateSessionUser, getAvatarUrl, authFetch } from '../../services/auth';
+import { shippingData, shippingField, shippingStatus, shippingStatusLabel } from '../../services/shipping';
 import '../Home/HomePage.css';
+import CustomerReturnRequest from '../../components/common/CustomerReturnRequest';
+import SourcingRequestDetail from '../../components/common/SourcingRequestDetail';
+import { paymentLabels } from '../Operations/labels';
+import DeliveryTimeline from '../Shipping/DeliveryTimeline';
+import StyleWatchSection from './StyleWatchSection';
+import NotificationCenter from '../../components/common/NotificationCenter';
+import '../Shipping/Delivery.css';
 import './ProfilePage.css';
 
 const fmt = (n) => n.toLocaleString('vi-VN') + ' ₫';
@@ -48,7 +56,7 @@ const normalizeOrder = (raw) => {
     const image = typeof imageValue === 'string' ? imageValue : readField(imageValue, 'url', 'imageUrl') || '';
     return {
       productId: readField(item, 'productId', 'productID') ?? readField(product, 'id', 'productId'),
-      name: readField(item, 'productName', 'name', 'title') ?? readField(product, 'title', 'name') ?? 'Sản phẩm',
+      name: readField(item, 'productName', 'productTitle', 'name', 'title') ?? readField(product, 'title', 'name') ?? 'Sản phẩm',
       image,
       variant: [readField(item, 'color'), readField(item, 'size')].filter(Boolean).join(' / '),
       qty: Number(readField(item, 'quantity', 'qty') ?? 1),
@@ -61,7 +69,7 @@ const normalizeOrder = (raw) => {
   const addressValue = readField(raw, 'shippingAddress', 'deliveryAddress', 'address');
   const address = typeof addressValue === 'string'
     ? addressValue
-    : [readField(addressValue, 'streetAddress', 'addressLine', 'address'), readField(addressValue, 'ward'), readField(addressValue, 'district'), readField(addressValue, 'province', 'city')].filter(Boolean).join(', ');
+    : readField(addressValue, 'fullAddress') || [readField(addressValue, 'streetAddress', 'addressLine', 'address'), readField(addressValue, 'ward'), readField(addressValue, 'district'), readField(addressValue, 'province', 'city')].filter(Boolean).join(', ');
   const tracking = readField(raw, 'trackingNumber', 'trackingCode', 'waybillNumber', 'shipmentCode');
   const shippingFee = readField(raw, 'shippingFee', 'deliveryFee');
   const note = readField(raw, 'note', 'customerNote');
@@ -77,9 +85,13 @@ const normalizeOrder = (raw) => {
     items,
     total,
     shippingFee,
+    shippingStatus: readField(raw, 'shippingStatus'),
+    paymentMethod: readField(raw, 'paymentMethod'),
+    recipientName: readField(addressValue, 'recipientName'),
+    recipientPhone: readField(addressValue, 'phoneNumber'),
     address,
     tracking: tracking === undefined ? null : String(tracking),
-    note: note === undefined ? null : String(note),
+    note: note === undefined ? readField(addressValue, 'note') : String(note),
     timeline: Array.isArray(rawTimeline) ? rawTimeline.map(event => ({
       label: readField(event, 'description', 'title', 'message', 'statusName', 'status'),
       at: readField(event, 'createdAt', 'timestamp', 'changedAt', 'date'),
@@ -93,26 +105,32 @@ const formatOrderMoney = (value) => {
 };
 const ORDER_STATUS_LABELS = {
   0: 'Chờ thanh toán', 1: 'Đã xác nhận', 2: 'Đang giao',
-  3: 'Đã giao', 4: 'Đã hủy', 5: 'Hết hạn thanh toán',
+  3: 'Đã giao', 4: 'Đã hủy', 5: 'Hết hạn thanh toán', 6: 'Giao thất bại',
+  7: 'Yêu cầu trả hàng', 8: 'Đã nhận hàng hoàn', 9: 'Đã kiểm định hàng hoàn',
   AwaitingPayment: 'Chờ thanh toán', Confirmed: 'Đã xác nhận', Shipping: 'Đang giao',
-  Delivered: 'Đã giao', Cancelled: 'Đã hủy', PaymentExpired: 'Hết hạn thanh toán',
+  Delivered: 'Đã giao', Cancelled: 'Đã hủy', PaymentExpired: 'Hết hạn thanh toán', Failed: 'Giao thất bại',
+  ReturnRequested: 'Yêu cầu trả hàng', ReturnReceived: 'Đã nhận hàng hoàn', Returned: 'Đã kiểm định hàng hoàn',
 };
 const getOrderStatusLabel = (status) => ORDER_STATUS_LABELS[status] || ORDER_STATUS_LABELS[String(status)] || (status == null ? 'Chưa có trạng thái' : String(status));
+const paymentStatusLabel = status => paymentLabels[status] || 'Chưa xác nhận';
+const isPaymentPaid = status => status === 'Paid' || status === '1' || status === 1;
 const SOURCING_STATUS = {
   0: 'Chờ duyệt', 1: 'Đang xem xét', 2: 'Đã định giá', 3: 'Đã đồng ý giá',
-  4: 'Đã nhận hàng', 5: 'Đã chấp nhận', 6: 'Đã từ chối', 7: 'Đã từ chối giá', 8: 'Hoàn tất',
+  4: 'Đã nhận hàng', 5: 'Đã chấp nhận', 6: 'Hoàn tất', 7: 'Đã từ chối', 8: 'Đã từ chối giá',
   Pending: 'Chờ duyệt', UnderReview: 'Đang xem xét', Priced: 'Đã định giá',
   Accepted: 'Đã đồng ý giá', Received: 'Đã nhận hàng', Approved: 'Đã chấp nhận',
   Rejected: 'Đã từ chối', Declined: 'Đã từ chối giá', Completed: 'Hoàn tất',
 };
 const sourcingStatus = (status) => SOURCING_STATUS[status ?? 0] || String(status);
-const sourcingTone = (status) => ['6', 'Rejected', '7', 'Declined'].includes(String(status)) ? 'rejected' : ['5', 'Approved', '8', 'Completed'].includes(String(status)) ? 'approved' : 'progress';
+const sourcingTone = (status) => ['7', 'Rejected', '8', 'Declined'].includes(String(status)) ? 'rejected' : ['5', 'Approved', '6', 'Completed'].includes(String(status)) ? 'approved' : 'progress';
 
 const MENU = [
   { key: 'profile', label: 'Hồ sơ của tôi', icon: User },
   { key: 'addresses', label: 'Sổ địa chỉ', icon: MapPin },
   { key: 'orders', label: 'Đơn mua', icon: Package },
-  { key: 'history', label: 'Lịch sử mua hàng', icon: History },
+  { key: 'delivery', label: 'Theo dõi giao hàng', icon: Truck },
+  { key: 'notifications', label: 'Thông báo', icon: Bell },
+  { key: 'style', label: 'Theo dõi gu đồ', icon: Bell },
   { key: 'sourcing', label: 'Bán đồ cũ', icon: PlusCircle },
 ];
 
@@ -123,7 +141,7 @@ const EMPTY_ADDR = {
 
 function SectionTitle({ kicker, title, description, action }) {
   return <div className="pp-card-head row pp-section-head">
-    <div><span className="pp-profile-eyebrow"><span />{kicker}</span><h2>{title}</h2><p>{description}</p></div>
+    <div><span className="pp-profile-eyebrow">{kicker}</span><h2>{title}</h2>{description && <p>{description}</p>}</div>
     {action}
   </div>;
 }
@@ -208,7 +226,7 @@ function ProfileSection({ notify, onLoaded }) {
     <section className="pp-card pp-profile-card" aria-labelledby="pp-profile-title">
       <div className="pp-card-head row pp-profile-head">
         <div>
-          <span className="pp-profile-eyebrow"><span aria-hidden="true" /> Tài khoản của bạn</span>
+          <span className="pp-profile-eyebrow">Tài khoản của bạn</span>
           <h2 id="pp-profile-title">Hồ sơ cá nhân</h2>
           <p>Thông tin liên hệ và cách bạn xuất hiện trên REWEAR.</p>
         </div>
@@ -374,22 +392,27 @@ function AddressSection({ notify }) {
           {list.map((a) => {
             const id = a.id || a._id;
             return (
-              <div className="pp-addr" key={id}>
+              <div className={`pp-addr ${a.isDefault ? 'is-default' : ''}`} key={id}>
                 <div className="pp-addr-main">
-                  <div className="pp-addr-name"><strong>{a.recipientName}</strong>{a.isDefault && <span className="pp-tag">Mặc định</span>}</div>
+                  <div className="pp-addr-name">
+                    <strong>{a.recipientName}</strong>
+                    {a.isDefault && <span className="pp-tag">Mặc định</span>}
+                  </div>
                   <p className="pp-addr-phone">{a.phoneNumber}</p>
-                  <p>{a.streetAddress}</p>
-                  <p>{[a.ward, a.district, a.province].filter(Boolean).join(', ')}</p>
-                  {a.note && <p className="pp-muted">Ghi chú: {a.note}</p>}
+                  <p className="pp-addr-street">{a.streetAddress}</p>
+                  <p className="pp-addr-region">{[a.ward, a.district, a.province].filter(Boolean).join(', ')}</p>
+                  {a.note && <p className="pp-muted pp-addr-note">Ghi chú: {a.note}</p>}
                 </div>
                 <div className="pp-addr-side">
                   <div className="pp-links">
                     <button type="button" onClick={() => edit(a)}>Chỉnh sửa</button>
                     {!a.isDefault && <button type="button" className="danger" disabled={loading} onClick={() => window.confirm('Xóa địa chỉ này?') && run(() => profileApi.deleteAddress(id), 'Đã xóa địa chỉ.')}>Xóa</button>}
                   </div>
-                  <button type="button" className="pp-btn ghost sm" disabled={a.isDefault || loading} onClick={() => run(() => profileApi.setDefault(id), 'Đã đặt làm mặc định.')}>
-                    Đặt làm mặc định
-                  </button>
+                  {!a.isDefault && (
+                    <button type="button" className="pp-btn ghost sm" disabled={loading} onClick={() => run(() => profileApi.setDefault(id), 'Đã đặt làm mặc định.')}>
+                      Đặt làm mặc định
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -401,82 +424,100 @@ function AddressSection({ notify }) {
 }
 
 /* ───────────────────────── Orders section ───────────────────────── */
-function OrderCard({ order }) {
-  const [open, setOpen] = useState(false);
+function OrderCard({ order, initiallyOpen = false }) {
+  const [open, setOpen] = useState(initiallyOpen);
   const [detail, setDetail] = useState(null);
+  const [shipment, setShipment] = useState(null);
+  const [events, setEvents] = useState([]);
   const [detailStatus, setDetailStatus] = useState('idle');
-  const loadDetail = async () => {
-    const id = order.requestId || order.id;
-    if (!order.orderCode && (!id || id === '—')) return;
-    setDetailStatus('loading');
+  const [error, setError] = useState('');
+  const sequence = useRef(0);
+  const id = order.requestId;
+  const loadDetail = useCallback(async (background = false) => {
+    if (!id) return;
+    const request = ++sequence.current;
+    if (!background) setDetailStatus('loading');
+    setError('');
     try {
-      const response = order.orderCode
-        ? await ordersApi.getByCode(order.orderCode)
-        : await ordersApi.get(id);
-      const normalized = normalizeOrder(unwrapOrder(response));
-      setDetail({
-        ...order,
-        ...Object.fromEntries(Object.entries(normalized).filter(([key, value]) => value !== undefined && value !== null && !['id', 'requestId', 'orderCode'].includes(key) && !(key === 'statusLabel' && normalized.status == null) && !(key === 'items' && value.length === 0) && !(key === 'timeline' && value.length === 0))),
-        items: normalized.items.length ? normalized.items : order.items,
-        timeline: normalized.timeline.length ? normalized.timeline : [],
-      });
+      const tracking = shippingData(await ordersApi.tracking(id));
+      if (!tracking?.order) throw new Error('Chưa có dữ liệu theo dõi của đơn hàng.');
+      if (request !== sequence.current) return;
+      setDetail(normalizeOrder(tracking.order));
+      setShipment(tracking.shipping || null);
+      setEvents(Array.isArray(tracking.deliveryHistory) ? tracking.deliveryHistory : []);
       setDetailStatus('ready');
-    } catch {
-      setDetailStatus('error');
+    } catch (err) {
+      if (request === sequence.current) { setError(err.message || 'Không tải được hành trình đơn hàng.'); setDetailStatus(previous => previous === 'ready' && background ? previous : 'error'); }
     }
-  };
-  const toggleDetail = () => {
-    if (open) {
-      setOpen(false);
-      return;
-    }
-    setOpen(true);
-    if (!detail && detailStatus !== 'loading') loadDetail();
-  };
-
-  return (
-    <div className="pp-order">
-      <div className="pp-order-head">
-        <div className="pp-order-shop"><span className="pp-shop-pill">REWEAR</span><span className="pp-muted">Mã đơn: {order.id}{order.createdAt ? ` · ${fmtDate(order.createdAt)}` : ''}</span></div>
-        <div className="pp-status">{order.statusLabel}</div>
-      </div>
-      {order.items.map((it, i) => {
-        const content = <>
-          {it.image ? <img src={it.image} alt={it.name} /> : <div className="pp-order-placeholder"><Package size={20} /></div>}
-          <div className="pp-order-info">
-            <div className="pp-order-name">{it.name}</div>
-            {it.variant && <div className="pp-muted">Phân loại: {it.variant}</div>}
-            <div className="pp-muted">Số lượng: {it.qty}</div>
-          </div>
-          {formatOrderMoney(it.price) && <div className="pp-order-price">{formatOrderMoney(it.price)}</div>}
-        </>;
-        return it.productId
-          ? <Link className="pp-order-item" key={i} to={`/product/${it.productId}`} aria-label={`Xem ${it.name}`}>{content}</Link>
-          : <div className="pp-order-item" key={i}>{content}</div>;
-      })}
-
-      <div className="pp-order-foot">
-        {formatOrderMoney(order.total) && <div className="pp-order-total">Tổng đơn: <strong>{formatOrderMoney(order.total)}</strong></div>}
-        <div className="pp-order-actions">
-          {order.paymentStatus && <span className="pp-muted">Thanh toán: {order.paymentStatus}</span>}
-          <button type="button" className="pp-btn ghost" aria-expanded={open} onClick={toggleDetail}>{open ? 'Ẩn chi tiết' : 'Chi tiết đơn hàng'}</button>
+  }, [id]);
+  useEffect(() => {
+    if (!open) return;
+    loadDetail();
+    const timer = setInterval(() => { if (!document.hidden) loadDetail(true); }, 20000);
+    return () => { sequence.current += 1; clearInterval(timer); };
+  }, [open, loadDetail]);
+  const shown = detail || order;
+  const deliveryStatus = shipment ? shippingStatus(shipment) : shown.shippingStatus;
+  return <article className="pp-order">
+    <div className="pp-order-head">
+      <div className="pp-order-shop"><span className="pp-shop-pill">REWEAR</span><span className="pp-muted">Mã đơn: {shown.id}{shown.createdAt ? ' · ' + fmtDate(shown.createdAt) : ''}</span></div>
+      <div className="pp-status">{shown.statusLabel}</div>
+    </div>
+    {shown.items.map((item, index) => {
+      const content = <>{item.image ? <img src={item.image} alt={item.name} /> : <div className="pp-order-placeholder"><Package size={20} /></div>}<div className="pp-order-info"><div className="pp-order-name">{item.name}</div>{item.variant && <div className="pp-muted">Phân loại: {item.variant}</div>}<div className="pp-muted">Số lượng: {item.qty}</div></div>{formatOrderMoney(item.price) && <div className="pp-order-price">{formatOrderMoney(item.price)}</div>}</>;
+      return item.productId ? <Link className="pp-order-item" key={index} to={'/product/' + item.productId}>{content}</Link> : <div className="pp-order-item" key={index}>{content}</div>;
+    })}
+    {/* Khối trạng thái giao hàng riêng biệt */}
+    <div className="pp-order-delivery-block" aria-label="Trạng thái giao hàng">
+      <div className="pp-delivery-badge-group">
+        <div className="pp-delivery-icon-circle">
+          <Truck size={17} />
+        </div>
+        <div className="pp-delivery-info">
+          <span className="pp-delivery-label">Trạng thái vận chuyển</span>
+          <strong className="pp-delivery-value">
+            {deliveryStatus != null ? shippingStatusLabel(deliveryStatus) : isPaymentPaid(shown.paymentStatus) ? 'Đang chuẩn bị giao hàng' : 'Chưa phân công giao hàng'}
+          </strong>
         </div>
       </div>
-      {open && <div className="pp-order-expanded">
-        {detailStatus === 'loading' && <div role="status">Đang tải chi tiết đơn hàng…</div>}
-        {detailStatus === 'error' && <div className="pp-order-detail-error" role="alert">Không tải được chi tiết đơn hàng.<button type="button" onClick={loadDetail}>Thử lại</button></div>}
-        {detailStatus === 'ready' && detail && <>
-          {detail.items.map((item, index) => <div key={`${item.name}-${index}`}>{item.name} <span>{item.variant ? `${item.variant} · ` : ''}× {item.qty}</span></div>)}
-          {detail.address && <div><strong>Địa chỉ nhận hàng</strong><span>{detail.address}</span></div>}
-          {detail.tracking && <div><strong>Mã vận đơn</strong><span>{detail.tracking}</span></div>}
-          {detail.paymentStatus && <div><strong>Thanh toán</strong><span>{detail.paymentStatus}</span></div>}
-          {detail.shippingFee !== undefined && <div><strong>Phí giao hàng</strong><span>{formatOrderMoney(detail.shippingFee) || '—'}</span></div>}
-          {detail.note && <div><strong>Ghi chú</strong><span>{detail.note}</span></div>}
-          {detail.timeline.map((event, index) => <div key={`event-${index}`}><strong>{event.label || 'Cập nhật đơn hàng'}</strong><span>{event.at ? fmtDate(event.at) : ''}</span></div>)}
-        </>}
-      </div>}
+      {shipment?.trackingNumber && (
+        <div className="pp-delivery-meta">
+          <span>Mã vận đơn: <strong>{shipment.trackingNumber}</strong></span>
+          {shipment?.carrier && <span className="pp-muted">({shipment.carrier})</span>}
+        </div>
+      )}
     </div>
-  );
+
+    <div className="pp-order-foot">
+      <div className="pp-order-foot-left">
+        <div className="pp-payment-inline">
+          <span className="pp-muted">Thanh toán:</span>
+          <span className={`pp-payment-badge ${isPaymentPaid(shown.paymentStatus) ? 'paid' : ''}`}>
+            {paymentStatusLabel(shown.paymentStatus)}
+          </span>
+        </div>
+        {formatOrderMoney(shown.total) && <div className="pp-order-total">Tổng thanh toán: <strong>{formatOrderMoney(shown.total)}</strong></div>}
+      </div>
+      <div className="pp-order-actions">
+        <button type="button" className="pp-btn ghost" aria-expanded={open} aria-controls={'tracking-' + id} disabled={!id} onClick={() => setOpen(value => !value)}>
+          {open ? 'Ẩn chi tiết' : 'Theo dõi đơn hàng'}
+        </button>
+      </div>
+    </div>
+    {open && <div className="pp-order-expanded" id={'tracking-' + id}>
+      {detailStatus === 'loading' && <p role="status">Đang tải hành trình đơn hàng…</p>}
+      {error && <div className="pp-order-detail-error" role="alert">{error}<button type="button" onClick={() => loadDetail()}>Thử lại</button></div>}
+      {detailStatus === 'ready' && detail && <>
+        <section className="pp-tracking-section"><h3>Thông tin nhận hàng</h3><p><strong>{detail.recipientName}</strong>{detail.recipientPhone ? ' · ' + detail.recipientPhone : ''}</p><p>{detail.address || 'Chưa có địa chỉ nhận hàng'}</p>{detail.note && <p>Ghi chú: {detail.note}</p>}</section>
+        <section className="pp-tracking-section"><h3>Theo dõi giao hàng</h3>{shipment ? <><p>Trạng thái: <strong>{shippingStatusLabel(shippingStatus(shipment))}</strong></p>{shipment.shipperName && <p>Người giao hàng: <strong>{shipment.shipperName}</strong></p>}{shipment.carrier && <p>Đơn vị vận chuyển: {shipment.carrier}</p>}{shipment.trackingNumber && <p>Mã vận đơn: {shipment.trackingNumber}</p>}{shipment.estimatedDeliveryDate && <p>Dự kiến giao: {fmtDate(shipment.estimatedDeliveryDate)}</p>}{shipment.status === 'Failed' && <p role="status">{shipment.lastFailureReason || 'REWEAR đang xử lý lần giao chưa thành công.'}</p>}</> : <p>{isPaymentPaid(detail.paymentStatus) ? 'REWEAR đang chuẩn bị và phân công giao hàng.' : 'Đơn chưa được phân công giao hàng.'}</p>}
+          <DeliveryTimeline events={events} />
+        </section>
+        <section className="pp-tracking-section"><h3>Thanh toán</h3><p>Phương thức: {String(detail.paymentMethod).toLowerCase().includes('pay') ? 'payOS' : 'Chưa xác định'}</p><p>Trạng thái: <strong>{paymentStatusLabel(detail.paymentStatus)}</strong></p>{detail.shippingFee !== undefined && <p>Phí giao hàng: {formatOrderMoney(detail.shippingFee)}</p>}<p>Tổng tiền: <strong>{formatOrderMoney(detail.total)}</strong></p></section>
+        <CustomerReturnRequest order={detail} onChanged={loadDetail} />
+        <button type="button" className="pp-btn ghost" onClick={() => loadDetail()}>Cập nhật hành trình</button>
+      </>}
+    </div>}
+  </article>;
 }
 
 function useCustomerOrders({ status = '', page = 1, pageSize = 10 } = {}) {
@@ -502,7 +543,7 @@ function useCustomerOrders({ status = '', page = 1, pageSize = 10 } = {}) {
   return { ...result, loading, error, retry: () => setReload((value) => value + 1) };
 }
 
-function OrdersSection() {
+function OrdersSection({ selectedOrderId }) {
   const [status, setStatus] = useState('');
   const [page, setPage] = useState(1);
   const [q, setQ] = useState('');
@@ -512,44 +553,222 @@ function OrdersSection() {
   return (
     <>
       <div className="pp-card pp-section-card pp-section-intro">
-        <SectionTitle kicker="Tài khoản / 03" title="Đơn mua" description="Theo dõi đơn hàng và tìm lại sản phẩm bạn quan tâm." />
+        <SectionTitle kicker="Tài khoản / 03" title="Đơn mua" description="Xem tất cả đơn mua, trạng thái thanh toán và hành trình giao hàng tại đây." />
+        <button type="button" className="pp-btn ghost" onClick={retry} disabled={loading}>Cập nhật đơn mua</button>
       </div>
       <div className="pp-order-filters">
-        <label htmlFor="order-status">Lọc theo mã trạng thái</label>
+        <label htmlFor="order-status">Trạng thái đơn hàng</label>
         <select id="order-status" value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); }}>
           <option value="">Tất cả trạng thái</option>
-          {[0, 1, 2, 3, 4, 5].map((value) => <option key={value} value={value}>{ORDER_STATUS_LABELS[value]}</option>)}
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => <option key={value} value={value}>{ORDER_STATUS_LABELS[value]}</option>)}
         </select>
         <div className="pp-search"><Search size={16} /><input aria-label="Tìm đơn hàng" placeholder="Tìm mã đơn hoặc tên sản phẩm trên trang này" value={q} onChange={(e) => setQ(e.target.value)} /></div>
       </div>
+      {selectedOrderId && <OrderCard key={selectedOrderId} order={orders.find(order => order.requestId === selectedOrderId) || { requestId: selectedOrderId, id: 'Đơn được chọn', items: [] }} initiallyOpen />}
       {loading ? <div className="pp-card pp-order-state" role="status">Đang tải đơn hàng…</div>
         : error ? <div className="pp-card pp-order-state pp-order-error" role="alert"><strong>Chưa tải được đơn hàng</strong><span>{error}</span><button type="button" className="pp-btn ghost" onClick={retry}>Thử lại</button></div>
-        : shown.length === 0 ? (
-        <div className="pp-card pp-empty"><Package size={36} /><strong>{orders.length ? 'Không tìm thấy đơn phù hợp' : 'Bạn chưa có đơn hàng'}</strong><p>{orders.length ? 'Thử từ khóa khác trong các đơn đang hiển thị.' : 'Đơn hàng của bạn sẽ xuất hiện tại đây sau khi đặt hàng.'}</p>{q && <button type="button" className="pp-btn ghost" onClick={() => setQ('')}>Xóa từ khóa</button>}</div>
-      ) : (
-        shown.map((order, index) => <OrderCard key={`${order.id}-${index}`} order={order} />)
-      )}
+          : shown.length === 0 ? (
+            <div className="pp-card pp-empty"><Package size={36} /><strong>{orders.length ? 'Không tìm thấy đơn phù hợp' : 'Bạn chưa có đơn hàng'}</strong><p>{orders.length ? 'Thử từ khóa khác trong các đơn đang hiển thị.' : 'Đơn hàng của bạn sẽ xuất hiện tại đây sau khi đặt hàng.'}</p>{q && <button type="button" className="pp-btn ghost" onClick={() => setQ('')}>Xóa từ khóa</button>}</div>
+          ) : (
+            shown.filter(order => order.requestId !== selectedOrderId).map(order => <OrderCard key={order.requestId || order.id} order={order} />)
+          )}
       {!loading && !error && orders.length > 0 && <div className="pp-order-pagination"><span>{totalCount !== null ? `${totalCount} đơn hàng` : `Trang ${page}${totalPages ? ` / ${totalPages}` : ''}`}</span><div><button type="button" className="pp-btn ghost" disabled={page <= 1} onClick={() => setPage((value) => value - 1)}>Trước</button><button type="button" className="pp-btn ghost" disabled={(totalPages !== null && page >= totalPages) || (totalPages === null && orders.length < 10)} onClick={() => setPage((value) => value + 1)}>Tiếp</button></div></div>}
     </>
   );
 }
 
-/* ───────────────────────── History section ───────────────────────── */
-function HistorySection() {
-  const { orders, loading, error, retry } = useCustomerOrders({ pageSize: 50 });
+/* ───────────────────────── Delivery section ───────────────────────── */
+function DeliveryTrackerCard({ order }) {
+  const [detail, setDetail] = useState(null);
+  const [shipment, setShipment] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [detailStatus, setDetailStatus] = useState('loading');
+  const [error, setError] = useState('');
+  const id = order.requestId;
+
+  const loadTracking = useCallback(async (background = false) => {
+    if (!id) return;
+    if (!background) setDetailStatus('loading');
+    setError('');
+    try {
+      const tracking = shippingData(await ordersApi.tracking(id));
+      if (!tracking?.order) throw new Error('Chưa có dữ liệu theo dõi của đơn hàng.');
+      setDetail(normalizeOrder(tracking.order));
+      setShipment(tracking.shipping || null);
+      setEvents(Array.isArray(tracking.deliveryHistory) ? tracking.deliveryHistory : []);
+      setDetailStatus('ready');
+    } catch (err) {
+      setError(err.message || 'Chưa tải được lộ trình vận chuyển.');
+      setDetailStatus(previous => previous === 'ready' && background ? previous : 'error');
+    }
+  }, [id]);
+
+  useEffect(() => {
+    loadTracking();
+    const timer = setInterval(() => { if (!document.hidden) loadTracking(true); }, 20000);
+    return () => clearInterval(timer);
+  }, [loadTracking]);
+
+  const shown = detail || order;
+  const deliveryStatus = shipment ? shippingStatus(shipment) : shown.shippingStatus;
+  const statusText = deliveryStatus != null
+    ? shippingStatusLabel(deliveryStatus)
+    : isPaymentPaid(shown.paymentStatus)
+      ? 'Đang chuẩn bị giao hàng'
+      : 'Chờ thanh toán / phân công';
+
+  return (
+    <article className="pp-card pp-delivery-tracker-card">
+      <div className="pp-delivery-tracker-head">
+        <div className="pp-tracker-title-group">
+          <div className="pp-tracker-icon-badge">
+            <Truck size={20} />
+          </div>
+          <div>
+            <div className="pp-tracker-order-id">
+              <span>Đơn hàng:</span> <strong>{shown.id}</strong>
+              {shown.createdAt && <span className="pp-muted"> · {fmtDate(shown.createdAt)}</span>}
+            </div>
+            <div className="pp-tracker-status-tag">
+              <span className={`pp-delivery-pill status-${deliveryStatus ?? (isPaymentPaid(shown.paymentStatus) ? 'preparing' : 'awaiting')}`}>
+                {statusText}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="pp-tracker-head-actions">
+          <button type="button" className="pp-btn ghost sm" onClick={() => loadTracking()}>
+            Cập nhật lộ trình
+          </button>
+        </div>
+      </div>
+
+      {/* Thông tin vận chuyển tóm tắt */}
+      <div className="pp-tracker-meta-grid">
+        <div className="pp-tracker-meta-item">
+          <span className="pp-tracker-meta-label">Mã vận đơn</span>
+          <strong>{shipment?.trackingNumber || 'Đang tạo mã vận đơn'}</strong>
+        </div>
+        <div className="pp-tracker-meta-item">
+          <span className="pp-tracker-meta-label">Đơn vị vận chuyển</span>
+          <strong>{shipment?.carrier || 'REWEAR Express'}</strong>
+        </div>
+        <div className="pp-tracker-meta-item">
+          <span className="pp-tracker-meta-label">Người giao hàng</span>
+          <strong>{shipment?.shipperName || 'Đang phân công shipper'}</strong>
+        </div>
+        <div className="pp-tracker-meta-item">
+          <span className="pp-tracker-meta-label">Dự kiến giao</span>
+          <strong>{shipment?.estimatedDeliveryDate ? fmtDate(shipment.estimatedDeliveryDate) : '1 - 3 ngày làm việc'}</strong>
+        </div>
+      </div>
+
+      {/* Lộ trình chi tiết */}
+      <div className="pp-tracker-timeline-wrap">
+        <h4>Lộ trình vận chuyển</h4>
+        {detailStatus === 'loading' && <p className="pp-muted">Đang cập nhật vị trí kiện hàng...</p>}
+        {error && <p className="pp-muted pp-order-detail-error">{error}</p>}
+        <DeliveryTimeline events={events} />
+      </div>
+
+      {/* Thông tin nhận hàng & Kiện hàng */}
+      <div className="pp-tracker-footer-grid">
+        <div className="pp-tracker-address">
+          <h4>Địa chỉ nhận hàng</h4>
+          <p className="pp-tracker-recipient">
+            <strong>{shown.recipientName || 'Người nhận'}</strong>
+            {shown.recipientPhone ? ` · ${shown.recipientPhone}` : ''}
+          </p>
+          <p className="pp-tracker-dest">{shown.address || 'Địa chỉ giao hàng'}</p>
+          {shown.note && <p className="pp-muted pp-addr-note">Ghi chú: {shown.note}</p>}
+        </div>
+
+        <div className="pp-tracker-items">
+          <h4>Kiện hàng ({shown.items.length} món)</h4>
+          <div className="pp-tracker-item-list">
+            {shown.items.map((item, idx) => (
+              <div key={idx} className="pp-tracker-mini-item">
+                {item.image ? <img src={item.image} alt={item.name} /> : <div className="pp-order-placeholder"><Package size={16} /></div>}
+                <div className="pp-tracker-mini-info">
+                  <span className="pp-tracker-mini-name">{item.name}</span>
+                  <span className="pp-muted">SL: {item.qty} {item.variant ? ` · ${item.variant}` : ''}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function DeliverySection({ selectedOrderId }) {
+  const [filter, setFilter] = useState('all');
+  const { orders, loading, error, retry } = useCustomerOrders({ pageSize: 20 });
+
+  const deliveryOrders = useMemo(() => {
+    return orders.filter(order => {
+      if (filter === 'active') {
+        const status = String(order.status);
+        return ['Confirmed', 'Shipping', 'Failed', 'ReturnRequested', 'ReturnReceived', '1', '2', '6', '7', '8'].includes(status)
+          || (order.status == null && isPaymentPaid(order.paymentStatus));
+      }
+      if (filter === 'completed') {
+        return ['Delivered', 'Returned', '3', '9'].includes(String(order.status));
+      }
+      return true;
+    });
+  }, [orders, filter]);
 
   return (
     <>
       <div className="pp-card pp-section-card pp-section-intro">
-        <SectionTitle kicker="Tài khoản / 04" title="Lịch sử mua hàng" description="Xem lại các đơn hàng bạn đã đặt." />
+        <SectionTitle
+          kicker="Tài khoản / 04"
+          title="Theo dõi giao hàng"
+          description="Tra cứu tiến độ vận chuyển, lộ trình kiện hàng và cập nhật trực tiếp từ Shipper theo thời gian thực."
+          action={
+            <button type="button" className="pp-btn ghost" onClick={retry} disabled={loading}>
+              Làm mới dữ liệu
+            </button>
+          }
+        />
       </div>
-      <div className="pp-card pp-section-card pp-history-card">
-        <div className="pp-history-head"><h3>Đơn hàng gần đây</h3><span>{orders.length} đơn</span></div>
-        {loading && <div className="pp-order-state" role="status">Đang tải lịch sử đơn hàng…</div>}
-        {error && <div className="pp-order-state pp-order-error" role="alert"><span>{error}</span><button type="button" className="pp-btn ghost" onClick={retry}>Thử lại</button></div>}
-        {!loading && !error && orders.length === 0 && <div className="pp-empty"><History size={36} /><strong>Chưa có lịch sử mua hàng</strong><p>Đơn hàng của bạn sẽ xuất hiện tại đây sau khi đặt hàng.</p></div>}
-        {!loading && !error && orders.map((order, index) => <OrderCard key={`${order.id}-${index}`} order={order} />)}
+
+      <div className="pp-delivery-tabs-bar">
+        <div className="pp-delivery-filter-pills">
+          <button type="button" className={filter === 'all' ? 'active' : ''} onClick={() => setFilter('all')}>
+            Tất cả đơn giao ({orders.length})
+          </button>
+          <button type="button" className={filter === 'active' ? 'active' : ''} onClick={() => setFilter('active')}>
+            Đang vận chuyển / Chuẩn bị
+          </button>
+          <button type="button" className={filter === 'completed' ? 'active' : ''} onClick={() => setFilter('completed')}>
+            Đã giao thành công
+          </button>
+        </div>
       </div>
+
+      {loading ? (
+        <div className="pp-card pp-order-state" role="status">Đang tải danh sách kiện hàng…</div>
+      ) : error ? (
+        <div className="pp-card pp-order-state pp-order-error" role="alert">
+          <strong>Chưa tải được thông tin giao hàng</strong>
+          <span>{error}</span>
+          <button type="button" className="pp-btn ghost" onClick={retry}>Thử lại</button>
+        </div>
+      ) : deliveryOrders.length === 0 ? (
+        <div className="pp-card pp-empty">
+          <Truck size={40} />
+          <strong>Chưa có kiện hàng nào cần theo dõi</strong>
+          <p>Khi bạn hoàn tất đặt hàng, tiến độ vận chuyển của shipper sẽ hiển thị trực tiếp tại mục này.</p>
+        </div>
+      ) : (
+        deliveryOrders.map(order => (
+          <DeliveryTrackerCard key={order.requestId || order.id} order={order} />
+        ))
+      )}
     </>
   );
 }
@@ -595,7 +814,7 @@ function SourcingSection({ notify }) {
 
   const handleAcceptOffer = async (id) => {
     try {
-      await authFetch(`/api/Sourcing/${id}/accept`, { method: 'PATCH' });
+      await authFetch(`/api/Sourcing/${id}/accept`, { method: 'PATCH', body: JSON.stringify({ offerVersion: detailModal.data?.offerVersion }) });
       notify('success', 'Đã đồng ý giá đề xuất thành công!');
       setDetailModal({ open: false, data: null, loading: false });
       loadRequests();
@@ -617,7 +836,7 @@ function SourcingSection({ notify }) {
   };
 
   const [form, setForm] = useState({
-    Title: '', Description: '', BrandId: '', CategoryId: '', 
+    Title: '', Description: '', BrandId: '', CategoryId: '',
     DeclaredCondition: 1, Size: '', Color: '', CustomerExpectedPrice: ''
   });
   const [files, setFiles] = useState([]);
@@ -676,11 +895,11 @@ function SourcingSection({ notify }) {
       if (form.Size) formData.append('Size', form.Size);
       if (form.Color) formData.append('Color', form.Color);
       if (form.CustomerExpectedPrice) formData.append('CustomerExpectedPrice', form.CustomerExpectedPrice);
-      
+
       files.forEach(f => formData.append('Images', f));
 
       await authFetch('/api/Sourcing', { method: 'POST', body: formData });
-      
+
       notify('success', 'Đã gửi yêu cầu bán đồ cũ thành công!');
       setForm({ Title: '', Description: '', BrandId: '', CategoryId: '', DeclaredCondition: 1, Size: '', Color: '', CustomerExpectedPrice: '' });
       setFiles([]);
@@ -714,13 +933,13 @@ function SourcingSection({ notify }) {
   return (
     <div className="pp-card pp-section-card">
       <SectionTitle kicker="Tài khoản / 05" title="Bán đồ cũ" description="Cho món đồ của bạn một vòng đời mới cùng REWEAR."
-      action={
-        view === 'list' ? (
-          <button type="button" className="pp-btn" onClick={() => setView('new')}><PlusCircle size={16} /> Tạo yêu cầu</button>
-        ) : (
-          <button type="button" className="pp-btn ghost" onClick={() => setView('list')}>Danh sách yêu cầu</button>
-        )
-      } />
+        action={
+          view === 'list' ? (
+            <button type="button" className="pp-btn" onClick={() => setView('new')}><PlusCircle size={16} /> Tạo yêu cầu</button>
+          ) : (
+            <button type="button" className="pp-btn ghost" onClick={() => setView('list')}>Danh sách yêu cầu</button>
+          )
+        } />
 
       {view === 'list' ? (
         <div className="pp-sourcing-content">
@@ -781,9 +1000,10 @@ function SourcingSection({ notify }) {
 
           <label className="pp-input-field">Tình trạng món đồ *
             <select value={form.DeclaredCondition} onChange={setF('DeclaredCondition')} required>
-              <option value={1}>1 - Như mới</option>
-              <option value={2}>2 - Tốt</option>
-              <option value={3}>3 - Khá</option>
+              <option value={0}>Như mới</option>
+              <option value={1}>Rất tốt</option>
+              <option value={2}>Tốt</option>
+              <option value={3}>Khá</option>
             </select>
           </label>
 
@@ -822,7 +1042,7 @@ function SourcingSection({ notify }) {
       {/* Sourcing Detail Modal (Customer) */}
       {detailModal.open && (
         <div className="pp-modal-overlay" onMouseDown={(e) => { if (e.target === e.currentTarget) setDetailModal({ open: false, data: null, loading: false }); }}>
-          <div ref={modalRef} className="pp-modal-content" role="dialog" aria-modal="true" aria-labelledby="pp-sourcing-dialog-title">
+          <div ref={modalRef} className="pp-modal-content srd-dialog" role="dialog" aria-modal="true" aria-labelledby="pp-sourcing-dialog-title">
             <div className="pp-modal-head">
               <h3 id="pp-sourcing-dialog-title">Chi tiết yêu cầu</h3>
               <button ref={modalCloseRef} type="button" className="pp-modal-close" aria-label="Đóng chi tiết" onClick={() => setDetailModal({ open: false, data: null, loading: false })}>×</button>
@@ -831,43 +1051,13 @@ function SourcingSection({ notify }) {
               {detailModal.loading ? (
                 <div className="pp-empty" role="status">Đang tải chi tiết...</div>
               ) : detailModal.data ? (
-                <div className="pp-detail-grid">
-                  <div className="pp-grid-2">
-                    <div className="pp-detail-field"><span>Tên sản phẩm</span><strong>{detailModal.data.title}</strong></div>
-                    <div className="pp-detail-field"><span>Trạng thái</span><span className={`pp-sourcing-status ${sourcingTone(detailModal.data.status)}`}>{sourcingStatus(detailModal.data.status)}</span></div>
-                  </div>
-                  <div className="pp-detail-field"><span>Mô tả</span><p>{detailModal.data.description || 'Không có mô tả'}</p></div>
-                  <div className="pp-grid-2">
-                    <div className="pp-detail-field"><span>Kích cỡ / Màu sắc</span><strong>{detailModal.data.size || '—'} / {detailModal.data.color || '—'}</strong></div>
-                    <div className="pp-detail-field"><span>Giá mong muốn</span><strong>{detailModal.data.customerExpectedPrice ? fmt(Number(detailModal.data.customerExpectedPrice)) : 'Chưa nhập'}</strong></div>
-                  </div>
-                  {(detailModal.data.offeredPrice > 0 || detailModal.data.adminNote) && (
-                    <div className="pp-grid-2 pp-detail-offer">
-                      <div className="pp-detail-field"><span>Giá REWEAR đề xuất</span><strong>{detailModal.data.offeredPrice ? fmt(Number(detailModal.data.offeredPrice)) : '—'}</strong></div>
-                      <div className="pp-detail-field"><span>Ghi chú từ cửa hàng</span><p>{detailModal.data.adminNote || '—'}</p></div>
-                    </div>
-                  )}
-                  <div className="pp-detail-field"><span>Hình ảnh đính kèm</span>
-                    {(() => {
-                      const imgs = detailModal.data.images || detailModal.data.sourcingImages || detailModal.data.imageUrls || [];
-                      return imgs.length > 0 ? (
-                        <div className="pp-detail-images">
-                          {imgs.map((img, idx) => (
-                            <img key={idx} src={img.imageUrl || img.url || img} alt={`Ảnh món đồ ${idx + 1}`} />
-                          ))}
-                        </div>
-                      ) : (
-                        <p>Không có ảnh</p>
-                      );
-                    })()}
-                  </div>
-                </div>
+                <SourcingRequestDetail request={detailModal.data} statusLabel={sourcingStatus(detailModal.data.status)} statusTone={sourcingTone(detailModal.data.status)} />
               ) : (
                 <div className="pp-empty">Không có dữ liệu</div>
               )}
             </div>
             <div className="pp-modal-footer">
-              {detailModal.data && (detailModal.data.status === 'Priced' || detailModal.data.status === 2 || detailModal.data.status === '2') && (
+              {detailModal.data && (detailModal.data.status === 'Priced' || detailModal.data.status === 2 || detailModal.data.status === '2' || detailModal.data.requiresRevisedAcceptance) && (
                 <>
                   <button type="button" className="pp-btn ghost" onClick={() => handleDeclineOffer(detailModal.data.id)}>Từ chối giá</button>
                   <button type="button" className="pp-btn" onClick={() => handleAcceptOffer(detailModal.data.id)}>Đồng ý giá</button>
@@ -884,10 +1074,15 @@ function SourcingSection({ notify }) {
 
 /* ───────────────────────── Page ───────────────────────── */
 export default function ProfilePage() {
+  const { id: selectedOrderId } = useParams();
   const { openCart, cartItemCount } = useCart();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
-  const section = MENU.some((m) => m.key === params.get('tab')) ? params.get('tab') : 'profile';
+  const requestedTab = params.get('tab');
+  const section = selectedOrderId || requestedTab === 'history' ? 'orders' : MENU.some(m => m.key === requestedTab) ? requestedTab : 'profile';
+  useEffect(() => {
+    if (requestedTab === 'history') { const next = new URLSearchParams(params); next.set('tab', 'orders'); setParams(next, { replace: true }); }
+  }, [requestedTab, params, setParams]);
   const [session, setSession] = useState(getSession());
   const [toast, setToast] = useState(null);
 
@@ -938,7 +1133,7 @@ export default function ProfilePage() {
           </div>
           <nav className="pp-menu">
             {MENU.map(({ key, label, icon: Icon }) => (
-              <button type="button" key={key} className={section === key ? 'active' : ''} aria-current={section === key ? 'page' : undefined} onClick={() => setParams({ tab: key })}>
+              <button type="button" key={key} className={section === key ? 'active' : ''} aria-current={section === key ? 'page' : undefined} onClick={() => navigate(`/profile?tab=${key}`)}>
                 <Icon size={17} />{label}
               </button>
             ))}
@@ -951,8 +1146,10 @@ export default function ProfilePage() {
         <main className="pp-main">
           {section === 'profile' && <ProfileSection notify={notify} />}
           {section === 'addresses' && <AddressSection notify={notify} />}
-          {section === 'orders' && <OrdersSection />}
-          {section === 'history' && <HistorySection />}
+          {section === 'orders' && <OrdersSection selectedOrderId={selectedOrderId} />}
+          {section === 'delivery' && <DeliverySection selectedOrderId={selectedOrderId} />}
+          {section === 'style' && <StyleWatchSection notify={notify} />}
+          {section === 'notifications' && <NotificationCenter />}
           {section === 'sourcing' && <SourcingSection notify={notify} />}
         </main>
       </div>

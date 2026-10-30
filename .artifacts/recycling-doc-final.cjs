@@ -1,0 +1,7 @@
+﻿const fs=require('fs');
+function intro(p,text){const s=fs.readFileSync(p,'utf8').replace(/^\uFEFF/,'');const i=s.indexOf('\n');fs.writeFileSync(p,s.slice(0,i+1)+'\n'+text+'\n'+s.slice(i+1));}
+intro('Rewear_BackEnd/REWEAR.Tests/README.md','Cập nhật 27/10/2026: suite hiện đạt **70/70** trên Mongo riêng. Nghiệp vụ chỉ tái chế: RecyclingOnlyTests kiểm tra ẩn hàng bán nguyên trạng công khai, chặn cart/checkout/reservation từ giỏ cũ, chuyển nguyên liệu QC cũ sang dự án; CircularFashionTests và CatalogReplacementTests chặn đường bán nguyên trạng/tạo hàng/mở preview trực tiếp. Fixture commerce và gu đồ ghi rõ ProductType=Upcycled; không đổi mặc định entity của dữ liệu cũ. [Phạm vi và bằng chứng](../../context/recycling-only-2026-10-27.md).');
+intro('tools/qa/README.md',`## Chỉ tái chế — 27/10/2026
+
+Chạy node tools/qa/recycling-only.cjs với Vite 127.0.0.1:5196 và Chrome headless CDP 9246, hồ sơ riêng trong .artifacts/recycling-only/chrome-profile. Khởi động bằng Start-Process -WindowStyle Hidden; không dùng hồ sơ người dùng. Script intercept toàn bộ /api/* bằng fixture và dùng JSON bản lưu thật trong repo, không gọi mutation API thật. Bao phủ kho, QC dự án, sourcing, danh sách/bản lưu, redirect tạo hàng, storefront/PDP ẩn hàng bán nguyên trạng, preview không có nút mở bán trực tiếp và empty/error ở 1440/768/390 px. Bằng chứng .artifacts/recycling-only/browser. Script qc-flow-ui.cjs và catalog-drafts.cjs cũ còn kỳ vọng nhánh resale/6 mẫu; không dùng làm contract hiện tại.
+`);

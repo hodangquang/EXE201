@@ -56,6 +56,7 @@ export default function ProductListingGrid({ products, loading, columns }) {
             <div className="new-in-product-info">
               <div className="new-in-product-details-left">
                 <span className="new-in-name">{p.name}</span>
+                {p.isPreview && <span className="catalog-preview-label">Sắp mở bán</span>}
                 <div className="new-in-colors">
                   {p.colors?.map((color, i) => <span key={color.id ?? i} className="color-swatch" title={color.name} style={{ backgroundColor: color.hex }} />)}
                   {p.size && <span className="catalog-card-size">Cỡ {p.size}</span>}

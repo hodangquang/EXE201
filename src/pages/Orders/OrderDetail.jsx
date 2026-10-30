@@ -1,240 +1,69 @@
-import React, { useState } from 'react';
-import { Row, Col, Typography, Space, Button, Select, Divider, message, Table } from 'antd';
-import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  MapPin, 
-  Phone, 
-  User, 
-  CreditCard, 
-  Truck, 
-  Sparkles, 
-  CheckCircle2,
-  Calendar,
-  Package
-} from 'lucide-react';
-import StatusBadge from '../../components/common/StatusBadge';
-import { mockOrders } from '../../data/mockData';
-import { ORDER_STATUS, PAYMENT_STATUS } from '../../utils/constants';
-import { formatCurrency, formatShortDate } from '../../utils/formatters';
+﻿import { useCallback, useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Alert, Button, Card, Descriptions, Form, Input, Modal, Select, Space, Table, Tag, Timeline, message } from 'antd';
+import { operationsApi } from '../../services/operations';
+import { authFetch } from '../../services/auth';
+import { useAuth } from '../../contexts/AuthContext';
+import { ROLES } from '../../utils/constants';
+import { orderLabel, paymentLabels, shippingLabels } from '../Operations/labels';
+import { formatCurrency, formatDate } from '../../utils/formatters';
+import '../Operations/OperationsPage.css';
 
-const { Option } = Select;
-
-export const OrderDetail = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [order, setOrder] = useState(
-    mockOrders.find((o) => o.id === id) || mockOrders[0]
-  );
-
-  const handleUpdateStatus = (newStatus) => {
-    setOrder({ ...order, orderStatus: newStatus });
-    message.success(`Đã cập nhật trạng thái đơn sang: ${newStatus}`);
+export default function OrderDetail() {
+  const { id } = useParams(); const { user } = useAuth();
+  const [data, setData] = useState(null); const [loading, setLoading] = useState(true); const [error, setError] = useState('');
+  const [action, setAction] = useState(''); const [busy, setBusy] = useState(false); const [form] = Form.useForm();
+  const load = useCallback(async () => { setLoading(true); setError(''); try { setData(await operationsApi.order(id)); } catch (e) { setError(e.message); } finally { setLoading(false); } }, [id]);
+  useEffect(() => { load(); }, [load]);
+  const submit = async values => {
+    setBusy(true);
+    try {
+      if (action === 'reship') await authFetch(`/api/admin/shipping/${encodeURIComponent(id)}/reship`, { method: 'POST', body: JSON.stringify(values) });
+      else if (action === 'receive') await authFetch(`/api/returns/orders/${encodeURIComponent(id)}/receive`, { method: 'POST', body: JSON.stringify(values) });
+      else if (action === 'inspect') await authFetch(`/api/returns/orders/${encodeURIComponent(id)}/inspect`, { method: 'POST', body: JSON.stringify(values) });
+      else if (action === 'refund') await operationsApi.requestRefund(id, values);
+      else await authFetch(`/api/admin/payments/${encodeURIComponent(id)}/refund/confirm`, { method: 'POST', body: JSON.stringify({ ...values, amount: data.payment.receivedAmount ?? data.payment.amount }) });
+      message.success('Đã lưu kết quả từ hệ thống.'); setAction(''); await load();
+    } catch (e) { message.error(e.message); } finally { setBusy(false); }
   };
-
-  const handlePaymentStatus = (newPayStatus) => {
-    setOrder({ ...order, paymentStatus: newPayStatus });
-    message.success(`Đã cập nhật trạng thái thanh toán sang: ${newPayStatus}`);
+  const order = data?.order; const payment = data?.payment; const shipping = data?.shipping;
+  const returnRecord = data?.return;
+  const canConfirm = payment?.status === 'Paid' && payment.refundState === 'Requested' && ((!shipping || [0, 'Pending'].includes(shipping.status)) || returnRecord?.state === 'Inspected');
+  const canRefund = payment?.status === 'Paid' && (!shipping || [0, 'Pending'].includes(shipping.status)) && (order?.status === 'Confirmed' || payment.requiresReconciliation);
+  const reconcile = async () => {
+    setBusy(true);
+    try { await operationsApi.reconcile(id); message.success('Đã kiểm tra trạng thái thanh toán từ backend.'); await load(); }
+    catch (e) { message.error(e.message); } finally { setBusy(false); }
   };
-
-  const itemColumns = [
-    {
-      title: 'Sản phẩm',
-      key: 'product',
-      render: (_, item) => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <img
-            src={item.image}
-            alt={item.name}
-            style={{ width: 52, height: 52, objectFit: 'cover', border: '1px solid #e5e5e4' }}
-          />
-          <div>
-            <div style={{ fontWeight: 600, color: '#10100f' }}>{item.name}</div>
-            {item.isOneOfOne && (
-              <span className="one-of-one-pill" style={{ fontSize: '9px', padding: '1px 6px' }}>
-                SẢN PHẨM ĐỘC BẢN
-              </span>
-            )}
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: 'Đơn giá',
-      dataIndex: 'price',
-      key: 'price',
-      render: (p) => formatCurrency(p),
-    },
-    {
-      title: 'Số lượng',
-      dataIndex: 'quantity',
-      key: 'quantity',
-      render: (q) => <span>{q}</span>,
-    },
-    {
-      title: 'Thành tiền',
-      key: 'subtotal',
-      render: (_, item) => <span style={{ fontWeight: 600 }}>{formatCurrency(item.price * item.quantity)}</span>,
-    },
-  ];
-
-  return (
-    <div className="rw-admin-page">
-      <div style={{ marginBottom: '24px' }}>
-        <button
-          onClick={() => navigate('/orders')}
-          style={{
-            background: 'none',
-            border: 'none',
-            padding: 0,
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-            fontSize: '13px',
-            color: '#70706f',
-            marginBottom: '12px',
-          }}
-        >
-          <ArrowLeft size={16} /> Quay lại danh sách đơn hàng
-        </button>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <div className="editorial-sub">HỒ SƠ ĐƠN HÀNG</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
-                Chi tiết đơn hàng #{order.id}
-              </h1>
-              <StatusBadge status={order.orderStatus} />
-              <StatusBadge status={order.paymentStatus} />
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ fontSize: '13px', color: '#70706f' }}>Đổi trạng thái:</span>
-            <Select
-              aria-label="Trạng thái đơn hàng" value={order.orderStatus}
-              onChange={handleUpdateStatus}
-              style={{ width: 180 }}
-            >
-              <Option value={ORDER_STATUS.PENDING}>Chờ xác nhận</Option>
-              <Option value={ORDER_STATUS.CONFIRMED}>Đã xác nhận</Option>
-              <Option value={ORDER_STATUS.PREPARING}>Đang chuẩn bị</Option>
-              <Option value={ORDER_STATUS.SHIPPING}>Đang giao</Option>
-              <Option value={ORDER_STATUS.DELIVERED}>Đã giao</Option>
-              <Option value={ORDER_STATUS.CANCELLED}>Đã hủy</Option>
-            </Select>
-          </div>
-        </div>
-      </div>
-
-      <Row gutter={[24, 24]}>
-        {/* Left Column: Items & Financial Breakdown */}
-        <Col xs={24} lg={15}>
-          {/* Order Items Table */}
-          <div className="flat-card" style={{ padding: '24px', marginBottom: '24px' }}>
-            <div className="editorial-sub" style={{ marginBottom: '16px' }}>DANH SÁCH SẢN PHẨM ĐẶT MUA</div>
-            <Table scroll={{ x: 'max-content' }}
-              dataSource={order.items}
-              columns={itemColumns}
-              rowKey="productId"
-              pagination={false}
-              size="middle"
-            />
-          </div>
-
-          {/* Payment & Invoice Breakdown */}
-          <div className="flat-card" style={{ padding: '28px' }}>
-            <div className="editorial-sub" style={{ marginBottom: '16px' }}>CHI TIẾT THANH TOÁN</div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '13px' }}>
-              <span style={{ color: '#70706f' }}>Tiền hàng tạm tính:</span>
-              <span style={{ fontWeight: 500 }}>{formatCurrency(order.subtotal)}</span>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '13px' }}>
-              <span style={{ color: '#70706f' }}>Phí vận chuyển:</span>
-              <span style={{ fontWeight: 500 }}>{formatCurrency(order.shippingFee)}</span>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px', fontSize: '13px' }}>
-              <span style={{ color: '#70706f' }}>Voucher giảm giá (Eco Hero):</span>
-              <span style={{ fontWeight: 600, color: '#991b1b' }}>- {formatCurrency(order.discount)}</span>
-            </div>
-
-            <Divider style={{ margin: '12px 0' }} />
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '16px', fontWeight: 600, color: '#10100f' }}>Tổng cộng thanh toán:</span>
-              <span style={{ fontFamily: "var(--font-ui)", fontSize: '24px', fontWeight: 700, color: '#10100f' }}>
-                {formatCurrency(order.total)}
-              </span>
-            </div>
-
-            <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #f0f0ef', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <span style={{ fontSize: '12px', color: '#70706f', display: 'block' }}>Phương thức: {order.paymentMethod}</span>
-                {order.transactionId && (
-                  <span style={{ fontSize: '11px', fontFamily: 'monospace', color: '#70706f' }}>
-                    Mã giao dịch: {order.transactionId}
-                  </span>
-                )}
-              </div>
-              <Button
-                size="small"
-                onClick={() => handlePaymentStatus(order.paymentStatus === PAYMENT_STATUS.PAID ? PAYMENT_STATUS.UNPAID : PAYMENT_STATUS.PAID)}
-              >
-                Đánh dấu: {order.paymentStatus === PAYMENT_STATUS.PAID ? 'Chưa trả' : 'Đã trả'}
-              </Button>
-            </div>
-          </div>
-        </Col>
-
-        {/* Right Column: Customer Info & Shipping Address */}
-        <Col xs={24} lg={9}>
-          {/* Customer Card */}
-          <div className="flat-card" style={{ padding: '24px', marginBottom: '24px' }}>
-            <div className="editorial-sub" style={{ marginBottom: '16px' }}>THÔNG TIN NGƯỜI NHẬN</div>
-            <div style={{ fontWeight: 600, fontSize: '16px', color: '#10100f', marginBottom: '4px' }}>
-              {order.customer.name}
-            </div>
-            <div style={{ fontSize: '13px', color: '#70706f', marginBottom: '12px' }}>
-              Số điện thoại: {order.customer.phone}
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: '13px', color: '#40403f' }}>
-              <MapPin size={16} color="#70706f" style={{ marginTop: 2, flexShrink: 0 }} />
-              <span>{order.customer.address}</span>
-            </div>
-          </div>
-
-          {/* Shipping & Fulfillment Card */}
-          <div className="flat-card" style={{ padding: '24px' }}>
-            <div className="editorial-sub" style={{ marginBottom: '16px' }}>VẬN CHUYỂN & GIAO NHẬN</div>
-
-            <div style={{ marginBottom: '12px' }}>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Đơn vị vận chuyển</span>
-              <span style={{ fontWeight: 600, fontSize: '13px' }}>{order.shippingCarrier || 'Chưa cập nhật'}</span>
-            </div>
-
-            <div style={{ marginBottom: '12px' }}>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#70706f', display: 'block' }}>Mã vận đơn (Tracking Code)</span>
-              <span style={{ fontFamily: 'monospace', fontWeight: 600, color: '#10100f' }}>
-                {order.trackingCode || 'Chưa tạo vận đơn'}
-              </span>
-            </div>
-
-            {order.notes && (
-              <div style={{ marginTop: '16px', padding: '10px 12px', backgroundColor: '#f9f9f8', borderLeft: '3px solid #10100f', fontSize: '12px' }}>
-                <b>Ghi chú giao hàng:</b> {order.notes}
-              </div>
-            )}
-          </div>
-        </Col>
-      </Row>
-    </div>
-  );
-};
-
-export default OrderDetail;
+  return <div className="ops-page"><div className="ops-heading"><div><Link to="/orders">← Danh sách đơn hàng</Link><h1 className="editorial-title">{order?.orderCode || 'Chi tiết đơn hàng'}</h1></div><Button loading={loading} onClick={load}>Tải lại</Button></div>
+    {error && <Alert type="error" title={error} action={<Button onClick={load}>Thử lại</Button>} />}
+    {order && <><Space wrap><Tag>{orderLabel(order.status)}</Tag><Tag color={payment?.requiresReconciliation ? 'orange' : payment?.status === 'Paid' ? 'green' : 'default'}>{payment?.requiresReconciliation ? 'Cần đối soát thanh toán' : paymentLabels[payment?.status] || 'Chưa có phiên thanh toán'}</Tag><Tag>{shipping ? shippingLabels[shipping.status] : 'Chưa phân công giao hàng'}</Tag><Link to="/shipping">Mở quản lý vận chuyển</Link></Space>
+      {payment?.requiresReconciliation && <Alert type="warning" title="Giao dịch cần đối soát; không cho phép giao hàng." description={payment.reconciliationReason} />}
+      {payment?.refundState === 'Requested' && <Alert type="warning" title="Đang chờ hoàn tiền. Chưa xác nhận tiền đã được hoàn." />}
+      <Card title="Thông tin giao hàng"><Descriptions bordered column={{ xs: 1, md: 2 }} size="small"><Descriptions.Item label="Người nhận">{order.shippingAddress.recipientName}</Descriptions.Item><Descriptions.Item label="Liên hệ">{order.shippingAddress.phoneNumber}</Descriptions.Item><Descriptions.Item label="Địa chỉ">{order.shippingAddress.fullAddress}</Descriptions.Item><Descriptions.Item label="Ngày tạo">{formatDate(order.createdAt)}</Descriptions.Item><Descriptions.Item label="Mã vận đơn">{shipping?.trackingNumber || order.trackingNumber || 'Chưa có'}</Descriptions.Item><Descriptions.Item label="Ghi chú">{order.shippingAddress.note || 'Không có'}</Descriptions.Item></Descriptions></Card>
+      <Card title="Sản phẩm và tổng tiền"><Table rowKey="id" pagination={false} dataSource={order.items} scroll={{ x: 500 }} columns={[{ title: 'Sản phẩm', dataIndex: 'productTitle', render: (value, row) => <Link to={`/products/${row.productId}`}>{value}</Link> }, { title: 'Số lượng', dataIndex: 'quantity' }, { title: 'Giá chốt', dataIndex: 'unitPrice', render: formatCurrency }, { title: 'Thành tiền', dataIndex: 'lineTotal', render: formatCurrency }]} /><p style={{ marginTop: 20 }}>Tổng thanh toán: <strong>{formatCurrency(order.totalAmount)}</strong></p></Card>
+      <Card title="Thanh toán và hoàn tiền"><Descriptions column={1} size="small"><Descriptions.Item label="Số tiền đã nhận">{payment?.paidAt ? formatCurrency(payment.receivedAmount ?? payment.amount) : 'Chưa xác nhận'}</Descriptions.Item><Descriptions.Item label="Ngày thanh toán">{formatDate(payment?.paidAt)}</Descriptions.Item><Descriptions.Item label="Chứng từ hoàn tiền">{payment?.refundReference || 'Chưa có'}</Descriptions.Item><Descriptions.Item label="Ngày hoàn tiền">{formatDate(payment?.refundedAt)}</Descriptions.Item></Descriptions><Space wrap><Button loading={busy} onClick={reconcile}>Đối soát thanh toán</Button>{canRefund && payment.refundState !== 'Requested' && <Button onClick={() => { form.resetFields(); setAction('refund'); }}>Yêu cầu hoàn tiền</Button>}{canConfirm && user?.role === ROLES.ADMIN && <Button onClick={() => { form.resetFields(); setAction('confirm'); }}>Xác nhận chứng từ đã hoàn tiền</Button>}</Space></Card>
+      {['Failed', 'Delivered', 'ReturnRequested', 'ReturnReceived', 'Returned'].includes(order.status) && <Card title="Tiếp nhận và kiểm định hàng hoàn">
+        <Alert type="info" title="Chỉ xác nhận nhận hàng sau khi đã nhận đủ toàn bộ món trong đơn. Kiểm định và hoàn tiền được ghi nhận riêng." style={{ marginBottom: 16 }} />
+        <Space wrap>
+          {order.status === 'Failed' && user?.role === ROLES.ADMIN && payment?.status === 'Paid' && !payment.requiresReconciliation && payment.refundState !== 'Requested' && !returnRecord?.receivedAt && <Button onClick={() => { form.resetFields(); setAction('reship'); }}>Yêu cầu giao lại</Button>}
+          {['Failed', 'Delivered', 'ReturnRequested'].includes(order.status) && !returnRecord?.receivedAt && <Button onClick={() => { form.resetFields(); setAction('receive'); }}>Ghi nhận đã nhận đủ hàng hoàn</Button>}
+          {returnRecord?.state === 'Received' && <Button onClick={() => { form.resetFields(); form.setFieldsValue({ items: order.items.map(item => ({ productId: item.productId, restockApproved: false, condition: 2, note: '' })) }); setAction('inspect'); }}>Kiểm định từng món</Button>}
+        </Space>
+        {returnRecord && <><Descriptions column={1} style={{ marginTop: 20 }}><Descriptions.Item label="Lý do">{returnRecord.reason}</Descriptions.Item><Descriptions.Item label="Chứng từ nhận hàng">{returnRecord.receiptReference || 'Chưa nhận'}</Descriptions.Item><Descriptions.Item label="Trạng thái">{{ Requested: 'Chờ nhận hàng', Received: 'Đã nhận, chờ kiểm định', Inspected: 'Đã kiểm định, chờ hoàn tiền', RefundConfirmed: 'Đã xác nhận hoàn tiền' }[returnRecord.state]}</Descriptions.Item></Descriptions>
+          {returnRecord.items.map(item => <p key={item.productId}>{order.items.find(row => row.productId === item.productId)?.productTitle}: {item.restockApproved ? 'Được duyệt bán lại sau khi hoàn tiền' : 'Cách ly, chưa được bán lại'} · {item.note}</p>)}</>}
+      </Card>}
+      <Card title="Lịch sử đơn hàng"><Timeline items={data.history.map(event => ({ key: event.id, children: <><strong>{orderLabel(event.toStatus)}</strong><p>{event.note}</p><small>{event.changedByName || event.changedByUserId || 'Hệ thống'} · {formatDate(event.createdAt)}</small></> }))} /></Card>
+    </>}
+    <Modal rootClassName="rw-operations-modal" open={!!action} title={{ refund: 'Yêu cầu hoàn tiền', confirm: 'Xác nhận đã hoàn tiền', receive: 'Tiếp nhận toàn bộ hàng hoàn', inspect: 'Kiểm định hàng hoàn', reship: 'Yêu cầu giao lại' }[action]} onCancel={() => !busy && setAction('')} footer={null} destroyOnHidden>
+      <Alert style={{ marginBottom: 20 }} type="info" title={action === 'confirm' ? 'Chỉ xác nhận sau khi đã hoàn tiền thực tế và có mã giao dịch. Thao tác này không tự chuyển tiền.' : 'Mọi kết quả được ghi vào lịch sử. Hàng hoàn chưa được mở bán trước khi hoàn tiền được xác nhận.'} />
+      <Form form={form} layout="vertical" onFinish={submit}>
+        {action === 'reship' && <Form.Item name="note" label="Lý do giao lại cho người giao hàng hiện tại" rules={[{ required: true, whitespace: true }]}><Input.TextArea rows={3} /></Form.Item>}
+        {action === 'receive' && <><Form.Item name="reference" label="Mã vận đơn / chứng từ nhận đủ hàng" rules={[{ required: true, whitespace: true }, { max: 120 }]}><Input /></Form.Item><Form.Item name="reason" label="Lý do trả hàng" rules={[{ required: true, whitespace: true }]}><Input.TextArea rows={2} /></Form.Item></>}
+        {['refund', 'confirm'].includes(action) && <Form.Item name={action === 'refund' ? 'reason' : 'reference'} label={action === 'refund' ? 'Lý do' : 'Mã giao dịch / phiếu hoàn tiền'} rules={[{ required: true, whitespace: true }, { max: 120 }]}><Input.TextArea rows={3} /></Form.Item>}
+        {action === 'inspect' && <Form.List name="items">{fields => fields.map(({ key, name }) => <Card key={key} size="small" style={{ marginBottom: 16 }} title={order.items[name]?.productTitle}><Form.Item name={[name, 'productId']} hidden><Input /></Form.Item><Form.Item name={[name, 'restockApproved']} label="Quyết định bán lại" rules={[{ required: true }]}><Select options={[{ value: false, label: 'Cách ly — chưa được bán lại' }, { value: true, label: 'Cho phép bán lại sau hoàn tiền' }]} /></Form.Item><Form.Item name={[name, 'condition']} label="Tình trạng thực tế" rules={[{ required: true }]}><Select options={[{ value: 0, label: 'Như mới' }, { value: 1, label: 'Rất tốt' }, { value: 2, label: 'Tốt' }, { value: 3, label: 'Khá' }]} /></Form.Item><Form.Item name={[name, 'note']} label="Kết quả kiểm định" rules={[{ required: true, whitespace: true }]}><Input.TextArea rows={2} /></Form.Item></Card>)}</Form.List>}
+        <Button type="primary" htmlType="submit" loading={busy}>Xác nhận</Button>
+      </Form>
+    </Modal>
+  </div>;
+}

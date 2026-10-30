@@ -1,0 +1,1750 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "route": "/inventory",
+      "title": "Kho vòng đời",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/upcycling/qc",
+      "title": "Kiểm định & Nghiệm thu QC",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/collections/sourcing",
+      "title": "Duyệt yêu cầu đồ cũ",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/products",
+      "title": "Tất cả sản phẩm",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/products/drafts",
+      "title": "Vòng đời mới, phong cách riêng",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "modal": "material-to-project"
+    },
+    {
+      "width": 1440,
+      "modal": "project-qc"
+    },
+    {
+      "width": 1440,
+      "modal": "sourcing-next-step"
+    },
+    {
+      "width": 1440,
+      "route": "direct-create-redirect"
+    },
+    {
+      "width": 1440,
+      "route": "upcycled-drafts-only"
+    },
+    {
+      "width": 1440,
+      "route": "public-upcycled-only"
+    },
+    {
+      "width": 1440,
+      "route": "legacy-pdp-hidden"
+    },
+    {
+      "width": 1440,
+      "route": "preview-project-guidance"
+    },
+    {
+      "width": 768,
+      "route": "/inventory",
+      "title": "Kho vòng đời",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/upcycling/qc",
+      "title": "Kiểm định & Nghiệm thu QC",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/collections/sourcing",
+      "title": "Duyệt yêu cầu đồ cũ",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/products",
+      "title": "Tất cả sản phẩm",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/products/drafts",
+      "title": "Vòng đời mới, phong cách riêng",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "modal": "material-to-project"
+    },
+    {
+      "width": 768,
+      "modal": "project-qc"
+    },
+    {
+      "width": 768,
+      "modal": "sourcing-next-step"
+    },
+    {
+      "width": 768,
+      "route": "direct-create-redirect"
+    },
+    {
+      "width": 768,
+      "route": "upcycled-drafts-only"
+    },
+    {
+      "width": 768,
+      "route": "public-upcycled-only"
+    },
+    {
+      "width": 768,
+      "route": "legacy-pdp-hidden"
+    },
+    {
+      "width": 768,
+      "route": "preview-project-guidance"
+    },
+    {
+      "width": 390,
+      "route": "/inventory",
+      "title": "Kho vòng đời",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/upcycling/qc",
+      "title": "Kiểm định & Nghiệm thu QC",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/collections/sourcing",
+      "title": "Duyệt yêu cầu đồ cũ",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/products",
+      "title": "Tất cả sản phẩm",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/products/drafts",
+      "title": "Vòng đời mới, phong cách riêng",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "modal": "material-to-project"
+    },
+    {
+      "width": 390,
+      "modal": "project-qc"
+    },
+    {
+      "width": 390,
+      "modal": "sourcing-next-step"
+    },
+    {
+      "width": 390,
+      "route": "direct-create-redirect"
+    },
+    {
+      "width": 390,
+      "route": "upcycled-drafts-only"
+    },
+    {
+      "width": 390,
+      "route": "public-upcycled-only"
+    },
+    {
+      "width": 390,
+      "route": "legacy-pdp-hidden"
+    },
+    {
+      "width": 390,
+      "route": "preview-project-guidance"
+    },
+    {
+      "scenario": "empty-inventory"
+    },
+    {
+      "scenario": "error-inventory"
+    },
+    {
+      "modal": "intake-inspection-evidence"
+    }
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/111111111111111111111111",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/111111111111111111111111",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/111111111111111111111111",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/111111111111111111111111",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products?IsActive=true&Status=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/222222222222222222222222",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/cart/count",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/111111111111111111111111",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Products/111111111111111111111111",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/shippers",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Sourcing",
+      "method": "GET"
+    }
+  ]
+}

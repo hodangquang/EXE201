@@ -1,6 +1,28 @@
 # Future plan: giao hàng bằng shipper riêng và thanh toán payOS
 
+> **27/10/2026 — chỉ tái chế:** Quyết định phạm vi sản phẩm: chỉ đăng bán mới từ dự án tái chế đã QC. Giữ nguyên trạng thái payment/shipping, quyền shipper và xác nhận tiền từ backend; không triển khai flow giao hàng hay payOS mới trong task này. [Phạm vi, kiểm thử và giới hạn](recycling-only-2026-10-27.md). Các mô tả xung đột ngày trước là snapshot lịch sử.
+
+> 25/10/2026: thông báo trong ứng dụng nay lấy từ lịch sử đơn và phân công giao hàng backend lưu; item xác nhận thanh toán sinh sau khi trạng thái đơn chuyển Confirmed. Không dùng return URL hay trạng thái giao hàng để suy đơn đã thanh toán. Đây là source local, chưa nghiệm thu payOS/giao vận live. [Chi tiết](notifications-2026-10-25.md).
+
+> Rà soát 25/10/2026: giao diện Đơn mua nay xử lý `Paid=1`, `Failed=2` và tách bộ lọc giao hàng theo OrderStatus; luồng backend local vẫn cần nghiệm thu merchant PayOS, shipper và hoàn tiền thật. Xem [báo cáo nghiệp vụ](business-flow-audit-2026-10-25.md).
+
+## Thu gom đồ cũ và nhận kho — cập nhật 25/10/2026
+
+Source local đã tách trạng thái shipper `PickedUp` khỏi `Received` của yêu cầu thu mua: shipper xác nhận lấy hàng, sau đó Staff/Admin xác nhận nhận tại kho trước khi kiểm định. Không tự đưa hàng vào kho khi shipper bấm “đã lấy”; phân công yêu cầu tên, điện thoại, địa chỉ và giờ hẹn thật. Đây là luồng sourcing, không thay trạng thái giao hàng đơn mua hoặc thanh toán payOS. Chưa xác minh triển khai/live. [Bằng chứng](inspection-flow-audit-2026-10-25.md).
+
+## Quyết định mới đã làm local — 25/10/2026
+
+Người dùng chốt Shipper **dùng lại UI quản lý Admin**, giới hạn menu/route/API, không làm portal UI riêng. Member giữ Đơn mua và theo dõi nội tuyến, gộp Lịch sử trùng. Shipping giữ enum 0–4 và thêm 5 PickedUp; Pending là đã phân công/chờ lấy. Ngày phân công/lấy hàng nullable, không backfill giả cho đơn cũ. Tái sử dụng OrderStatusHistories; kiểm tra trạng thái và quyền phía backend. [Báo cáo giao hàng](shipping-acceptance-2026-10-25.md) thay thế phần dự kiến bên dưới khi khác nhau; merchant/deploy vẫn chưa xác minh.
+
+> Cập nhật 25/10/2026: luồng commerce đã được sửa trong source local. Đọc [kết quả triển khai](implementation-report-2026-10-25.md) trước các snapshot lịch sử bên dưới; trạng thái PayOS/Cloudinary/SMTP live và deploy vẫn chưa được xác minh.
+
+## Hiện trạng đã triển khai local — 25/10/2026
+
+Order/payment/shipping là các bản ghi riêng, giữ hàng thuộc order trong Mongo transaction, Paid chốt Sold khi hết tồn; giao hàng không trừ kho lần hai. Có webhook được xác minh chữ ký và polling/worker đối soát. Enum payment là 1 Paid/2 Failed theo source. Đã có full-order receive/inspect/refund confirmation, shipper server-side assignment và dashboard API; automatic refund/partial refund và live merchant vẫn chưa nghiệm thu. Các phần ghi “dự kiến”/mapping cũ bên dưới là lịch sử thiết kế; dùng [báo cáo triển khai](implementation-report-2026-10-25.md) và [migration backend](../Rewear_BackEnd/docs/COMMERCE_MIGRATION.md) cho quyết định hiện tại.
+
 ## Trạng thái triển khai frontend ngày 2026-10-18
+
+> **Đối chiếu source backend mới tại workspace ngày 2026-10-24:** xem `business-overview-2026-10-24.md`. Đã có shipping/shipper, reship, cancel-permanent, webhook và status reconciliation trong source; chưa xác nhận deploy/live. Payment success hiện chốt sản phẩm Sold ngay khi Paid, không chờ Delivered. Mặc định settings giữ hàng 15 phút, runtime có thể ghi đè; một số comment/service fallback vẫn 5 phút. Nhánh cancel-permanent không refund/không trả kho là code hiện có, chưa coi là chính sách đã được duyệt. Cần khớp lại refund với release không nhận Sold và các enum FE/BE. Các đoạn ngày 18 và future plan dưới đây giữ vai trò snapshot/lịch sử định hướng.
 
 Người dùng đã cung cấp Swagger cho bảy endpoint shipping: rates, chi tiết theo orderId, tạo shipping, cập nhật status, queue, my-orders và all. Frontend hiện có `/shipping` cho Admin/Staff, `/shipper/orders` cho SHIPPER, lựa chọn rates khi checkout và thông tin shipping trong chi tiết Đơn mua. Các màn này gọi API thật qua `shippingApi`, không lấy mock; backend không nằm trong repo và localhost:5000 không phản hồi lúc kiểm tra nên chưa xác minh dữ liệu, role server, enum status và thao tác end-to-end. `PUT /api/shipping/{orderId}` cũng xuất hiện trong ảnh Swagger nhưng chưa có body/contract nên chưa dùng. Trang `/orders` admin vẫn là mock độc lập.
 

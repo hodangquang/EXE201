@@ -10,13 +10,11 @@ import AboutPage from '../pages/About/AboutPage';
 import Login from '../pages/Auth/Login';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import ProductList from '../pages/Products/ProductList';
+import CatalogDrafts from '../pages/Products/CatalogDrafts';
 import ProductDetail from '../pages/Products/ProductDetail';
 import ProductForm from '../pages/Products/ProductForm';
 import Categories from '../pages/Products/Categories';
 import Brands from '../pages/Products/Brands';
-import CollectionList from '../pages/Collections/CollectionList';
-import CollectionDetail from '../pages/Collections/CollectionDetail';
-import Inspection from '../pages/Collections/Inspection';
 import SourcingRequests from '../pages/Collections/SourcingRequests';
 import ProjectList from '../pages/Upcycling/ProjectList';
 import ProjectDetail from '../pages/Upcycling/ProjectDetail';
@@ -27,10 +25,8 @@ import ShippingPage from '../pages/Shipping/ShippingPage';
 import CustomerList from '../pages/Customers/CustomerList';
 import CustomerDetail from '../pages/Customers/CustomerDetail';
 import InventoryList from '../pages/Inventory/InventoryList';
-import PromotionList from '../pages/Promotions/PromotionList';
 import ReportsPage from '../pages/Reports/ReportsPage';
 import StaffList from '../pages/Staff/StaffList';
-import SettingsPage from '../pages/Settings/SettingsPage';
 import NotFound from '../pages/NotFound/NotFound';
 import StoreProductPage from '../pages/Store/StoreProductPage';
 import NewInPage from '../pages/Store/NewInPage';
@@ -41,6 +37,7 @@ import ProfilePage from '../pages/Profile/ProfilePage';
 import CheckoutPage from '../pages/Checkout/CheckoutPage';
 import PaymentWaitingPage from '../pages/Checkout/PaymentWaitingPage';
 import StorefrontCartLayout from '../layouts/StorefrontCartLayout';
+import NotificationCenter from '../components/common/NotificationCenter';
 
 export const AppRoutes = () => {
   return (
@@ -50,13 +47,14 @@ export const AppRoutes = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/product/:id" element={<StoreProductPage />} />
-        <Route path="/product" element={<Navigate to="/product/suva-hardshell-jacket" replace />} />
+        <Route path="/product" element={<Navigate to="/new-in" replace />} />
         <Route path="/store/:id" element={<StoreProductPage />} />
         <Route path="/new-in" element={<NewInPage />} />
         <Route path="/women" element={<WomenPage />} />
         <Route path="/men" element={<MenPage />} />
         <Route path="/world" element={<RainsWorldPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/orders/:id" element={<ProfilePage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
       </Route>
 
@@ -67,8 +65,17 @@ export const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/payment/waiting" element={<PaymentWaitingPage />} />
 
+      <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.STAFF, ROLES.SHIPPER]} />}>
+        <Route element={<AdminLayout />}>
+          <Route path="/notifications" element={<NotificationCenter admin />} />
+        </Route>
+      </Route>
+
       <Route element={<ProtectedRoute requiredRole={ROLES.SHIPPER} />}>
-        <Route path="/shipper/orders" element={<ShippingPage />} />
+        <Route element={<AdminLayout />}>
+          <Route path="/shipper/orders" element={<ShippingPage />} />
+          <Route path="/shipper/orders/:id" element={<ShippingPage />} />
+        </Route>
       </Route>
 
       {/* Protected routes inside AdminLayout */}
@@ -77,25 +84,25 @@ export const AppRoutes = () => {
           {/* Admin-only routes */}
           <Route element={<ProtectedRoute requiredRole={ROLES.ADMIN} />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/products/new" element={<ProductForm />} />
+            <Route path="/products/new" element={<Navigate to="/upcycling" replace />} />
             <Route path="/products/edit/:id" element={<ProductForm />} />
             <Route path="/products/brands" element={<Brands />} />
             <Route path="/customers" element={<CustomerList />} />
             <Route path="/customers/:id" element={<CustomerDetail />} />
-            <Route path="/promotions" element={<PromotionList />} />
-
-            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/promotions" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/settings" element={<Navigate to="/dashboard" replace />} />
           </Route>
 
           {/* Shared routes (Both ADMIN and STAFF) */}
           <Route path="/products" element={<ProductList />} />
+          <Route path="/products/drafts" element={<CatalogDrafts />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/products/categories" element={<Categories />} />
 
-          <Route path="/collections" element={<CollectionList />} />
+          <Route path="/collections" element={<Navigate to="/collections/sourcing" replace />} />
           <Route path="/collections/sourcing" element={<SourcingRequests />} />
-          <Route path="/collections/:id" element={<CollectionDetail />} />
-          <Route path="/collections/inspection" element={<Inspection />} />
+          <Route path="/collections/inspection" element={<Navigate to="/inventory" replace />} />
+          <Route path="/collections/:id" element={<Navigate to="/collections/sourcing" replace />} />
 
           <Route path="/upcycling" element={<ProjectList />} />
           <Route path="/upcycling/:id" element={<ProjectDetail />} />

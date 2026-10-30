@@ -1902,6 +1902,10 @@
 }
 
 .rains-detail-view-switches {
+  max-width: calc(100% - 24px);
+  width: max-content;
+  flex-wrap: wrap;
+  justify-content: center;
   position: absolute;
   bottom: 16px;
   left: 50%;
@@ -1919,6 +1923,8 @@
 }
 
 .rains-detail-switch-btn {
+  min-height: 44px;
+  white-space: nowrap;
   border: none;
   background: transparent;
   font-family: 'Inter', sans-serif;
@@ -1938,6 +1944,10 @@
 .rains-detail-switch-btn--active {
   background: #3A3A39;
   color: #FFFFFF;
+}
+
+@media (min-width: 1024px) {
+  .rains-detail-view-switches { top: 104px; bottom: auto; }
 }
 
 /* ── Right Column: Breadcrumbs & Accordions (Screenshots 2 & 3) ── */

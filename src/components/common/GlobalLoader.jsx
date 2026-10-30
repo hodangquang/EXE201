@@ -2,18 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import './GlobalLoader.css';
 
 const GlobalLoader = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
+  const rendered = useRef(false);
   const loadingStartTime = useRef(0);
   const timeoutRef = useRef(null);
 
   useEffect(() => {
     const handleLoadingEvent = (e) => {
       const loading = e.detail;
-      setIsLoading(loading);
 
       if (loading) {
-        if (!isRendered) {
+        if (!rendered.current) {
+          rendered.current = true;
           loadingStartTime.current = Date.now();
           setIsRendered(true);
         }
@@ -24,6 +24,7 @@ const GlobalLoader = () => {
         
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
+          rendered.current = false;
           setIsRendered(false);
         }, remainingTime);
       }
@@ -31,9 +32,10 @@ const GlobalLoader = () => {
     window.addEventListener('global-loading', handleLoadingEvent);
     return () => {
       window.removeEventListener('global-loading', handleLoadingEvent);
+      clearTimeout(timeoutRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [isRendered]);
+  }, []);
 
   if (!isRendered) return null;
 

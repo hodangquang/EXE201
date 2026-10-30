@@ -1,8 +1,78 @@
 # Khoảng trống và việc cần xác minh
 
+> **27/10/2026 — chỉ tái chế:** Nhánh bán lại và đường tạo/mở preview trực tiếp đã khóa trong source. Chưa deploy hoặc migrate database live; hàng Upcycled đã có chưa được kiểm toán nguồn gốc lại. Không tự đổi loại SecondHand thành Upcycled hoặc xóa lịch sử. Các giới hạn luồng mở preview rút gọn bên dưới chỉ còn là lịch sử. [Phạm vi, kiểm thử và giới hạn](recycling-only-2026-10-27.md). Các mô tả xung đột ngày trước là snapshot lịch sử.
+
+> Cập nhật thông báo 25/10/2026: source local nay có trung tâm thông báo chung cho đơn, giao hàng, thu mua và món hợp gu; Admin/Staff/Shipper có màn riêng. Ghi chú cũ bên dưới nói “chỉ có gu đồ” là snapshot trước triển khai. Chưa backfill lịch sử, chưa push/email tổng quát, chỉ đếm 50 item mới nhất; chưa nghiệm thu deploy. [Chi tiết](notifications-2026-10-25.md).
+
+> Rà thông báo 25/10/2026: source local hiện chỉ có thông báo **món mới hợp gu** cho Member (`StyleMatchNotifications`, tab Profile và badge avatar). Chưa có hộp thư thông báo chung cho đơn hàng, thu mua, giao hàng hoặc Admin; chuông thông báo mock ở Header quản trị đã bỏ. Email OTP là luồng xác thực, email gu đồ cần opt-in và chưa nghiệm thu SMTP/deploy.
+
+> Theo dõi gu đồ nay đã có ở source/API local (25/10/2026), ghi chú trước đó nói chưa có saved search/thông báo là snapshot. Còn mở: chưa kiểm tra browser với Member thật, SMTP email và SiteBaseUrl trên deploy; scan 60 giây có thể bỏ qua món đã bán trước khi quét; feed chỉ hiển thị 50 thông báo mới nhất. [Báo cáo](style-watch-implementation-2026-10-25.md).
+
+> Phát hiện khi đánh giá tính năng 25/10/2026: trang hành trình hiện có ảnh và mốc từ backend nhưng chưa có số đo thật hay bản đồ vị trí lỗi; source chưa có saved search/thông báo thật hoặc luồng gửi lại chính món đã mua. Đây là cơ hội phát triển, không phải chức năng hiện có. Xem [đánh giá](feature-opportunities-2026-10-25.md).
+
+> Hiện trạng sau rà soát 25/10/2026: API local có 1 túi tote mở bán/tồn 1 và 5 preview/tồn 0; cả 6 vẫn ghi nguồn ảnh `ai-generated`. Cần kiểm tra hiện vật, ảnh, giá và khả năng giao của món đang bán. PayOS merchant, deploy, giao vận/hoàn tiền thật chưa nghiệm thu. Các đoạn dưới đây gồm snapshot cũ (đặc biệt câu “6 preview”); ưu tiên [báo cáo mới](business-flow-audit-2026-10-25.md).
+
+## Bản lưu ý tưởng tĩnh — 25/10/2026
+
+`/products/drafts` không đồng bộ với API và có thể giữ giá/cỡ/ảnh lúc soạn khác bản sản phẩm đang bán. UI nay ghi rõ vai trò lưu trữ và dẫn về Danh sách sản phẩm; không dùng JSON tải từ trang này để suy trạng thái bán hiện tại. Chưa bỏ route hoặc tệp bản lưu vì vẫn hữu ích để đối chiếu ý tưởng gốc.
+
+## Giới hạn quy trình độc bản rút gọn — 25/10/2026
+
+Bước mở bán preview nay chỉ cần Admin chọn tình trạng, không bắt buộc tải ảnh thật hoặc ảnh trước/sau upcycling. Backend đặt tồn 1/độc bản và lưu người/thời gian xác nhận, nhưng không thể chứng minh hiện vật hay tình trạng chỉ qua thao tác này. Sáu bản ghi vẫn là preview/tồn 0; ảnh đang lưu thuộc nguồn đề xuất và được giữ nếu Admin mở bán, metadata nguồn ảnh không bị đổi. Cần Admin đối chiếu hàng, giá, ảnh và khả năng giao trước khi nhận đơn. Không tự động nâng tồn hoặc bỏ preview. Các mục về nhập tồn và ảnh bắt buộc bên dưới là snapshot cũ.
+
+## Xác nhận tồn và hàng đề xuất — 25/10/2026
+
+Đã có UI/Admin API nhập tồn hàng đang bán và mở preview sau xác nhận thủ công kèm ảnh hiện vật/biên bản. Sáu đề xuất chưa được xác nhận, vẫn tồn 0 và không mua được; không tự nâng tồn bằng ảnh đề xuất. Endpoint trực tiếp không liên kết bản ghi sourcing, kho hay dự án upcycling, nên timeline nguồn gốc vẫn không hoàn chỉnh (`isComplete=false`) dù có ảnh trước/sau. Cần đối chiếu hiện vật/giá/cỡ, biên bản và deploy trước khi nhận đơn thật. Chưa có luồng bổ sung tồn cho hàng Sold hoặc đã có phân bổ đơn; cần nghiệp vụ nhập lô mới.
+
+## Luồng kiểm định còn cần nghiệm thu thực tế — 25/10/2026
+
+Source local đã chặn bán lại trước QC có ảnh và tách shipper lấy hàng khỏi nhận kho. Vẫn cần kiểm tra hiện vật/ảnh/chứng từ bởi nhân viên; URL ảnh chưa chứng minh đúng món đồ. Hàng QC không đạt sau khi đã chi trả chỉ có `Rework`, chưa có quyết định kết thúc/chuyển mục đích được chốt. Chưa có ghi chú giải thích công khai riêng cho khách khi kết quả kiểm định làm thay đổi báo giá. Sourcing/pickup chưa có version guard cho ghi đồng thời. Sản phẩm được xuất bản trước guard mới chưa được kiểm toán lại; bản deploy/live chưa xác minh. Xem [báo cáo kiểm định](inspection-flow-audit-2026-10-25.md).
+
+## Vị trí chỉnh tồn kho — rà source 25/10/2026
+
+Giao diện hiện **chưa có ô tăng/chỉnh tồn** tại ProductForm hoặc trang Kho vòng đời. ProductForm chỉ đọc `stockQuantity` vào `existingStock` rồi gửi lại số đó trong PUT; không có Form.Item/InputNumber cho stock. API PUT có StockQuantity nhưng không có thao tác UI để nhập. Với sáu preview, tăng stock đơn thuần cũng không bỏ chặn IsPreview ở cart/checkout/reservation. Còn thiếu UI chỉnh tồn có kiểm soát và quy trình mở bán preview; chưa triển khai trong task giải thích vị trí này.
+
+## Nhãn ảnh sau chỉnh nội dung — 25/10/2026
+
+Đã bỏ nhãn/câu ảnh AI trên giao diện theo yêu cầu người dùng. Ảnh vẫn có nguồn AI trong metadata và tài liệu; việc bỏ nhãn không xác nhận đây là ảnh hiện vật hoặc hàng đã QC. Bộ sản phẩm tiếp tục preview, bốn góc và chặn mua giữ nguyên. Thay đổi chỉ phần hiển thị, không ghi lại API/database; bộ fixture bản nháp đã chỉnh assertion nhãn nhưng chưa chạy lại đầy đủ.
+
+## Gallery nhiều góc — 25/10/2026
+
+Đã khắc phục gallery sáu sản phẩm mới chỉ có một ảnh: hiện bốn URL/nội dung riêng mỗi món, detail cận cảnh và chọn đủ bốn góc; 168 kiểm tra qua API thật đạt. Ảnh vẫn là AI/preview. Nguồn PNG tăng lên 68,9 MB; cần responsive derivatives nếu triển khai rộng, storefront hiện dùng CDN tự tối ưu. Chưa deploy hosting/QA browser khác. [Chi tiết](catalog-gallery-2026-10-25.md).
+
+## Bộ sản phẩm đề xuất — 25/10/2026
+
+**Đính chính sau thay catalog:** đã ghi Mongo nguồn API và upload Cloudinary thật, ẩn 12 sản phẩm cũ; storefront nhận 6 preview mới. Hook đã bỏ fallback ảnh Unsplash. Các ghi chú chưa ghi DB/Cloudinary bên dưới mô tả task soạn trước đó. Còn mở: xác nhận hàng thật/tồn và quy trình mở bán, deploy hosting, thiết bị/browser khác. [Bằng chứng](catalog-replacement-2026-10-25.md).
+
+Đã soạn sáu bản nháp với tám ảnh AI tại `/products/drafts` theo lựa chọn của người dùng. Chưa có hàng/tồn/tình trạng thực tế được xác nhận, chưa ghi MongoDB, upload Cloudinary hoặc deploy; không đưa bản nháp vào cart/checkout. Ảnh PNG cần tối ưu trước khi dùng storefront. Hook bán hàng hiện vẫn dùng ảnh Unsplash khi thiếu ảnh API; bộ đề xuất không thay thế fallback đó. [Chi tiết và QA](catalog-drafts-2026-10-25.md).
+
+## Shipping/Profile local — 25/10/2026
+
+Đã bỏ Lịch sử trùng Đơn mua, thêm tracking ngay trong thẻ, dùng lại UI Admin cho Shipper và kiểm tra assignment/pickup/history phía server. [Kết quả hiện tại](shipping-acceptance-2026-10-25.md) thay thế các ghi chú cũ liên quan bên dưới.
+
+Còn mở: deploy API/frontend đồng bộ, migration database thật, merchant payOS/Cloudinary/SMTP live, legacy data đại diện và Final Audit rộng hơn. Browser dùng API/Mongo local, gateway test double. Build còn cảnh báo bundle lớn, lint chưa có cấu hình ESLint. Không kết luận API deploy đã có tracking mới.
+
+> Cập nhật 25/10/2026: luồng commerce đã được sửa trong source local. Đọc [kết quả triển khai](implementation-report-2026-10-25.md) trước các snapshot lịch sử bên dưới; trạng thái PayOS/Cloudinary/SMTP live và deploy vẫn chưa được xác minh.
+
 Danh sách này là phát hiện từ frontend tại 2026-10-06, không phải lỗi backend đã xác nhận. Cập nhật hoặc xóa mục khi mã thay đổi.
 
 ## Dữ liệu và flow
+
+### Đối chiếu FE/BE ngày 2026-10-24
+
+Source backend hiện có tại `Rewear_BackEnd/`; các nhận định cũ không có backend/enum chưa rõ bên dưới là lịch sử. Xem `business-overview-2026-10-24.md`. Chỉ review source, chưa kiểm chứng build/backend/live:
+
+- Snapshot cũ báo Profile map sai sourcing 6/7/8; source ProfilePage hiện đã map đúng. Chưa kiểm tra lại nhãn ở SourcingRequests admin trong lượt này. Payment enum Paid=1/Failed=2 khác numeric fallback FE (status endpoint source trả chuỗi/isPaid); order Failed=6 là nhận định snapshot cũ, cần đối chiếu lại code hiện hành trước khi xử lý.
+- Payment đã chốt Sold ngay khi Paid, nhưng release chỉ nhận Available/Reserved; refund không tự phục hồi sản phẩm Sold. Cần thống nhất multi-quantity/1-of-1, rollback và idempotency liên tài liệu.
+- Product PUT backend multipart, FE JSON. Staff có UI shipping nhưng policy my-orders/status backend không bao gồm Staff. Checkout DTO có ShippingMethod nhưng BuildOrder chưa lưu lựa chọn; tạo shipping nhận method riêng.
+- Backend có webhook/reconcile và admin reship/cancel-permanent; FE chưa nối đầy đủ. Cancel-permanent không hoàn tiền/trả kho trong code; không coi là chính sách đã duyệt. Sourcing có bản ghi chi trả thủ công PurchasePayout, chưa tích hợp chuyển khoản tự động.
+- `AuthService.RegisterAsync` nhận role từ request; product write action chưa gắn Authorize; shipping status kiểm assignment/enum nhưng chưa guard đầy đủ thứ tự. Chưa thử khai thác/gọi API không quyền.
+- Dashboard, đơn quản trị, thu gom/kiểm định cũ, upcycling/QC, kho, khuyến mãi và cài đặt vẫn mock/local; API call không chứng minh end-to-end.
+
+- **About sau chỉnh UI 2026-10-24:** đã bỏ các section/hiệu ứng riêng gây lệch storefront và dọn CSS cũ; bốn bước/FAQ/anchor/giỏ được QA trên Chromium 320–1440px, không xác nhận backend. Newsletter/link placeholder của footer chung vẫn giữ hành vi demo sẵn có. Chưa QA Safari/Firefox, thiết bị thật hoặc toàn bộ screen reader/contrast; các vấn đề Catalog/PDP/Profile trong audit vẫn còn.
+
+- **Audit UI 2026-10-24:** `usePublicProducts` hiện thay ảnh API thiếu bằng Unsplash theo từ khóa; listing/PDP không ghi nhãn minh họa. Vì vậy phát biểu “không thay ảnh bán hàng bằng ảnh stock” ở ghi chép ngày 18 bên dưới không còn phản ánh mã hiện tại sau cập nhật ngày 23. Cần dùng placeholder hoặc nhãn minh họa rõ ràng; chưa thay mã trong task audit. Hook còn không trả error riêng, GlobalLoader che toàn trang tối thiểu 2,5 giây. Xem `ui-audit-2026-10-24.md`.
+- **UI còn mở, đã kiểm tra bằng fixture:** lưới catalog nằm sâu dưới banner; chọn 8 cột mobile vẫn hiển thị 2 cột; PDP lặp ảnh khi chỉ có một ảnh; Profile/Checkout lệch radius/mật độ; CTA “Quay lại cửa hàng” ở checkout empty chưa dùng style nút chung. Đề xuất cải thiện chưa triển khai, không phải lỗi backend đã xác nhận.
 
 - Cập nhật UI 2026-10-18: ảnh banner/cảm hứng Mới về/Nam/Nữ đã tách thành ba bộ, nhưng sản phẩm thật vẫn lấy cùng nguồn API và chưa có phân loại giới tính trong adapter. Vì vậy ảnh/sản phẩm trong lưới có thể vẫn giống nhau giữa ba trang; không thay ảnh bán hàng bằng ảnh stock. Footer dùng mẫu Home, còn link `#` và nút newsletter thông báo tính năng đang hoàn thiện. Chưa có chức năng đăng ký nhận tin thật. Bộ ảnh local mới chưa có biến thể responsive/WebP/AVIF; xác minh UI bằng Chromium với fixture, chưa xác minh dữ liệu/backend live.
 
@@ -28,7 +98,7 @@ Danh sách này là phát hiện từ frontend tại 2026-10-06, không phải l
 3. Đã bỏ mục “Chuyển quyền” và lời gọi switchRole không tồn tại trong Header; chỉ hiển thị role của phiên. Tích hợp shipping đã thêm SHIPPER trong AuthContext và guard route theo role. Đây là điều hướng/ẩn UI, không thay thế kiểm quyền server.
 4. `GlobalLoader` giữ overlay tối thiểu 2,5 giây cho phần lớn `authFetch`; payment status polling dùng loading riêng và không bật overlay. Listing/filter vẫn có thể chậm. React StrictMode dev có thể gọi effect hai lần.
 5. Build thành công nhưng JS bundle khoảng 1.9 MB (warning >500 KB). `npm.cmd run lint` lỗi vì thiếu cấu hình ESLint flat config. Không có test suite trong package scripts.
-6. Chưa thấy backend/schema, nên method, response, enum và workflow sourcing chỉ là client expectations. Kiểm tra API thật hoặc hỏi owner khi thay đổi contract.
+6. Đã có backend source và DTO sourcing trong `Rewear_BackEnd/`; modal Profile đã đối chiếu source. Response tài khoản thật và bản deploy vẫn cần kiểm tra khi thay đổi contract.
 7. Tên/mô tả/màu sản phẩm lấy từ API có thể vẫn là tiếng Anh hoặc chứa thương hiệu cũ; frontend không tự viết lại dữ liệu catalog thật. Một số ảnh tham khảo và tên file/class kỹ thuật cũ còn được giữ để tránh đứt asset hoặc selector. Cần chuẩn hóa catalog tại nguồn khi backend/data được chốt.
 
 ## Ưu tiên gợi ý khi được giao triển khai
@@ -51,3 +121,7 @@ Backend deployment handoff: backend owner needs to commit and deploy the Dockerf
 - AuthModal/CartDrawer/AccountMenu dùng chung Home được giữ nguyên nguồn; chưa coi đã hoàn tất kiểm thử accessibility cho mọi trạng thái của chúng. Login đã bỏ mật khẩu khởi tạo mẫu; checkbox ghi nhớ chưa có persistence riêng.
 - Không tuyên bố đạt WCAG đầy đủ: chưa audit screen reader, mọi contrast, mọi tổ hợp dữ liệu, Safari/Firefox hoặc thiết bị thật. Bundle ~1.96 MB và lint thiếu flat config còn mở.
 - Navbar Home gốc ở viewport 375px ép vùng menu chỉ còn khoảng 10px; các route ngoài Home dùng hàng menu cuộn riêng để giữ link sử dụng được. Task đồng bộ navbar không sửa Home theo phạm vi đã thống nhất; nếu muốn đồng nhất cả hành vi mobile, cần sửa responsive của Home ở task riêng.
+
+## Sau triển khai commerce 25/10/2026
+
+Những lỗi public role/catalog writes, reservation owner, paid-refund stock, mapping enum và mock vận hành trọng tâm được sửa trong source local; không tiếp tục coi chúng là trạng thái hiện tại chỉ dựa trên audit cũ. Còn live staging/payOS/Cloudinary/SMTP, đối chiếu dữ liệu cũ, partial/excess refunds, worker hosting ngủ, pagination vòng đời khi dữ liệu lớn và regression toàn storefront/16 phân hệ. Xem chi tiết ở implementation-report-2026-10-25.md.

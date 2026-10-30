@@ -1,8 +1,51 @@
-﻿# Bản đồ API từ frontend
+# Bản đồ API từ frontend
+
+> **27/10/2026 — chỉ tái chế:** POST inventory/{id}/qc và /publish của operations, Sourcing convert-to-product, ProductService.CreateAsync và activate-preview từ chối nghiệp vụ; POST /api/Products trả 409 trước upload. Public GET Products và journey chỉ Upcycled, cart/checkout/reservation chặn loại khác. Endpoint đăng bán hợp lệ là POST /api/operations/projects/{id}/publish sau QCApproved. [Phạm vi, kiểm thử và giới hạn](recycling-only-2026-10-27.md). Các mô tả xung đột ngày trước là snapshot lịch sử.
+
+> API thông báo từ backend source local 25/10/2026: JWT Member/Admin/Staff/Shipper gọi `GET /api/notifications` → `{data: [{id,kind,title,body,link,createdAt,readAt}], unreadCount}` (50 item mới nhất); `POST /api/notifications/{id}/read` → 204 hoặc 404 nếu không thuộc quyền. Member nhận thêm item gu đồ ID có tiền tố `style:`; không ghi nhận thanh toán từ browser. [Chi tiết](notifications-2026-10-25.md).
+
+> API theo dõi gu đồ 25/10/2026 (từ source): JWT Member cho `GET/PUT /api/style-watch`, `GET /api/style-watch/notifications`, `POST /api/style-watch/notifications/{id}/read`. PUT nhận `categoryIds`, `sizes`, `colors`, `minPrice`, `maxPrice`, `isEnabled`, `emailEnabled`; owner lấy từ JWT, không từ body. Chỉ món mới sau khi bật theo dõi mới tạo thông báo. [Chi tiết](style-watch-implementation-2026-10-25.md).
+
+> Cập nhật từ source backend 25/10/2026: `POST/PUT /api/Products` bắt buộc `Condition` hợp lệ, không tự điền Good khi request thiếu; `DELETE /api/Products/{id}` trả 409 nếu món còn được phân bổ trong đơn và chỉ ẩn mềm khi thành công. `POST /api/Products/{id}/activate-preview` vẫn AdminOnly, yêu cầu tình trạng và đặt độc bản/tồn 1. Xem [rà soát nghiệp vụ](business-flow-audit-2026-10-25.md).
+
+## Đăng bán đồ độc bản — contract mới từ source local 25/10/2026
+
+`POST /api/Products/{id}/activate-preview` nay nhận JSON `{condition}` và yêu cầu AdminOnly. `condition` phải là enum hợp lệ; backend xác nhận sản phẩm đang preview/Available/tồn 0, ghi actor/thời điểm, đặt `isUnique=true`, `stockQuantity=1`, `isPreview=false`. Không nhận số lượng, mã biên bản hay ảnh mới; giữ nguyên URL ảnh, ảnh trước và `imageSource` hiện có. `POST /api/Products` tạo hàng mới với `isUnique=true`, tồn 1; form tạo/sửa không còn nhập tồn. PUT metadata vẫn gửi lại tồn hiện có để giữ contract cũ. Cart và giữ kho tiếp tục giới hạn một món; khi hết hàng trạng thái bán/giữ do backend xử lý. Đây là xác nhận thủ công của Admin, không tạo mốc QC hoặc xác thực ảnh. Các đoạn contract nhập tồn/ảnh bắt buộc bên dưới là trạng thái trước thay đổi này.
+
+## [Lịch sử trước điều chỉnh] Tồn kho và mở bán preview — 25/10/2026
+
+`POST /api/Products` nhận StockQuantity từ form tạo mới (mặc định 1, phải >=1). `PUT /api/Products/{id}` nhận multipart/form-data và StockQuantity từ form quản trị. Hàng đang bán phải tồn >=1, độc bản đúng 1, không đổi tồn khi có phân bổ đơn; Reserved/Sold không sửa qua form. Preview chỉ nhận tồn 0 qua PUT. `POST /api/Products/{id}/activate-preview` dùng multipart/form-data và quyền AdminOnly, nhận StockQuantity, Condition, VerificationReference, Images (2–5 ảnh hiện vật ở các góc khác nhau); Upcycled còn cần BeforeImages (1–5). Backend kiểm tra trạng thái, người xác nhận, ảnh HTTPS sau upload; thay ảnh đề xuất, lưu người/thời gian/tham chiếu, bỏ IsPreview. Cart/checkout vẫn kiểm tra IsPreview và tồn. Đây là xác nhận thủ công, không tự sinh sourcing/project/QC. Chưa thử với hiện vật/deploy; sáu món vẫn preview/tồn 0.
+
+## Điều kiện kiểm định đã đối chiếu backend local — 25/10/2026
+
+`GET /api/Sourcing/my` và `GET /api/Sourcing/{id}` trả DTO có `customerName/customerEmail`, `inspectionImages`, tình trạng khai báo/kiểm định và payout; với member, controller lược bỏ `adminNote`, `inspectedBy`, `offerHistory` và người xác nhận trong payout. Admin/Staff vẫn nhận dữ liệu nội bộ. `PATCH /api/Sourcing/{id}/inspect` nhận `images` (0–5 URL HTTPS) và kết quả; `POST /api/operations/inventory/{id}/qc` yêu cầu 1–5 ảnh khi `passed=true`. `POST /api/operations/inventory/{id}/publish` chỉ nhận inventory `QCApproved` có lượt QC đạt kèm ảnh; từ chối ảnh/tình trạng khác dữ liệu đã kiểm định. `POST /api/Sourcing/{id}/convert-to-product` dùng cùng guard backend. Phân công lấy hàng yêu cầu dữ liệu liên hệ/giờ hẹn thực tế; shipper `PickedUp` chưa là nhận kho, `PATCH /api/Sourcing/{id}/received` do nhân viên gọi riêng. Đây là contract từ source local và test, chưa xác minh deploy. [Chi tiết](inspection-flow-audit-2026-10-25.md).
+
+## Contract shipping đã kiểm thử local — 25/10/2026
+
+> Nội dung UI 25/10/2026: nhãn ảnh AI đã được bỏ theo yêu cầu người dùng. Adapter/renderer dùng `formatCatalogText` cho câu mô tả ghép sẵn; response API, `imageSource`, `imageLabels`, URL và dữ liệu Mongo không thay đổi. Không có mutation hoặc endpoint mới trong task bỏ nhãn.
+
+> Gallery 25/10/2026: `GET /api/Products` và `GET /api/Products/{id}` thêm mảng tùy chọn `imageLabels`, khớp thứ tự với `imageUrls`; dữ liệu cũ không có nhãn dùng “Ảnh n” ở client. Sáu sản phẩm mới đã có bốn ảnh/nhãn, journey giữ nguyên ảnh nguyên liệu và trả bốn ảnh hiện tại. Không có endpoint import/gallery hàng loạt mới. [Áp dụng và QA](catalog-gallery-2026-10-25.md).
+
+> Catalog 25/10/2026 đã kiểm tra API local thật: GET Products chỉ còn 6 sản phẩm mới, response thêm `isPreview`, `imageSource`, `condition` nullable cho preview. GET `/api/products/{id}/journey` trả nhãn preview/AI, ảnh trước-sau HTTPS; preview không có mốc vận hành giả. Preview bị chặn tại cart add/update/read, checkout và giữ kho. Không có endpoint nhập catalog mới; dùng CLI bảo trì có đối chiếu DB/API. [Chi tiết](catalog-replacement-2026-10-25.md).
+
+`GET /api/orders/{id}/tracking` kiểm tra chủ đơn, trả `order`, `shipping` nullable, `deliveryHistory` (code/label/occurredAt nullable), giữ timeline tương thích. Customer không nhận ghi chú nội bộ/id Shipper/danh tính người ghi lịch sử. DTO shipment có snapshot người nhận, địa chỉ, kiện hàng, paymentStatus, assignedAt/pickedUpAt và history.
+
+Tận dụng API cũ: queue/all/my-orders/GET shipment/POST phân công/PUT status. Staff/Admin được xem all; Shipper chỉ xem và cập nhật đúng đơn được phân công. Giữ mã 0–4, thêm **5 PickedUp**; chuyến mới 0 → 5 → 1 → 2/3. failureCode có allowlist, Other cần note; attemptCount client bị bỏ qua. POST phân công đổi người được trước pickup, không tạo shipment thứ hai. [Contract/kiểm thử/migration](shipping-acceptance-2026-10-25.md). Chưa xác minh deploy; các ghi chép cũ bên dưới là snapshot lịch sử.
+
+> Cập nhật 25/10/2026: luồng commerce đã được sửa trong source local. Đọc [kết quả triển khai](implementation-report-2026-10-25.md) trước các snapshot lịch sử bên dưới; trạng thái PayOS/Cloudinary/SMTP live và deploy vẫn chưa được xác minh.
 
 **Phạm vi:** workspace frontend không chứa backend. Hầu hết contract bên dưới suy ra từ mã client; riêng flow checkout/payment đã đối chiếu mã backend chạy ngoài workspace và Swagger live ngày 2026-10-07. Ngoại lệ: người dùng đã cung cấp schema Swagger cho `PUT /api/Products/{id}` ngày 2026-10-06; các endpoint cart, orders và payment session ngày 2026-10-07. GET cart được mô tả trả giỏ kèm thông tin sản phẩm đầy đủ; response schema cart, count và một số orders vẫn chưa được kiểm thử bằng dữ liệu tài khoản thật; checkout/session đã đối chiếu mã backend, xem `payment-checkout-audit.md`. Backend đặt thời hạn session 15 phút theo cấu hình; chưa thử thành công với PayOS thật. Các response khác thường được chuẩn hóa tại page bằng `Array.isArray(res) ? res : res.data || []`, detail bằng `res.data || res`; cần xác nhận shape thật.
 
 ## Shipping (Swagger do người dùng cung cấp ngày 2026-10-18)
+
+> **Đính chính từ source backend local 2026-10-24:** workspace có `Rewear_BackEnd/`. Ghi chú đầu tài liệu và các phần bên dưới là snapshot contract frontend cũ; khi xung đột, ưu tiên các phát hiện sau và `business-overview-2026-10-24.md`. Đây là review source, chưa xác minh response live/bản deploy.
+
+- Sourcing backend: **6 Completed, 7 Rejected, 8 Declined**. ProfilePage hiện map đúng cả mã số và tên enum; nhận định map Profile sai là snapshot cũ. DTO `SourcingResponse` trong source có `imageUrls`, `declaredCondition`, `inspectedCondition`, `customerExpectedPrice`, `offeredPrice`, `requiresRevisedAcceptance`, `payout`. `payout` là bản ghi chi trả thủ công; chỉ state Confirmed mới hiển thị là cửa hàng đã ghi nhận chi trả. Chưa xác minh response tài khoản thật/deploy trong lượt UI này.
+- Payment backend enum: 0 Pending, **1 Paid, 2 Failed**, 3 Expired, 4 Refunded. Numeric fallback FE đảo 1/2; `/status` trong source trả chuỗi và `isPaid`, nên không kết luận endpoint này chắc chắn đang hiển thị sai. Order thêm **6 Failed**. Shipping enum đủ 0 Pending/1 InTransit/2 Delivered/3 Failed/4 Returned.
+- Có webhook controller và endpoint reconcile/history; không khẳng định chỉ có polling hoặc webhook production đã đăng ký. `Program.cs`/settings mặc định session 15 phút, service fallback 5 phút; runtime có thể ghi đè.
+- Payment success commit Reserved → Sold ngay khi Paid; repository release không nhận Sold, xung đột với refund trả kho.
+- Backend `PUT /api/Products/{id}` hiện nhận multipart/form-data qua FromForm, khác JSON ProductForm FE gửi theo Swagger cũ.
+- Có cancel/tracking order, payment reconcile/history và admin shipping reship/cancel-permanent; FE chưa nối đầy đủ. Policy shipping my-orders/status là Admin/Shipper, không bao gồm Staff.
 
 Frontend gọi qua `shippingApi` trong `src/services/auth.js`; adapter ở `src/services/shipping.js`. Các endpoint, tham số và quyền bên dưới lấy từ ảnh/mô tả Swagger người dùng gửi, **chưa kiểm chứng bằng response backend live** (localhost:5000 không phản hồi lúc kiểm tra). Response thành công được mô tả là `{success,message,data,errorCode}` nhưng schema `data` chỉ ghi `string`; client nhận JSON hoặc text JSON và chuẩn hóa một số dạng list/object có thể có. Không coi tên field suy đoán trong adapter là contract backend đã xác nhận.
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ConfigProvider, Layout } from 'antd';
 import viVN from 'antd/locale/vi_VN';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/common/Sidebar';
 import Header from '../components/common/Header';
 import '../styles/AdminQuality.css';
@@ -10,8 +10,6 @@ const { Content } = Layout;
 
 export const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { pathname } = useLocation();
-  const isDemo = ['/dashboard', '/collections', '/upcycling', '/orders', '/inventory', '/promotions', '/settings'].some(path => pathname === path || pathname.startsWith(`${path}/`)) && pathname !== '/collections/sourcing';
 
   return (
     <ConfigProvider locale={viVN} theme={{ token: { fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif' } }}>
@@ -22,7 +20,6 @@ export const AdminLayout = () => {
         <Content
           className="rw-admin-content"
         >
-          {isDemo && <p className="rw-demo-notice">Giao diện minh họa · Dữ liệu và thao tác trên màn hình này chưa được lưu trên máy chủ.</p>}
           <Outlet />
         </Content>
       </Layout>

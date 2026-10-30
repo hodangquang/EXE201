@@ -19,7 +19,7 @@ export const Login = () => {
       const data = await login(values.email, values.password);
       const role = data.data?.role || data.role || '';
       message.success(`Đăng nhập thành công với vai trò ${role}`);
-      navigate(role === ROLES.ADMIN ? '/dashboard' : role === ROLES.SHIPPER ? '/shipper/orders' : '/collections');
+      navigate(role === ROLES.ADMIN ? '/dashboard' : role === ROLES.SHIPPER ? '/shipper/orders' : '/collections/sourcing');
     } catch (error) {
       message.error(error.message || 'Đăng nhập thất bại');
     } finally {

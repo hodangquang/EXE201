@@ -32,7 +32,7 @@ export const shippingOrderId = row => {
 export const shippingStatus = row => shippingField(row, 'status', 'shippingStatus');
 
 export const shippingStatusLabel = status => {
-  const labels = { Pending: 'Chờ giao', InTransit: 'Đang giao', Delivered: 'Đã giao', Failed: 'Giao thất bại' };
+  const labels = { 0: 'Chờ lấy hàng', 1: 'Đang giao', 2: 'Đã giao', 3: 'Giao thất bại', 4: 'Đã hoàn về', 5: 'Đã lấy hàng', Pending: 'Chờ lấy hàng', InTransit: 'Đang giao', Delivered: 'Đã giao', Failed: 'Giao thất bại', Returned: 'Đã hoàn về', PickedUp: 'Đã lấy hàng' };
   if (status === undefined || status === null || status === '') return 'Chưa có trạng thái';
   return labels[status] || `Mã trạng thái ${status}`;
 };

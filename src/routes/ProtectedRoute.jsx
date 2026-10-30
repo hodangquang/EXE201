@@ -11,7 +11,7 @@ export const ProtectedRoute = ({ requiredRole, allowedRoles }) => {
   }
 
   if ((requiredRole && user?.role !== requiredRole) || (allowedRoles && !allowedRoles.includes(user?.role))) {
-    return <Navigate to={user?.role === ROLES.SHIPPER ? '/shipper/orders' : user?.role === ROLES.ADMIN ? '/dashboard' : user?.role === ROLES.STAFF ? '/collections' : '/'} replace />;
+    return <Navigate to={user?.role === ROLES.SHIPPER ? '/shipper/orders' : user?.role === ROLES.ADMIN ? '/dashboard' : user?.role === ROLES.STAFF ? '/collections/sourcing' : '/'} replace />;
   }
 
   return <Outlet />;

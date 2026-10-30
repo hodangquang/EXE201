@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, InputNumber, Select, Row, Col, message, Upload } from 'antd';
+import { Form, Input, InputNumber, Select, Row, Col, message } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Sparkles, Upload as UploadIcon } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import { authFetch } from '../../services/auth';
+import { formatCatalogText } from '../../utils/catalogText';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -13,8 +14,10 @@ export const ProductForm = () => {
   const { id } = useParams();
   const isEdit = !!id;
   const [loading, setLoading] = useState(false);
-  const [fileList, setFileList] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
+  const [existingStock, setExistingStock] = useState(1);
+  const [isPreview, setIsPreview] = useState(false);
+  const [productType, setProductType] = useState('');
   const [productLoaded, setProductLoaded] = useState(!isEdit);
   const [productLoadError, setProductLoadError] = useState(false);
   const [brands, setBrands] = useState([]);
@@ -37,7 +40,7 @@ export const ProductForm = () => {
           const product = res.data || res;
           form.setFieldsValue({
             Title: product.title || product.name,
-            Description: product.description,
+            Description: formatCatalogText(product.description),
             BrandId: product.brandId || product.brand?.id,
             CategoryId: product.categoryId || product.category?.id || product.category,
             Price: product.price,
@@ -47,6 +50,9 @@ export const ProductForm = () => {
           });
           const imgs = product.images || product.imageUrls || [];
           setExistingImages(imgs.map(img => img.imageUrl || img.url || img));
+          setExistingStock(product.stockQuantity ?? 1);
+          setIsPreview(Boolean(product.isPreview));
+          setProductType(product.productType || '');
           setProductLoaded(true);
         })
         .catch(err => {
@@ -56,82 +62,27 @@ export const ProductForm = () => {
     }
   }, [id, isEdit, form]);
 
-  const onFinish = async (values) => {
-    if (isEdit) {
+  const saveEdits = async (values) => {
       const imageUrls = existingImages.map(url => url.trim()).filter(Boolean);
-
-      try {
-        setLoading(true);
         // Keep the PUT body aligned with PUT /api/Products/{id}.
-        const payload = {
-          title: values.Title,
-          description: values.Description || '',
-          brandId: values.BrandId,
-          categoryId: values.CategoryId,
-          price: Number(values.Price),
-          condition: Number(values.Condition ?? 1),
-          size: values.Size ?? '',
-          color: values.Color ?? '',
-          imageUrls,
-        };
-        await authFetch(`/api/Products/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        message.success(`Đã cập nhật sản phẩm "${values.Title}" thành công!`);
-        navigate('/products');
-      } catch (error) {
-        message.error(error.message || 'Lỗi khi cập nhật sản phẩm');
-      } finally {
-        setLoading(false);
-      }
-      return;
-    }
-
-    if (fileList.length === 0) {
-      message.error('Vui lòng tải lên ít nhất 1 hình ảnh sản phẩm!');
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('Title', values.Title);
-      formData.append('Description', values.Description || '');
-      formData.append('BrandId', values.BrandId);
-      formData.append('CategoryId', values.CategoryId);
-      formData.append('Price', values.Price);
-      formData.append('Condition', values.Condition || 1);
-      formData.append('Status', 0);
-
-      if (values.Size) formData.append('Size', values.Size);
-      if (values.Color) formData.append('Color', values.Color);
-
-      fileList.forEach(file => {
-        formData.append('Images', file.originFileObj);
-      });
-
-      await authFetch('/api/Products', {
-        method: 'POST',
-        body: formData
-      });
-
-      message.success(`Đã tạo sản phẩm "${values.Title}" thành công!`);
-      navigate('/products');
-    } catch (error) {
-      message.error(error.message || 'Lỗi khi tạo sản phẩm');
-    } finally {
-      setLoading(false);
-    }
+        const formData = new FormData();
+        for (const [key, value] of Object.entries({ Title: values.Title, Description: values.Description || '', BrandId: values.BrandId,
+          CategoryId: values.CategoryId, Price: Number(values.Price), StockQuantity: existingStock, Condition: Number(values.Condition), Size: values.Size ?? '', Color: values.Color ?? '' })) {
+          formData.append(key, String(value));
+        }
+        imageUrls.forEach(url => formData.append('KeepImageUrls', url));
+        return authFetch(`/api/Products/${id}`, { method: 'PUT', body: formData });
   };
 
-  const handleUploadChange = ({ fileList: newFileList }) => setFileList(newFileList);
-
-  const dummyRequest = ({ file, onSuccess }) => {
-    setTimeout(() => {
-      onSuccess("ok");
-    }, 0);
+  const onFinish = async values => {
+    try {
+      setLoading(true);
+      await saveEdits(values);
+      message.success('Đã cập nhật thông tin sản phẩm.');
+      navigate('/products');
+    } catch (error) {
+      message.error(error.message || 'Không cập nhật được sản phẩm.');
+    } finally { setLoading(false); }
   };
 
   return (
@@ -157,7 +108,7 @@ export const ProductForm = () => {
 
         <div className="editorial-sub">{isEdit ? 'CẬP NHẬT SẢN PHẨM' : 'TẠO SẢN PHẨM MỚI'}</div>
         <h1 className="editorial-title" style={{ fontSize: '32px', margin: 0 }}>
-          {isEdit ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm thời trang tái chế'}
+          {isEdit ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm'}
         </h1>
       </div>
 
@@ -165,10 +116,6 @@ export const ProductForm = () => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{
-          Condition: 1,
-          Size: 'L',
-        }}
       >
         <Row gutter={[24, 24]}>
           <Col xs={24} lg={15}>
@@ -255,17 +202,18 @@ export const ProductForm = () => {
                 </Col>
               </Row>
 
-              <Form.Item
+              {!isPreview && <Form.Item
                 name="Condition"
-                label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Tình trạng đồ cũ</span>}
+                label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Tình trạng món đồ</span>}
                 rules={[{ required: true, message: 'Vui lòng chọn tình trạng!' }]}
               >
                 <Select>
-                  <Option value={1}>1 - Như mới</Option>
-                  <Option value={2}>2 - Tốt</Option>
-                  <Option value={3}>3 - Khá</Option>
+                  <Option value={0}>Như mới</Option>
+                  <Option value={1}>Rất tốt</Option>
+                  <Option value={2}>Tốt</Option>
+                  <Option value={3}>Khá</Option>
                 </Select>
-              </Form.Item>
+              </Form.Item>}
 
               <Form.Item
                 name="Description"
@@ -277,38 +225,15 @@ export const ProductForm = () => {
           </Col>
 
           <Col xs={24} lg={9}>
-            {!isEdit && (
-              <div className="flat-card" style={{ padding: '24px', marginBottom: '24px' }}>
-                <div className="editorial-sub" style={{ marginBottom: '12px' }}>HÌNH ẢNH SẢN PHẨM</div>
-
-                <div style={{ backgroundColor: '#f7f7f6', padding: '10px 12px', borderLeft: '3px solid #10100f', fontSize: '12px', color: '#555', marginBottom: '16px' }}>
-                  <b>Lưu ý:</b> Bạn có thể tải lên từ 1 đến 5 hình ảnh cho mỗi sản phẩm. Ảnh đầu tiên sẽ là ảnh đại diện.
-                </div>
-
-                <Form.Item
-                  label={<span style={{ fontSize: '12px', fontWeight: 600, textTransform: 'uppercase' }}>Tải ảnh lên (Tối đa 5 ảnh)</span>}
-                  required
-                >
-                  <Upload
-                    customRequest={dummyRequest}
-                    listType="picture-card"
-                    fileList={fileList}
-                    onChange={handleUploadChange}
-                    multiple
-                    maxCount={5}
-                    accept="image/*"
-                  >
-                    {fileList.length >= 5 ? null : (
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#70706f' }}>
-                        <UploadIcon size={20} />
-                        <div style={{ marginTop: 8, fontSize: '12px' }}>Tải ảnh lên</div>
-                      </div>
-                    )}
-                  </Upload>
-                </Form.Item>
-              </div>
-            )}
-
+            {productLoaded && productType !== 'Upcycled' && <div className="flat-card" style={{ padding: 24, marginBottom: 24 }}>
+              <div className="editorial-sub" style={{ marginBottom: 12 }}>DỮ LIỆU CŨ · NGỪNG KINH DOANH</div>
+              <p>Món đồ này không thuộc sản phẩm tái chế. Thông tin được giữ để đối soát; món đồ không xuất hiện trên cửa hàng và không thể mua.</p>
+            </div>}
+            {isEdit && isPreview && productType === 'Upcycled' && <div className="flat-card" style={{ padding: 24, marginBottom: 24 }}>
+              <div className="editorial-sub" style={{ marginBottom: 12 }}>Ý TƯỞNG TÁI CHẾ</div>
+              <p>Bản xem trước chưa phải thành phẩm được kiểm định. Tạo dự án từ nguyên liệu đã thu mua, hoàn thiện và kiểm định thành phẩm để đăng bán.</p>
+              <button type="button" className="pill-btn-filled" onClick={() => navigate('/upcycling')}>Đến dự án tái chế</button>
+            </div>}
             <div style={{ display: 'flex', gap: '12px' }}>
               <button
                 type="button"

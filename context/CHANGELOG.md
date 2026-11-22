@@ -1,5 +1,19 @@
 # Lịch sử context
 
+## 2026-11-22 — Nâng cấp Dashboard quản trị (biểu đồ Recharts) & đồng bộ UI `/profile`
+
+- **Dashboard quản trị (`src/pages/Dashboard/Dashboard.jsx`, `src/pages/Operations/OperationsPage.css`):** Thiết kế lại bố cục tổng quan kinh doanh từ dữ liệu thật của `GET /api/operations/metrics`: thêm nút chọn nhanh khoảng ngày (`7 ngày`, `30 ngày`, `90 ngày`, `1 năm`), 4 thẻ KPI trọng tâm (Thu ròng, Doanh thu ghi nhận, Tổng chi thu mua & tái chế, Lãi gộp tham khảo), biểu đồ cột ngang so sánh dòng tiền & doanh thu (`Recharts BarChart`), biểu đồ cột chồng cơ cấu chi phí thu mua/vật tư/nhân công tái chế, 3 biểu đồ Donut (`PieChart`) kèm bảng tỷ lệ `%` cho Đơn hàng / Kho vòng đời / Dự án tái chế, dải pill chỉ số đối soát và lưới 9 chỉ số hạch toán chi tiết.
+- **Khu vực tài khoản `/profile` (`NotificationCenter.jsx`, `NotificationCenter.css`, `StyleWatchSection.jsx`, `StyleWatchSection.css`, `ProfilePage.jsx`, `ProfilePage.css`):** Bọc `NotificationCenter` trong card trắng bo góc `12px` và tăng độ ưu tiên selector lên `(0,2,0)` để không bị `.rw *` trong `HomePage.css` ghi đè `padding`/`margin`; đồng bộ header `StyleWatchSection` vào card, thêm badge số thông báo chưa đọc ở sidebar `/profile`, đổi icon tab `Theo dõi gu đồ` sang `Sparkles`, căn nút làm mới của `OrdersSection` vào `SectionTitle`.
+- **Hệ thống giao diện Quản trị & các trang con (`src/styles/theme.js`, `src/layouts/AdminLayout.jsx`, `src/components/common/Sidebar.jsx`, `src/components/common/Header.jsx`, `src/styles/AdminQuality.css`, `src/pages/Orders/OrderList.jsx`, `src/pages/Orders/OrderDetail.jsx`, `src/pages/Operations/OperationsPage.jsx`, `src/pages/Products/ProductList.jsx`, `src/pages/Products/Categories.jsx`, `src/pages/Products/Brands.jsx`, `src/pages/Products/ProductForm.jsx`, `src/pages/Collections/SourcingRequests.jsx`, `src/pages/Customers/CustomerList.jsx`, `src/pages/Customers/CustomerDetail.jsx`):** Sửa `AdminLayout` nạp đầy đủ `themeConfig`; nâng cấp nền quản trị sang `#f5f5f2`, card bo góc `14px` có đổ bóng nhẹ, bảng dữ liệu header tương phản cao, input/select bo góc `10px`, tag/chip trạng thái dạng pill; thiết kế lại `Sidebar` với badge thương hiệu `RW` vàng kem `#fffb85`, chỉ báo mục đang chọn, badge đếm thông báo chưa đọc và liên kết mở nhanh Storefront; thiết kế lại `Header` kính mờ có breadcrumb động theo route; bổ sung dải thẻ thống kê nhanh, thanh pill lọc trạng thái, nút thao tác và nút quay lại dạng pill cho toàn bộ trang con (`ProductList`, `Categories`, `Brands`, `SourcingRequests`, `OrderList`, `OrderDetail`, `OperationsPage`, `CustomerList`, `CustomerDetail`, `ProductForm`).
+- Bằng chứng: `npm.cmd run build` thành công (`4041 modules transformed`, `1.00s`).
+- Còn mở: chưa kiểm tra trực quan trên trình duyệt ở các breakpoint desktop/mobile với tài khoản thật.
+
+## 2026-11-22 — Tóm tắt dự án để làm slide
+
+- Thêm tài liệu tóm tắt slide-ready theo hướng chỉ tái chế; làm rõ hành trình nghiệp vụ, vai trò, công nghệ, trạng thái đã kiểm tra và các giới hạn chưa xác minh. Sửa README gốc để phản ánh backend source nằm trong `Rewear_BackEnd/`.
+- Bằng chứng: đọc context README, business overview, architecture, routes, user flows, gaps và recycling-only; đối chiếu package frontend, route React, `CircularFashionService`, `ProductsController`, `Program.cs` và target .NET. Không chạy build/test vì đây là task tổng hợp tài liệu.
+- Còn mở: deploy/live, giao dịch và tích hợp ngoài chưa được xác minh; bằng chứng kiểm tra được dẫn trong tài liệu là lần gần nhất ghi ngày 27/10/2026.
+
 ## 2026-10-27 — Chỉ giữ luồng tái chế
 
 - Người dùng xác nhận bỏ nhánh bán lại nguyên trạng; sửa kho/QC/thu mua/catalog và chặn backend bán trực tiếp, tạo sản phẩm, mở preview bỏ qua dự án. Public/giỏ/checkout chỉ Upcycled; giữ lịch sử và hỗ trợ nguyên liệu QC cũ vào dự án. JSON còn 2 ý tưởng tái chế.

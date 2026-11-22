@@ -114,12 +114,18 @@ export default function StyleWatchSection({ notify }) {
     navigate(`/product/${alert.productId}`);
   };
 
-  if (loading) return <section className="sw-panel"><p role="status">Đang tải gu đồ của bạn…</p></section>;
-  if (error) return <section className="sw-panel"><p role="alert">{error}</p><button type="button" className="sw-secondary" onClick={load}>Thử lại</button></section>;
+  if (loading) return <section className="sw-panel"><p className="sw-loading" role="status">Đang tải gu đồ của bạn…</p></section>;
+  if (error) return <section className="sw-panel sw-error"><p role="alert">{error}</p><button type="button" className="sw-secondary" onClick={load}>Thử lại</button></section>;
 
   const unread = notifications.filter(item => !item.readAt).length;
   return <div className="sw-page">
-    <div className="sw-heading"><span>GU ĐỒ CỦA BẠN / REWEAR</span><h2>Để món phù hợp tìm đến bạn.</h2><p>Chọn điều bạn thích. Khi một món độc bản mới được mở bán và khớp các tiêu chí, REWEAR sẽ báo cho bạn.</p></div>
+    <div className="sw-panel sw-header-card">
+      <div className="sw-heading">
+        <span>TÀI KHOẢN / 06</span>
+        <h2>Theo dõi gu đồ</h2>
+        <p>Chọn điều bạn thích. Khi một món độc bản mới được mở bán và khớp các tiêu chí, REWEAR sẽ báo cho bạn.</p>
+      </div>
+    </div>
     <form className="sw-panel" onSubmit={save}>
       <div className="sw-field"><div className="sw-field-head"><h3>01 / Loại đồ</h3><span>Chọn nhiều loại</span></div>
         <div className="sw-chips">{categories.map(category => <button key={category.id} type="button" className={watch.categoryIds.includes(category.id) ? 'selected' : ''} aria-pressed={watch.categoryIds.includes(category.id)} onClick={() => toggle('categoryIds', category.id)}>{category.name}</button>)}{watch.categoryIds.filter(id => !categories.some(category => category.id === id)).map(id => <button key={id} type="button" className="selected" onClick={() => toggle('categoryIds', id)}>Danh mục cũ ×</button>)}{!categories.length && !watch.categoryIds.length && <p>Chưa có danh mục để chọn.</p>}</div>

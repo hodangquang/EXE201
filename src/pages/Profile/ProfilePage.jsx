@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { User, MapPin, Package, LogOut, Camera, ChevronRight, Search, ShoppingBag, PlusCircle, UploadCloud, Pencil, Truck, Bell } from 'lucide-react';
+import { User, MapPin, Package, LogOut, Camera, ChevronRight, Search, ShoppingBag, PlusCircle, UploadCloud, Pencil, Truck, Bell, Sparkles } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
 import RainsFooter from '../../components/common/RainsFooter';
 import AccountMenu from '../../components/common/AccountMenu';
@@ -12,7 +12,7 @@ import SourcingRequestDetail from '../../components/common/SourcingRequestDetail
 import { paymentLabels } from '../Operations/labels';
 import DeliveryTimeline from '../Shipping/DeliveryTimeline';
 import StyleWatchSection from './StyleWatchSection';
-import NotificationCenter from '../../components/common/NotificationCenter';
+import NotificationCenter, { useNotificationCount } from '../../components/common/NotificationCenter';
 import '../Shipping/Delivery.css';
 import './ProfilePage.css';
 
@@ -130,7 +130,7 @@ const MENU = [
   { key: 'orders', label: 'Đơn mua', icon: Package },
   { key: 'delivery', label: 'Theo dõi giao hàng', icon: Truck },
   { key: 'notifications', label: 'Thông báo', icon: Bell },
-  { key: 'style', label: 'Theo dõi gu đồ', icon: Bell },
+  { key: 'style', label: 'Theo dõi gu đồ', icon: Sparkles },
   { key: 'sourcing', label: 'Bán đồ cũ', icon: PlusCircle },
 ];
 
@@ -553,8 +553,12 @@ function OrdersSection({ selectedOrderId }) {
   return (
     <>
       <div className="pp-card pp-section-card pp-section-intro">
-        <SectionTitle kicker="Tài khoản / 03" title="Đơn mua" description="Xem tất cả đơn mua, trạng thái thanh toán và hành trình giao hàng tại đây." />
-        <button type="button" className="pp-btn ghost" onClick={retry} disabled={loading}>Cập nhật đơn mua</button>
+        <SectionTitle
+          kicker="Tài khoản / 03"
+          title="Đơn mua"
+          description="Xem tất cả đơn mua, trạng thái thanh toán và hành trình giao hàng tại đây."
+          action={<button type="button" className="pp-btn ghost" onClick={retry} disabled={loading}>Cập nhật đơn mua</button>}
+        />
       </div>
       <div className="pp-order-filters">
         <label htmlFor="order-status">Trạng thái đơn hàng</label>
@@ -1085,6 +1089,7 @@ export default function ProfilePage() {
   }, [requestedTab, params, setParams]);
   const [session, setSession] = useState(getSession());
   const [toast, setToast] = useState(null);
+  const unreadNotifications = useNotificationCount(Boolean(session));
 
   useEffect(() => onAuthChange(() => setSession(getSession())), []);
   useEffect(() => { if (!session) navigate('/', { replace: true }); }, [session]);
@@ -1134,7 +1139,13 @@ export default function ProfilePage() {
           <nav className="pp-menu">
             {MENU.map(({ key, label, icon: Icon }) => (
               <button type="button" key={key} className={section === key ? 'active' : ''} aria-current={section === key ? 'page' : undefined} onClick={() => navigate(`/profile?tab=${key}`)}>
-                <Icon size={17} />{label}
+                <Icon size={17} />
+                <span>{label}</span>
+                {key === 'notifications' && unreadNotifications > 0 && (
+                  <span className="pp-menu-badge" aria-label={`${unreadNotifications} thông báo chưa đọc`}>
+                    {unreadNotifications > 99 ? '99+' : unreadNotifications}
+                  </span>
+                )}
               </button>
             ))}
             <button className="logout" onClick={() => { clearSession(); navigate('/'); }}>

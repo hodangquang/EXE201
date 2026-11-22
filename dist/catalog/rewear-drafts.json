@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "collectionId": "rewear-proposed-2026-10-25",
+  "collectionId": "rewear-upcycled-ideas-2026-10-27",
   "brand": "REWEAR",
   "title": "Vòng đời mới, phong cách riêng",
   "status": "Draft",
@@ -60,122 +60,6 @@
       "beforeImages": [
         "/images/catalog-drafts/shirt-before.png"
       ],
-      "stockQuantity": null,
-      "condition": null,
-      "measurements": null,
-      "imageLabels": [
-        "Mặt trước",
-        "Mặt sau",
-        "Góc nghiêng",
-        "Cận cảnh"
-      ]
-    },
-    {
-      "sku": "RW-SH-001",
-      "productType": "SecondHand",
-      "title": "Áo sơ mi kem dáng thoải mái",
-      "categoryName": "Áo sơ mi",
-      "brandName": null,
-      "proposedPrice": 159000,
-      "proposedSize": "M",
-      "color": "Kem",
-      "description": "Gợi ý sơ mi tay dài màu kem, cổ bẻ, một túi ngực và phom thẳng thoải mái. Sắc trung tính dễ phối cùng quần jean xanh hoặc quần tối màu cho trang phục hằng ngày.",
-      "transformationDescription": null,
-      "proposedSourceMaterial": null,
-      "imageUrls": [
-        "/images/catalog-drafts/resale-shirt.png",
-        "/images/catalog-drafts/resale-shirt-back.png",
-        "/images/catalog-drafts/resale-shirt-angle.png",
-        "/images/catalog-drafts/resale-shirt-detail.png"
-      ],
-      "beforeImages": [],
-      "stockQuantity": null,
-      "condition": null,
-      "measurements": null,
-      "imageLabels": [
-        "Mặt trước",
-        "Mặt sau",
-        "Góc nghiêng",
-        "Cận cảnh"
-      ]
-    },
-    {
-      "sku": "RW-SH-002",
-      "productType": "SecondHand",
-      "title": "Quần jean xanh ống đứng",
-      "categoryName": "Quần jean",
-      "brandName": null,
-      "proposedPrice": 219000,
-      "proposedSize": "M",
-      "color": "Xanh chàm",
-      "description": "Gợi ý quần jean cạp cao, ống đứng và thiết kế năm túi. Màu xanh chàm với hiệu ứng bạc nhẹ giúp kết hợp cùng sơ mi, áo thun hoặc áo khoác mỏng.",
-      "transformationDescription": null,
-      "proposedSourceMaterial": null,
-      "imageUrls": [
-        "/images/catalog-drafts/resale-jeans.png",
-        "/images/catalog-drafts/resale-jeans-back.png",
-        "/images/catalog-drafts/resale-jeans-angle.png",
-        "/images/catalog-drafts/resale-jeans-detail.png"
-      ],
-      "beforeImages": [],
-      "stockQuantity": null,
-      "condition": null,
-      "measurements": null,
-      "imageLabels": [
-        "Mặt trước",
-        "Mặt sau",
-        "Góc nghiêng",
-        "Cận cảnh"
-      ]
-    },
-    {
-      "sku": "RW-SH-003",
-      "productType": "SecondHand",
-      "title": "Áo cardigan xanh lá dịu",
-      "categoryName": "Áo khoác len",
-      "brandName": null,
-      "proposedPrice": 189000,
-      "proposedSize": "M",
-      "color": "Xanh lá dịu",
-      "description": "Gợi ý cardigan cổ chữ V, tay dài và hàng cúc đồng màu. Bề mặt dệt có gân ở cổ tay và gấu áo, phù hợp phối nhiều lớp cùng áo trơn hoặc sơ mi.",
-      "transformationDescription": null,
-      "proposedSourceMaterial": null,
-      "imageUrls": [
-        "/images/catalog-drafts/resale-cardigan.png",
-        "/images/catalog-drafts/resale-cardigan-back.png",
-        "/images/catalog-drafts/resale-cardigan-angle.png",
-        "/images/catalog-drafts/resale-cardigan-detail.png"
-      ],
-      "beforeImages": [],
-      "stockQuantity": null,
-      "condition": null,
-      "measurements": null,
-      "imageLabels": [
-        "Mặt trước",
-        "Mặt sau",
-        "Góc nghiêng",
-        "Cận cảnh"
-      ]
-    },
-    {
-      "sku": "RW-SH-004",
-      "productType": "SecondHand",
-      "title": "Chân váy chữ A xám than",
-      "categoryName": "Chân váy",
-      "brandName": null,
-      "proposedPrice": 169000,
-      "proposedSize": "M",
-      "color": "Xám than",
-      "description": "Gợi ý chân váy dáng chữ A dài qua gối, cạp gọn và đường may tối giản. Màu xám than phù hợp phối cùng áo sơ mi kem hoặc cardigan xanh lá trong bộ sưu tập.",
-      "transformationDescription": null,
-      "proposedSourceMaterial": null,
-      "imageUrls": [
-        "/images/catalog-drafts/resale-skirt.png",
-        "/images/catalog-drafts/resale-skirt-back.png",
-        "/images/catalog-drafts/resale-skirt-angle.png",
-        "/images/catalog-drafts/resale-skirt-detail.png"
-      ],
-      "beforeImages": [],
       "stockQuantity": null,
       "condition": null,
       "measurements": null,

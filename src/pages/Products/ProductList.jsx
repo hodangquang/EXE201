@@ -93,9 +93,9 @@ export const ProductList = () => {
           <img
             src={firstImg}
             alt="product"
-            style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 0, border: '1px solid #e5e5e4' }}
+            style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 10, border: '1px solid #e4e4dc' }}
           />
-        ) : <span style={{ display: 'inline-grid', width: 56, height: 56, placeItems: 'center', color: '#70706f', border: '1px solid #e5e5e4', fontSize: 11 }}>Chưa có ảnh</span>;
+        ) : <span style={{ display: 'inline-grid', width: 56, height: 56, placeItems: 'center', color: '#70706f', border: '1px solid #e4e4dc', borderRadius: 10, background: '#fafaf7', fontSize: 11 }}>Chưa có ảnh</span>;
       },
     },
     {
@@ -137,7 +137,14 @@ export const ProductList = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
-      render: (status, record) => record.productType !== 'Upcycled' ? <span>Ngừng kinh doanh · dữ liệu cũ</span> : record.isPreview ? <span>Ý tưởng tái chế</span> : <StatusBadge status={status} />,
+      render: (status, record) =>
+        record.productType !== 'Upcycled' ? (
+          <span className="rw-status-chip rw-status-chip--muted">Ngừng kinh doanh · dữ liệu cũ</span>
+        ) : record.isPreview ? (
+          <span className="rw-status-chip rw-status-chip--preview">Ý tưởng tái chế</span>
+        ) : (
+          <StatusBadge status={status} />
+        ),
     },
     {
       title: 'Thao tác',
@@ -221,6 +228,40 @@ export const ProductList = () => {
         </Space>
       </div>
 
+      {/* Summary KPI Bar */}
+      <div className="ops-summary-grid" style={{ marginBottom: 20 }}>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Tổng sản phẩm đang lọc</span>
+            <strong className="ops-mini-stat-val">{products.length} món</strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Đang mở bán (1-of-1)</span>
+            <strong className="ops-mini-stat-val">
+              {products.filter((p) => p.productType === 'Upcycled' && !p.isPreview && [0, '0', 'Available'].includes(p.status)).length} món
+            </strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Ý tưởng tái chế (Preview)</span>
+            <strong className="ops-mini-stat-val">
+              {products.filter((p) => p.productType === 'Upcycled' && p.isPreview).length} món
+            </strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Đang giữ / Đã bán</span>
+            <strong className="ops-mini-stat-val">
+              {products.filter((p) => [1, 2, '1', '2', 'Reserved', 'Sold'].includes(p.status)).length} món
+            </strong>
+          </div>
+        </div>
+      </div>
+
       {/* Filter and Search Bar */}
       <div 
         className="flat-card" 
@@ -240,9 +281,8 @@ export const ProductList = () => {
             aria-label="Tìm kiếm trong danh sách" value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             onPressEnter={fetchProducts}
-            style={{ borderRadius: 0 }}
           />
-          <Button onClick={fetchProducts} type="primary" style={{ borderRadius: 0 }}>Tìm</Button>
+          <Button onClick={fetchProducts} type="primary">Tìm</Button>
         </div>
 
         <Select

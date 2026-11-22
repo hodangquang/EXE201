@@ -30,7 +30,7 @@
 
 Thương hiệu hiển thị là **REWEAR**; nội dung giao diện do dự án kiểm soát dùng tiếng Việt. Quy tắc chi tiết ở `AGENTS.md` và `skills/ui-design/SKILL.md`.
 
-Context được bổ sung đến **2026-10-24**. Workspace hiện có frontend React và source backend trong `Rewear_BackEnd/`; đã đối chiếu nghiệp vụ từ code local nhưng chưa xác minh phiên bản đang deploy hoặc giao dịch live. Các snapshot API/flow cũ chủ yếu suy từ client và có chỗ khác backend mới; ưu tiên phần đính chính và `business-overview-2026-10-24.md` khi đọc nghiệp vụ hiện tại.
+Context nghiệp vụ được cập nhật gần nhất đến **2026-10-27**. Workspace có frontend React và source backend trong `Rewear_BackEnd/`; đã đối chiếu nghiệp vụ từ code local nhưng chưa xác minh phiên bản đang deploy hoặc giao dịch live. Ưu tiên các phần đính chính đầu tài liệu và `recycling-only-2026-10-27.md` cho phạm vi hiện tại; các snapshot API/flow cũ bên dưới có thể mô tả trạng thái lịch sử. Tóm tắt ngắn dùng cho thuyết trình ở `project-summary-for-slides.md`.
 
 ## Cách đọc
 
@@ -64,3 +64,4 @@ Các skill nằm trong repo để người và coding agent đọc qua `AGENTS.m
 
 11. `render-deployment.md`: cấu hình frontend Render gọi API backend qua `VITE_API_BASE_URL` và yêu cầu CORS production.
 12. `../FE_INTEGRATION_GUIDE.md`: tài liệu tích hợp FE do người dùng cung cấp, mô tả checkout trả `data.order.id`, mở PayOS ở tab riêng và polling `GET /api/payments/{orderId}/status`; các ví dụ là contract, chưa thay thế kiểm tra response live.
+13. `project-summary-for-slides.md`: tóm tắt slide-ready theo phạm vi chỉ tái chế, gồm hành trình, vai trò, công nghệ, hiện trạng và các giới hạn cần nêu.

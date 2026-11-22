@@ -89,19 +89,9 @@ export const ProductForm = () => {
     <div className="rw-admin-page">
       <div style={{ marginBottom: '24px' }}>
         <button
+          type="button"
+          className="ops-back-link"
           onClick={() => navigate('/products')}
-          style={{
-            background: 'none',
-            border: 'none',
-            padding: 0,
-            cursor: 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 6,
-            fontSize: '13px',
-            color: '#70706f',
-            marginBottom: '12px',
-          }}
         >
           <ArrowLeft size={16} /> Quay lại danh sách sản phẩm
         </button>

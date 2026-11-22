@@ -35,9 +35,15 @@ export default function OrderDetail() {
     try { await operationsApi.reconcile(id); message.success('Đã kiểm tra trạng thái thanh toán từ backend.'); await load(); }
     catch (e) { message.error(e.message); } finally { setBusy(false); }
   };
-  return <div className="ops-page"><div className="ops-heading"><div><Link to="/orders">← Danh sách đơn hàng</Link><h1 className="editorial-title">{order?.orderCode || 'Chi tiết đơn hàng'}</h1></div><Button loading={loading} onClick={load}>Tải lại</Button></div>
+  return <div className="ops-page"><div className="ops-heading"><div><Link to="/orders" className="ops-back-link">← Danh sách đơn hàng</Link><h1 className="editorial-title">{order?.orderCode || 'Chi tiết đơn hàng'}</h1></div><Button className="ops-refresh-btn" loading={loading} onClick={load}>Tải lại</Button></div>
     {error && <Alert type="error" title={error} action={<Button onClick={load}>Thử lại</Button>} />}
-    {order && <><Space wrap><Tag>{orderLabel(order.status)}</Tag><Tag color={payment?.requiresReconciliation ? 'orange' : payment?.status === 'Paid' ? 'green' : 'default'}>{payment?.requiresReconciliation ? 'Cần đối soát thanh toán' : paymentLabels[payment?.status] || 'Chưa có phiên thanh toán'}</Tag><Tag>{shipping ? shippingLabels[shipping.status] : 'Chưa phân công giao hàng'}</Tag><Link to="/shipping">Mở quản lý vận chuyển</Link></Space>
+    {order && <>
+      <div className="ops-summary-grid">
+        <div className="ops-mini-stat"><div><span className="ops-mini-stat-label">Trạng thái đơn hàng</span><Tag color="blue">{orderLabel(order.status)}</Tag></div></div>
+        <div className="ops-mini-stat"><div><span className="ops-mini-stat-label">Thanh toán</span><Tag color={payment?.requiresReconciliation ? 'orange' : payment?.status === 'Paid' ? 'green' : 'default'}>{payment?.requiresReconciliation ? 'Cần đối soát thanh toán' : paymentLabels[payment?.status] || 'Chưa có phiên thanh toán'}</Tag></div></div>
+        <div className="ops-mini-stat"><div><span className="ops-mini-stat-label">Vận chuyển</span><Space size={8}><Tag>{shipping ? shippingLabels[shipping.status] : 'Chưa phân công giao hàng'}</Tag><Link to="/shipping" className="ops-card-link">Điều phối →</Link></Space></div></div>
+        <div className="ops-mini-stat"><div><span className="ops-mini-stat-label">Tổng thanh toán</span><strong className="ops-mini-stat-val">{formatCurrency(order.totalAmount)}</strong></div></div>
+      </div>
       {payment?.requiresReconciliation && <Alert type="warning" title="Giao dịch cần đối soát; không cho phép giao hàng." description={payment.reconciliationReason} />}
       {payment?.refundState === 'Requested' && <Alert type="warning" title="Đang chờ hoàn tiền. Chưa xác nhận tiền đã được hoàn." />}
       <Card title="Thông tin giao hàng"><Descriptions bordered column={{ xs: 1, md: 2 }} size="small"><Descriptions.Item label="Người nhận">{order.shippingAddress.recipientName}</Descriptions.Item><Descriptions.Item label="Liên hệ">{order.shippingAddress.phoneNumber}</Descriptions.Item><Descriptions.Item label="Địa chỉ">{order.shippingAddress.fullAddress}</Descriptions.Item><Descriptions.Item label="Ngày tạo">{formatDate(order.createdAt)}</Descriptions.Item><Descriptions.Item label="Mã vận đơn">{shipping?.trackingNumber || order.trackingNumber || 'Chưa có'}</Descriptions.Item><Descriptions.Item label="Ghi chú">{order.shippingAddress.note || 'Không có'}</Descriptions.Item></Descriptions></Card>

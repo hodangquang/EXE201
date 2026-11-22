@@ -364,17 +364,81 @@ const SourcingRequests = () => {
   ];
 
   return (
-    <Card
-      title={<h1 className="editorial-title" style={{ fontSize: 26, margin: 0 }}>Duyệt yêu cầu đồ cũ</h1>}
-      extra={
-        <Space>
-          <span style={{ fontSize: '14px', fontWeight: 500 }}>Bộ lọc trạng thái:</span>
+    <div className="ops-page">
+      <div className="ops-heading">
+        <div>
+          <p className="editorial-sub">THU GOM QUẦN ÁO</p>
+          <h1 className="editorial-title">Duyệt yêu cầu đồ cũ</h1>
+          <p className="ops-muted">Tiếp nhận, định giá, điều phối Shipper thu gom và kiểm định nguồn nguyên liệu tái chế.</p>
+        </div>
+        <Button className="ops-refresh-btn" onClick={() => fetchRequests(statusFilter)} loading={loading}>
+          Tải lại
+        </Button>
+      </div>
+
+      <div className="ops-summary-grid">
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Tổng yêu cầu đang lọc</span>
+            <strong className="ops-mini-stat-val">{data.length} yêu cầu</strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Chờ duyệt & Đang xem xét</span>
+            <strong className="ops-mini-stat-val">
+              {data.filter((r) => ['Pending', 'UnderReview', 0, 1, '0', '1'].includes(r.status)).length} yêu cầu
+            </strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Đã định giá / Đã đồng ý giá</span>
+            <strong className="ops-mini-stat-val">
+              {data.filter((r) => ['Priced', 'Accepted', 2, 3, '2', '3'].includes(r.status)).length} yêu cầu
+            </strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Đã nhận hàng & Đã duyệt</span>
+            <strong className="ops-mini-stat-val">
+              {data.filter((r) => ['Received', 'Approved', 'Completed', 4, 5, 6, '4', '5', '6'].includes(r.status)).length} yêu cầu
+            </strong>
+          </div>
+        </div>
+      </div>
+
+      <Card>
+        <div className="ops-quick-tabs" role="tablist" aria-label="Lọc nhanh trạng thái thu mua">
+          {[
+            ['all', 'Tất cả'],
+            ['Pending', 'Chờ duyệt'],
+            ['UnderReview', 'Đang xem xét'],
+            ['Priced', 'Đã định giá'],
+            ['Accepted', 'Đã đồng ý giá'],
+            ['Received', 'Đã nhận hàng'],
+            ['Approved', 'Đã duyệt'],
+          ].map(([val, label]) => (
+            <button
+              key={val}
+              type="button"
+              className={`ops-preset-pill${statusFilter === val ? ' active' : ''}`}
+              onClick={() => setStatusFilter(val)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <Space wrap style={{ marginBottom: 16 }}>
+          <span style={{ fontSize: '13px', fontWeight: 600, color: '#555550' }}>Bộ lọc đầy đủ:</span>
           <Select
             aria-label="Lọc trạng thái yêu cầu" value={statusFilter}
             onChange={(val) => setStatusFilter(val)}
-            style={{ width: 150 }}
+            style={{ width: 170 }}
             options={[
-              { value: 'all', label: 'Tất cả' },
+              { value: 'all', label: 'Tất cả trạng thái' },
               { value: 'Pending', label: 'Chờ duyệt' },
               { value: 'UnderReview', label: 'Đang xem xét' },
               { value: 'Priced', label: 'Đã định giá' },
@@ -386,17 +450,15 @@ const SourcingRequests = () => {
               { value: 'Rejected', label: 'Đã từ chối' },
             ]}
           />
-          <Button onClick={() => fetchRequests(statusFilter)}>Tải lại</Button>
         </Space>
-      }
-    >
-      <Table scroll={{ x: 'max-content' }}
-        dataSource={data}
-        columns={columns}
-        rowKey="id"
-        loading={loading}
-        pagination={{ pageSize: 10 }}
-      />
+
+        <Table scroll={{ x: 'max-content' }}
+          dataSource={data}
+          columns={columns}
+          rowKey="id"
+          loading={loading}
+          pagination={{ pageSize: 10 }}
+        />
 
       <Modal rootClassName="rw-admin-modal"
         title="Chi tiết yêu cầu đồ cũ"
@@ -664,7 +726,8 @@ const SourcingRequests = () => {
           </div>
         </div>
       </Modal>
-    </Card>
+      </Card>
+    </div>
   );
 };
 

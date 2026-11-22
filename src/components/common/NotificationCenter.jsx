@@ -60,18 +60,46 @@ export default function NotificationCenter({ admin = false }) {
 
   return <section className={`rw-notifications${admin ? ' rw-notifications-admin' : ''}`} aria-labelledby="rw-notifications-title">
     <div className="rw-notifications-head">
-      <div><span className="rw-notifications-kicker">REWEAR / TÀI KHOẢN</span><h1 id="rw-notifications-title"><Bell size={25} /> Thông báo</h1><p>Cập nhật về đơn mua, giao hàng, bán đồ cũ và món hợp gu.</p></div>
-      <button type="button" onClick={() => { setLoading(true); refresh(); }} aria-label="Tải lại thông báo"><RefreshCw size={17} /> Tải lại</button>
+      <div>
+        <span className="rw-notifications-kicker">{admin ? 'REWEAR / QUẢN TRỊ' : 'TÀI KHOẢN / 05'}</span>
+        <h1 id="rw-notifications-title">Thông báo</h1>
+        <p>Cập nhật về đơn mua, giao hàng, bán đồ cũ và món hợp gu.</p>
+      </div>
+      <button type="button" className="rw-notifications-refresh" onClick={() => { setLoading(true); refresh(); }} disabled={loading} aria-label="Tải lại thông báo">
+        <RefreshCw size={15} className={loading ? 'rw-spin' : ''} aria-hidden="true" /> Tải lại
+      </button>
     </div>
-    {loading && <p className="rw-notifications-state" role="status">Đang tải thông báo...</p>}
-    {error && <div className="rw-notifications-state error" role="alert">{error} <button type="button" onClick={refresh}>Thử lại</button></div>}
-    {!loading && !error && items.length === 0 && <div className="rw-notifications-state">Chưa có thông báo mới. Các cập nhật sau này sẽ xuất hiện ở đây.</div>}
+    {loading && (
+      <div className="rw-notifications-skeleton" role="status" aria-label="Đang tải thông báo">
+        <span />
+        <span />
+        <span />
+      </div>
+    )}
+    {error && (
+      <div className="rw-notifications-state error" role="alert">
+        <strong>Chưa tải được thông báo</strong>
+        <p>{error}</p>
+        <button type="button" onClick={refresh}>Thử lại</button>
+      </div>
+    )}
+    {!loading && !error && items.length === 0 && (
+      <div className="rw-notifications-empty">
+        <div className="rw-notifications-empty-icon" aria-hidden="true"><Bell size={22} /></div>
+        <strong>Chưa có thông báo mới</strong>
+        <p>Các cập nhật về đơn mua, giao hàng, bán đồ cũ và món hợp gu sẽ xuất hiện tại đây.</p>
+      </div>
+    )}
     {!loading && !error && items.length > 0 && <div className="rw-notifications-list">
       {items.map(item => <button type="button" key={item.id} className={`rw-notification-item${item.readAt ? '' : ' unread'}`}
         disabled={busyId === item.id} onClick={() => open(item)}>
         <span className="rw-notification-dot" aria-hidden="true" />
-        <span className="rw-notification-content"><strong>{item.title}</strong><span>{item.body}</span><small>{new Date(item.createdAt).toLocaleString('vi-VN')}</small></span>
-        {item.readAt ? <Check size={17} aria-label="Đã đọc" /> : <span className="rw-notification-new">Mới</span>}
+        <span className="rw-notification-content">
+          <strong>{item.title}</strong>
+          <span>{item.body}</span>
+          <small>{new Date(item.createdAt).toLocaleString('vi-VN')}</small>
+        </span>
+        {item.readAt ? <span className="rw-notification-read"><Check size={15} aria-hidden="true" /> Đã đọc</span> : <span className="rw-notification-new">Mới</span>}
       </button>)}
     </div>}
   </section>;

@@ -184,6 +184,19 @@ export default function OperationsPage({ mode = 'projects' }) {
   ];
 
   const p = detail?.project;
+  const sourceList = effectiveIsInventory ? data.inventory : data.projects;
+  const summaryCards = effectiveIsInventory ? [
+    ['Tổng mục trong kho', sourceList.length],
+    ['Nguyên liệu sẵn sàng', sourceList.filter(i => ['AvailableRaw', 'QCApproved'].includes(i.state)).length],
+    ['Đang đưa vào tái chế', sourceList.filter(i => ['ReservedForUpcycling', 'UpcyclingInProgress'].includes(i.state)).length],
+    ['Thành phẩm bán lẻ / Đã bán', sourceList.filter(i => ['ReadyRetail', 'Reserved', 'Sold'].includes(i.state)).length],
+  ] : [
+    ['Tổng dự án tái chế', sourceList.length],
+    ['Đang thực hiện / Cần làm lại', sourceList.filter(i => ['Pending', 'InProgress', 'Rework'].includes(i.state)).length],
+    ['Chờ kiểm định QC', sourceList.filter(i => i.state === 'QualityCheck').length],
+    ['QC đạt & Đã mở bán', sourceList.filter(i => ['QCApproved', 'Completed'].includes(i.state)).length],
+  ];
+
   return <div className="ops-page">
     <div className="ops-heading">
       <div>
@@ -192,11 +205,21 @@ export default function OperationsPage({ mode = 'projects' }) {
         <p className="ops-muted">{inventoryMode ? 'Theo dõi nguyên liệu, thành phẩm và trạng thái hàng hoàn.' : qcMode ? 'Kiểm định chất lượng thành phẩm tái chế trước khi mở bán.' : 'Từ nguyên liệu đã chi trả đến thành phẩm được kiểm định.'}</p>
       </div>
       <Space wrap>
-        <Button onClick={load} loading={loading}>Tải lại</Button>
-        {!inventoryMode && !qcMode && <Button type="primary" onClick={() => openAction('create')}>Tạo dự án</Button>}
+        <Button className="ops-refresh-btn" onClick={load} loading={loading}>Tải lại</Button>
+        {!inventoryMode && !qcMode && <Button type="primary" className="ops-refresh-btn" onClick={() => openAction('create')}>Tạo dự án</Button>}
       </Space>
     </div>
     {error && <Alert type="error" title={error} action={<Button onClick={load}>Thử lại</Button>} />}
+    <div className="ops-summary-grid">
+      {summaryCards.map(([label, count]) => (
+        <div className="ops-mini-stat" key={label}>
+          <div>
+            <span className="ops-mini-stat-label">{label}</span>
+            <strong className="ops-mini-stat-val">{count} mục</strong>
+          </div>
+        </div>
+      ))}
+    </div>
     <Card>
       <Space wrap style={{ marginBottom: 20 }}>
         <Input.Search aria-label="Tìm món đồ hoặc dự án" placeholder="Tìm theo tên, mã hoặc nguồn hàng" value={query} onChange={e => setQuery(e.target.value)} style={{ width: 'min(320px, 100%)' }} />

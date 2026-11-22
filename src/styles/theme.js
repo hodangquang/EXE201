@@ -1,64 +1,81 @@
-// Rains / Scandinavian Editorial Theme Token Configuration for Ant Design
-// Derived strictly from DESIGN (1).md
+// REWEAR Editorial & Executive Admin Theme Configuration for Ant Design
 export const themeConfig = {
   token: {
-    colorPrimary: '#26292a', // Charcoal - Filled action surface
-    colorInfo: '#26292a',
-    colorSuccess: '#2b593f', // Forest eco-accent
-    colorWarning: '#9e621e',
-    colorError: '#991b1b',
-    colorTextBase: '#10100f', // Ink
-    colorTextSecondary: '#70706f',
-    colorBgBase: '#efefef', // Fog
-    colorBgContainer: '#ffffff', // Paper
-    colorBorder: '#e2e2e2',
-    colorBorderSecondary: '#efefef',
-    borderRadius: 0, // Flat design as per DESIGN (1).md
-    fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    colorPrimary: '#10100f',
+    colorInfo: '#10100f',
+    colorSuccess: '#1f6f43',
+    colorWarning: '#b76e14',
+    colorError: '#b42318',
+    colorTextBase: '#10100f',
+    colorTextSecondary: '#66665f',
+    colorBgBase: '#f5f5f2',
+    colorBgContainer: '#ffffff',
+    colorBorder: '#dcdcd4',
+    colorBorderSecondary: '#ecece6',
+    borderRadius: 10,
+    borderRadiusLG: 14,
+    borderRadiusSM: 8,
+    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     fontSize: 14,
   },
   components: {
     Layout: {
-      bodyBg: '#efefef',
+      bodyBg: '#f5f5f2',
       headerBg: '#ffffff',
-      siderBg: '#10100f', // Ink
+      siderBg: '#111211',
     },
     Menu: {
-      darkItemBg: '#10100f',
-      darkItemSelectedBg: '#26292a',
-      darkItemHoverBg: '#1d1f20',
+      darkItemBg: 'transparent',
+      darkSubMenuItemBg: 'transparent',
+      darkItemSelectedBg: '#242624',
+      darkItemHoverBg: '#1b1d1b',
       darkItemSelectedColor: '#ffffff',
-      itemBorderRadius: 9999, // Pill nav items
+      darkItemColor: '#b8b8b0',
+      itemBorderRadius: 10,
+      itemHeight: 42,
+      itemMarginInline: 8,
+      itemMarginBlock: 4,
     },
     Card: {
-      headerFontSize: 15,
-      borderRadiusLG: 0, // Flat cards
-      colorBorderSecondary: '#e8e8e8',
+      headerFontSize: 16,
+      borderRadiusLG: 14,
+      colorBorderSecondary: '#e4e4de',
+      paddingLG: 24,
     },
     Button: {
-      borderRadius: 9999, // Pill buttons strictly from DESIGN (1).md
-      controlHeight: 38,
-      fontWeight: 500,
+      borderRadius: 9999,
+      controlHeight: 40,
+      fontWeight: 600,
       primaryColor: '#ffffff',
-      defaultBorderColor: '#10100f',
+      defaultBorderColor: '#d4d4cc',
       defaultColor: '#10100f',
     },
     Table: {
-      borderRadiusLG: 0,
-      headerBg: '#f8f8f8',
-      headerColor: '#10100f',
-      borderColor: '#efefef',
+      borderRadiusLG: 12,
+      headerBg: '#f6f6f3',
+      headerColor: '#26292a',
+      borderColor: '#ecece6',
+      rowHoverBg: '#fafaf7',
+      cellPaddingBlock: 14,
+      cellPaddingInline: 16,
     },
     Tag: {
-      borderRadiusSM: 9999, // Pill tags
+      borderRadiusSM: 9999,
     },
     Input: {
-      borderRadius: 0,
-      colorBorder: '#d4d4d3',
+      borderRadius: 10,
+      controlHeight: 40,
+      colorBorder: '#d4d4cc',
     },
     Select: {
-      borderRadius: 0,
-      colorBorder: '#d4d4d3',
+      borderRadius: 10,
+      controlHeight: 40,
+      colorBorder: '#d4d4cc',
+    },
+    InputNumber: {
+      borderRadius: 10,
+      controlHeight: 40,
+      colorBorder: '#d4d4cc',
     },
     Tabs: {
       inkBarColor: '#10100f',
@@ -66,7 +83,10 @@ export const themeConfig = {
       itemHoverColor: '#40403f',
     },
     Modal: {
-      borderRadiusLG: 0,
-    }
+      borderRadiusLG: 16,
+    },
+    Drawer: {
+      borderRadiusLG: 16,
+    },
   },
 };

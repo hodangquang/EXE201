@@ -206,7 +206,7 @@ export default function CartDrawer() {
                       <Minus size={14} />
                     </button>
                     <span className="rains-qty-val">{item.quantity}</span>
-                    <button className="rains-qty-btn" onClick={() => handleQuantityChange(item, item.quantity + 1)} aria-label="Tăng số lượng" disabled={confirmationBusy || confirmOpen}>
+                    <button className="rains-qty-btn" onClick={() => handleQuantityChange(item, item.quantity + 1)} aria-label="Tăng số lượng" disabled={confirmationBusy || confirmOpen || item.quantity >= item.maxQuantity}>
                       <Plus size={14} />
                     </button>
                   </div>

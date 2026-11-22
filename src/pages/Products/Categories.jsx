@@ -64,8 +64,17 @@ export const Categories = () => {
       key: 'name',
       render: (_, r) => (
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          {r.imageUrl && <img src={r.imageUrl} alt={r.name} style={{ width: 36, height: 36, objectFit: 'cover', borderRadius: 4 }} />}
-          <span style={{ fontWeight: 600, color: '#10100f' }}>{r.name}</span>
+          {r.imageUrl ? (
+            <img src={r.imageUrl} alt={r.name} style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8, border: '1px solid #e4e4dc' }} />
+          ) : (
+            <span style={{ width: 40, height: 40, borderRadius: 8, background: '#f4f4ef', color: '#10100f', display: 'inline-grid', placeItems: 'center', fontWeight: 700, fontSize: 13 }}>
+              {(r.name || 'D').charAt(0).toUpperCase()}
+            </span>
+          )}
+          <div>
+            <span style={{ fontWeight: 600, color: '#10100f', display: 'block' }}>{r.name}</span>
+            {r.description && <span style={{ fontSize: 12, color: '#70706f' }}>{r.description}</span>}
+          </div>
         </div>
       ),
     },
@@ -74,21 +83,21 @@ export const Categories = () => {
       title: 'Hành động',
       key: 'actions',
       render: (_, r) => (
-        <Space size="middle">
-          <button type="button" className="rw-table-action" style={{ color: 'var(--color-graphite)', fontWeight: 500, textDecoration: 'underline' }} onClick={() => handleViewDetail(r.id)}>
+        <Space size="small">
+          <Button size="small" onClick={() => handleViewDetail(r.id)}>
             Chi tiết
-          </button>
-          <button type="button" className="rw-table-action" style={{ color: '#0055ff', fontWeight: 500, textDecoration: 'underline' }} onClick={() => { setEditingCategory(r); setOpen(true); }}>
+          </Button>
+          <Button size="small" onClick={() => { setEditingCategory(r); setOpen(true); }}>
             Sửa
-          </button>
+          </Button>
           {(!r.isDeleted && r.isActive !== false) && (
             <Popconfirm title="Bạn có chắc muốn xóa danh mục này?" onConfirm={() => handleDelete(r.id)} okText="Xóa" cancelText="Hủy">
-              <button type="button" className="rw-table-action" style={{ color: '#991b1b', fontWeight: 500, textDecoration: 'underline' }}>Xóa</button>
+              <Button size="small" danger>Xóa</Button>
             </Popconfirm>
           )}
           {(r.isDeleted || r.isActive === false) && (
             <Popconfirm title="Bạn có chắc muốn khôi phục danh mục này?" onConfirm={() => handleRestore(r.id)} okText="Khôi phục" cancelText="Hủy">
-              <button type="button" className="rw-table-action" style={{ color: '#287447', fontWeight: 500, textDecoration: 'underline' }}>Khôi phục</button>
+              <Button size="small" type="primary">Khôi phục</Button>
             </Popconfirm>
           )}
         </Space>

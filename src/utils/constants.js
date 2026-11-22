@@ -2,6 +2,7 @@
 export const ROLES = {
   ADMIN: 'ADMIN',
   STAFF: 'STAFF',
+  SHIPPER: 'SHIPPER',
 };
 
 // Product Statuses

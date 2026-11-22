@@ -1,0 +1,686 @@
+import { PRODUCT_STATUS, COLLECTION_STATUS, INSPECTION_RESULT, UPCYCLING_STATUS, QC_DECISION, ORDER_STATUS, PAYMENT_STATUS, ROLES } from "/src/utils/constants.js";
+// Initial Dashboard KPIs
+export const mockKPIs = {
+	revenue: 452e5,
+	ordersCount: 128,
+	collectedClothes: 356,
+	upcycledProducts: 214,
+	productsSold: 173,
+	customersCount: 892,
+	wasteDivertedKg: 185.4
+};
+// Monthly Revenue & Trend Data
+export const mockRevenueTrends = [
+	{
+		month: "T1",
+		revenue: 285e5,
+		orders: 74,
+		collected: 180
+	},
+	{
+		month: "T2",
+		revenue: 321e5,
+		orders: 86,
+		collected: 210
+	},
+	{
+		month: "T3",
+		revenue: 389e5,
+		orders: 102,
+		collected: 260
+	},
+	{
+		month: "T4",
+		revenue: 345e5,
+		orders: 95,
+		collected: 230
+	},
+	{
+		month: "T5",
+		revenue: 412e5,
+		orders: 115,
+		collected: 310
+	},
+	{
+		month: "T6",
+		revenue: 452e5,
+		orders: 128,
+		collected: 356
+	}
+];
+// Category Breakdown Data
+export const mockCategoryStats = [
+	{
+		name: "Denim tái thiết kế",
+		value: 42,
+		color: "#10100f"
+	},
+	{
+		name: "Áo khoác ghép vải",
+		value: 28,
+		color: "#26292a"
+	},
+	{
+		name: "Túi và phụ kiện",
+		value: 18,
+		color: "#70706f"
+	},
+	{
+		name: "Áo tái thiết kế",
+		value: 12,
+		color: "#b3b3b2"
+	}
+];
+// Product Categories
+export const mockCategories = [
+	{
+		id: "cat_1",
+		name: "Denim tái thiết kế",
+		slug: "denim-upcycled",
+		productCount: 42,
+		description: "Sản phẩm tái chế từ quần và áo khoác jean cũ"
+	},
+	{
+		id: "cat_2",
+		name: "Áo khoác ghép vải",
+		slug: "patchwork-outerwear",
+		productCount: 28,
+		description: "Áo khoác ghép vải nghệ thuật đa chất liệu"
+	},
+	{
+		id: "cat_3",
+		name: "Túi xách",
+		slug: "tote-bags",
+		productCount: 35,
+		description: "Túi xách và phụ kiện từ chất liệu tái sử dụng"
+	},
+	{
+		id: "cat_4",
+		name: "Áo tái thiết kế",
+		slug: "reworked-tops",
+		productCount: 22,
+		description: "Áo thun và sơ mi biến tấu phom dáng"
+	},
+	{
+		id: "cat_5",
+		name: "Phụ kiện tái sử dụng",
+		slug: "eco-accessories",
+		productCount: 15,
+		description: "Nón, khăn quàng và phụ kiện nhỏ"
+	}
+];
+// Products
+export const mockProducts = [
+	{
+		id: "PRD-001",
+		name: "Áo khoác denim ghép vải #001",
+		description: "Áo khoác denim chắp vá phong cách Boro Nhật Bản, được may thủ công từ 3 chiếc quần jean cũ đã qua khử khuẩn và xử lý mềm.",
+		price: 89e4,
+		category: "Áo khoác ghép vải",
+		size: "L",
+		color: "Indigo Indigo Blend",
+		material: "Upcycled Denim (100% Cotton)",
+		quantity: 1,
+		isOneOfOne: true,
+		status: PRODUCT_STATUS.AVAILABLE,
+		upcyclingProjectId: "UP-2026-001",
+		originalMaterial: "3 quần jean Levi’s & Uniqlo quyên góp",
+		upcyclingStory: "Mỗi mảng vải đại diện cho một câu chuyện riêng của từng chiếc quần jean cũ được chủ nhân cũ quyên góp tại Hà Nội. Đội ngũ thợ may thủ công REWEAR đã phân tách đường may, xử lý bạc màu tự nhiên và khâu lại trong 16 giờ làm việc.",
+		images: ["https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800", "https://images.unsplash.com/photo-1544441893-675973e31985?w=800"],
+		beforeAfter: {
+			beforeImage: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800",
+			processImage: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800",
+			afterImage: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800"
+		},
+		createdAt: "2026-03-10T10:30:00Z"
+	},
+	{
+		id: "PRD-002",
+		name: "Túi tote kaki đa dụng #002",
+		description: "Túi tote quai đeo chéo làm từ áo khoác lính kaki cũ, có 4 túi hộp đa năng và lót vải dù chống thấm tái sinh.",
+		price: 45e4,
+		category: "Túi xách",
+		size: "Free Size",
+		color: "Olive Green",
+		material: "Upcycled Canvas & Kaki",
+		quantity: 1,
+		isOneOfOne: true,
+		status: PRODUCT_STATUS.AVAILABLE,
+		upcyclingProjectId: "UP-2026-002",
+		originalMaterial: "1 áo jacket kaki rằn ri hỏng khóa kéo",
+		upcyclingStory: "Tận dụng túi hộp nguyên bản của áo lính để tạo nên chiếc túi thời thượng, có độ bền chịu tải trên 10kg.",
+		images: ["https://images.unsplash.com/photo-1544816155-12df9643f363?w=800"],
+		beforeAfter: {
+			beforeImage: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=800",
+			processImage: "https://images.unsplash.com/photo-1528458876885-544243324950?w=800",
+			afterImage: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800"
+		},
+		createdAt: "2026-03-12T14:15:00Z"
+	},
+	{
+		id: "PRD-003",
+		name: "Áo sơ mi dạ vạt lệch #003",
+		description: "Áo sơ mi dáng rộng vạt lệch ghép từ 2 áo dạ kẻ caro vintage đỏ và xanh rêu.",
+		price: 52e4,
+		category: "Áo tái thiết kế",
+		size: "XL",
+		color: "Red & Forest Green Plaid",
+		material: "Upcycled Flannel Cotton",
+		quantity: 0,
+		isOneOfOne: true,
+		status: PRODUCT_STATUS.SOLD,
+		upcyclingProjectId: "UP-2026-003",
+		originalMaterial: "2 áo sơ mi kẻ caro cũ rách tay",
+		upcyclingStory: "Hai chiếc áo sơ mi caro bị sờn ở cổ tay được cắt ghép tinh tế, biến khuyết điểm thành điểm nhấn thời trang unisex.",
+		images: ["https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800"],
+		beforeAfter: {
+			beforeImage: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800",
+			processImage: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800",
+			afterImage: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800"
+		},
+		createdAt: "2026-03-05T09:00:00Z"
+	}
+];
+// Collection Requests
+export const mockCollectionRequests = [
+	{
+		id: "COL-2026-001",
+		customer: {
+			id: "CUST-001",
+			name: "Nguyễn Minh Anh",
+			phone: "0901234567",
+			address: "45 Lê Duẩn, Phường Bến Nghé, Quận 1, TP. HCM"
+		},
+		clothesCount: 6,
+		clothingType: "Quần jeans (3), Áo thun (2), Áo khoác dạ (1)",
+		condition: "Tốt (60-80%), có vết sờn nhẹ ở gấu",
+		material: "Denim, Cotton, Len pha",
+		color: "Xanh indigo, Trắng, Đen, Xám",
+		collectionMethod: "Thu gom tận nhà (Home Pickup)",
+		requestDate: "2026-03-18T08:30:00Z",
+		pickupDate: "2026-03-20T10:00:00Z",
+		assignedStaff: "Lê Văn Hoàng (Staff)",
+		status: COLLECTION_STATUS.INSPECTING,
+		rewardPointsGranted: 0,
+		notes: "Khách hàng dặn bấm chuông cửa phụ bên hông.",
+		photos: ["https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600", "https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?w=600"]
+	},
+	{
+		id: "COL-2026-002",
+		customer: {
+			id: "CUST-002",
+			name: "Trần Thị Mai",
+			phone: "0912345678",
+			address: "128 Cầu Giấy, Quan Hoa, Cầu Giấy, Hà Nội"
+		},
+		clothesCount: 4,
+		clothingType: "Áo sơ mi văn phòng (4)",
+		condition: "Khá mới, mất vài cúc áo",
+		material: "Kate, Oxford Cotton",
+		color: "Trắng, Xanh nhạt, Hồng pastel",
+		collectionMethod: "Gửi qua bưu cục Viettel Post",
+		requestDate: "2026-03-19T14:20:00Z",
+		pickupDate: "2026-03-21T09:00:00Z",
+		assignedStaff: "Phạm Thu Hằng (Staff)",
+		status: COLLECTION_STATUS.ACCEPTED,
+		rewardPointsGranted: 80,
+		notes: "Đã nhận kiện hàng tại kho Hà Nội, đủ 4 chiếc đạt chuẩn.",
+		photos: ["https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600"]
+	},
+	{
+		id: "COL-2026-003",
+		customer: {
+			id: "CUST-003",
+			name: "Lê Hoàng Long",
+			phone: "0987654321",
+			address: "22 Nguyễn Thị Minh Khai, Hải Châu, Đà Nẵng"
+		},
+		clothesCount: 8,
+		clothingType: "Đồ trẻ em, Áo nỉ mùa đông",
+		condition: "Đã cũ, sờn rách nhiều",
+		material: "Nỉ bông, Cotton",
+		color: "Đa sắc",
+		collectionMethod: "Gửi tại điểm Drop-box REWEAR",
+		requestDate: "2026-03-22T11:00:00Z",
+		pickupDate: "2026-03-24T14:00:00Z",
+		assignedStaff: "Chưa phân công",
+		status: COLLECTION_STATUS.PENDING,
+		rewardPointsGranted: 0,
+		notes: "Khách muốn ủng hộ làm thảm hoặc gối lót.",
+		photos: []
+	}
+];
+// Inspection Items
+export const mockInspectionItems = [
+	{
+		id: "ITEM-01",
+		requestId: "COL-2026-001",
+		type: "Quần Jeans Levi’s 501",
+		material: "Denim 100% Cotton",
+		color: "Dark Indigo",
+		condition: "Tốt (75%)",
+		damageLevel: "Sờn gấu quần, bạc nhẹ ở đầu gối",
+		estimatedReusableValue: "Cao (Rất phù hợp tái chế thành Áo khoác / Túi)",
+		inspectionResult: INSPECTION_RESULT.ACCEPTED_UPCYCLING,
+		notes: "Vải dày, kết cấu sợi còn rất khỏe, màu bạc tự nhiên rất đẹp.",
+		photos: ["https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600"]
+	},
+	{
+		id: "ITEM-02",
+		requestId: "COL-2026-001",
+		type: "Áo phông Cotton trắng",
+		material: "100% Cotton",
+		color: "Trắng ố vàng nách",
+		condition: "Kém (30%)",
+		damageLevel: "Vết ố mồ hôi không thể tẩy sạch",
+		estimatedReusableValue: "Thấp (Cắt sợi làm đệm hoặc tái sinh sợi)",
+		inspectionResult: INSPECTION_RESULT.ACCEPTED_MATERIAL,
+		notes: "Không thể lên sản phẩm thời trang, đưa vào kho phụ liệu tái chế.",
+		photos: ["https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?w=600"]
+	},
+	{
+		id: "ITEM-03",
+		requestId: "COL-2026-001",
+		type: "Áo khoác gió hỏng tráng nhựa",
+		material: "Polyester tráng PU",
+		color: "Đỏ",
+		condition: "Hỏng nặng (10%)",
+		damageLevel: "Màng PU bị vỡ nát, bong tróc mảng lớn",
+		estimatedReusableValue: "Không thể sử dụng",
+		inspectionResult: INSPECTION_RESULT.REJECTED,
+		notes: "Không an toàn cho sức khỏe và không may lại được.",
+		photos: []
+	}
+];
+// Upcycling Projects
+export const mockUpcyclingProjects = [
+	{
+		id: "UP-2026-001",
+		title: "Dự án Áo khoác denim Boro",
+		designer: "Quang (Lead Creative)",
+		status: UPCYCLING_STATUS.READY_TO_SELL,
+		originalMaterials: "3 quần jean thu gom từ yêu cầu COL-2026-001",
+		beforeImages: ["https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600"],
+		processImages: ["https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600"],
+		finalImages: ["https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800"],
+		finalProductId: "PRD-001",
+		designConcept: "Kết hợp triết lý Wabi-Sabi và phong cách đường phố Gen Z, biến các mảng sờn của denim thành họa tiết trang trí hình học.",
+		productionNotes: "Cần khử khuẩn nhiệt độ cao 80 độ C trước khi may, sử dụng chỉ bò số 20 siêu bền.",
+		startDate: "2026-03-01T08:00:00Z",
+		completionDate: "2026-03-09T17:00:00Z",
+		qcStatus: QC_DECISION.APPROVED
+	},
+	{
+		id: "UP-2026-002",
+		title: "Túi Túi kaki đa dụng",
+		designer: "Hải Yến (Upcycling Artisan)",
+		status: UPCYCLING_STATUS.PRODUCTION,
+		originalMaterials: "1 áo jacket lính kaki từ đợt quyên góp số 4",
+		beforeImages: ["https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600"],
+		processImages: ["https://images.unsplash.com/photo-1528458876885-544243324950?w=600"],
+		finalImages: [],
+		finalProductId: "PRD-002",
+		designConcept: "Tái chế túi hộp và khóa bấm của áo khoác để tạo túi đeo chéo đa năng.",
+		productionNotes: "Đang gia cố đường viền quai túi chịu lực.",
+		startDate: "2026-03-11T09:30:00Z",
+		completionDate: null,
+		qcStatus: QC_DECISION.APPROVED
+	},
+	{
+		id: "UP-2026-003",
+		title: "Áo Hoodie chắp vải Dạ tweed",
+		designer: "Quang (Lead Creative)",
+		status: UPCYCLING_STATUS.QUALITY_CHECK,
+		originalMaterials: "1 áo hoodie xám + 1 chân váy dạ tweed cũ",
+		beforeImages: ["https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600"],
+		processImages: ["https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600"],
+		finalImages: ["https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?w=800"],
+		finalProductId: null,
+		designConcept: "Phối mũ và túi kangaroo bằng vải dạ tweed hoa văn houndstooth thanh lịch.",
+		productionNotes: "Đã hoàn thành may, chuyển qua khâu kiểm định chất lượng hoàn thiện.",
+		startDate: "2026-03-14T10:00:00Z",
+		completionDate: "2026-03-18T16:00:00Z",
+		qcStatus: QC_DECISION.NEEDS_REVISION
+	}
+];
+// QC Records
+export const mockQCRecords = [{
+	id: "QC-2026-001",
+	projectId: "UP-2026-001",
+	productName: "Áo khoác denim ghép vải #001",
+	inspector: "Đỗ Quốc Việt (QC Lead)",
+	stitchingQuality: "Xuất sắc (Đường chỉ kép đồng đều, không sót mối chỉ thừa)",
+	materialQuality: "Đạt chuẩn (Đã xử lý mềm, không có mùi lạ, độ bền cao)",
+	cleaningStatus: "Đạt (Khử khuẩn bằng tia UV và giặt sinh học)",
+	visualQuality: "Đẹp, màu sắc tương phản hài hòa đúng bản vẽ thiết kế",
+	sizeAccuracy: "Đúng bảng size L chuẩn (Dài áo 68cm, Rộng ngực 58cm)",
+	finalDecision: QC_DECISION.APPROVED,
+	checkedAt: "2026-03-09T18:00:00Z",
+	canBePublished: true
+}, {
+	id: "QC-2026-002",
+	projectId: "UP-2026-003",
+	productName: "Áo Hoodie chắp vải Dạ tweed",
+	inspector: "Đỗ Quốc Việt (QC Lead)",
+	stitchingQuality: "Chưa đạt (Góc nối giữa vải nỉ và dạ tweed ở túi bị nhăn)",
+	materialQuality: "Đạt chuẩn",
+	cleaningStatus: "Đạt",
+	visualQuality: "Phom dáng ổn, nhưng đường may túi cần là phẳng và may lại mí",
+	sizeAccuracy: "Đạt size M",
+	finalDecision: QC_DECISION.NEEDS_REVISION,
+	checkedAt: "2026-03-19T11:00:00Z",
+	canBePublished: false
+}];
+// Orders
+export const mockOrders = [
+	{
+		id: "RW2026001",
+		customer: {
+			id: "CUST-001",
+			name: "Nguyễn Minh Anh",
+			phone: "0901234567",
+			address: "45 Lê Duẩn, Phường Bến Nghé, Quận 1, TP. HCM"
+		},
+		items: [{
+			productId: "PRD-003",
+			name: "Áo sơ mi dạ vạt lệch #003",
+			price: 52e4,
+			quantity: 1,
+			isOneOfOne: true,
+			image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400"
+		}],
+		subtotal: 52e4,
+		shippingFee: 3e4,
+		discount: 5e4,
+		total: 5e5,
+		paymentMethod: "Chuyển khoản VietQR / MoMo",
+		paymentStatus: PAYMENT_STATUS.PAID,
+		transactionId: "TXN-99882231",
+		orderStatus: ORDER_STATUS.DELIVERED,
+		shippingCarrier: "Giao Hàng Tiết Kiệm (GHTK)",
+		trackingCode: "GHTK-98124981",
+		createdAt: "2026-03-06T14:30:00Z",
+		notes: "Giao giờ hành chính, gọi trước 15 phút."
+	},
+	{
+		id: "RW2026002",
+		customer: {
+			id: "CUST-004",
+			name: "Vũ Đức Thịnh",
+			phone: "0933445566",
+			address: "Toà Landmark 81, 208 Nguyễn Hữu Cảnh, P.22, Bình Thạnh, TP. HCM"
+		},
+		items: [{
+			productId: "PRD-001",
+			name: "Áo khoác denim ghép vải #001",
+			price: 89e4,
+			quantity: 1,
+			isOneOfOne: true,
+			image: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=400"
+		}],
+		subtotal: 89e4,
+		shippingFee: 0,
+		discount: 0,
+		total: 89e4,
+		paymentMethod: "Thẻ tín dụng / Visa Master",
+		paymentStatus: PAYMENT_STATUS.PAID,
+		transactionId: "TXN-77332211",
+		orderStatus: ORDER_STATUS.SHIPPING,
+		shippingCarrier: "GrabExpress",
+		trackingCode: "GRAB-88231",
+		createdAt: "2026-03-21T10:15:00Z",
+		notes: "Giao lên tầng 34 sảnh lễ tân."
+	},
+	{
+		id: "RW2026003",
+		customer: {
+			id: "CUST-002",
+			name: "Trần Thị Mai",
+			phone: "0912345678",
+			address: "128 Cầu Giấy, Quan Hoa, Cầu Giấy, Hà Nội"
+		},
+		items: [{
+			productId: "PRD-002",
+			name: "Túi tote kaki đa dụng #002",
+			price: 45e4,
+			quantity: 1,
+			isOneOfOne: true,
+			image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400"
+		}],
+		subtotal: 45e4,
+		shippingFee: 3e4,
+		discount: 4e4,
+		total: 44e4,
+		paymentMethod: "COD (Thanh toán khi nhận hàng)",
+		paymentStatus: PAYMENT_STATUS.UNPAID,
+		transactionId: null,
+		orderStatus: ORDER_STATUS.PREPARING,
+		shippingCarrier: "Viettel Post",
+		trackingCode: null,
+		createdAt: "2026-03-22T16:45:00Z",
+		notes: "Đóng gói hộp giấy bảo vệ môi trường."
+	}
+];
+// Customers
+export const mockCustomers = [
+	{
+		id: "CUST-001",
+		name: "Nguyễn Minh Anh",
+		email: "minhanh.nguyen@gmail.com",
+		phone: "0901234567",
+		avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150",
+		address: "45 Lê Duẩn, Phường Bến Nghé, Quận 1, TP. HCM",
+		rewardPoints: 320,
+		totalOrders: 4,
+		totalSpending: 235e4,
+		status: "Active",
+		createdAt: "2025-11-12T09:00:00Z",
+		donationCount: 3,
+		acceptedClothesDonated: 14
+	},
+	{
+		id: "CUST-002",
+		name: "Trần Thị Mai",
+		email: "mai.tran98@outlook.com",
+		phone: "0912345678",
+		avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150",
+		address: "128 Cầu Giấy, Quan Hoa, Cầu Giấy, Hà Nội",
+		rewardPoints: 180,
+		totalOrders: 2,
+		totalSpending: 96e4,
+		status: "Active",
+		createdAt: "2026-01-05T14:20:00Z",
+		donationCount: 2,
+		acceptedClothesDonated: 8
+	},
+	{
+		id: "CUST-003",
+		name: "Lê Hoàng Long",
+		email: "long.le@yahoo.com",
+		phone: "0987654321",
+		avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150",
+		address: "22 Nguyễn Thị Minh Khai, Hải Châu, Đà Nẵng",
+		rewardPoints: 60,
+		totalOrders: 1,
+		totalSpending: 45e4,
+		status: "Active",
+		createdAt: "2026-02-18T10:10:00Z",
+		donationCount: 1,
+		acceptedClothesDonated: 3
+	},
+	{
+		id: "CUST-004",
+		name: "Vũ Đức Thịnh",
+		email: "thinh.vu@techcorp.vn",
+		phone: "0933445566",
+		avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150",
+		address: "Landmark 81, Bình Thạnh, TP. HCM",
+		rewardPoints: 450,
+		totalOrders: 5,
+		totalSpending: 389e4,
+		status: "Active",
+		createdAt: "2025-10-01T08:00:00Z",
+		donationCount: 5,
+		acceptedClothesDonated: 22
+	}
+];
+// Inventory
+export const mockInventory = [
+	{
+		id: "INV-001",
+		item: "Lô Quần Jean Cũ đợt T3/2026",
+		category: "Quần áo đã thu gom",
+		type: "Used Denim",
+		quantity: 48,
+		unit: "Chiếc",
+		location: "Kho A - Kệ 01 (Khu sơ chế)",
+		status: "Sẵn sàng khử khuẩn",
+		lastUpdated: "2026-03-21T11:00:00Z"
+	},
+	{
+		id: "INV-002",
+		item: "Vải Denim cắt mảng Boro",
+		category: "Nguyên liệu thô",
+		type: "Phụ liệu vải xé",
+		quantity: 16.5,
+		unit: "Kg",
+		location: "Kho B - Kệ 04 (Xưởng may)",
+		status: "Đã giặt sấy tiệt trùng",
+		lastUpdated: "2026-03-20T16:30:00Z"
+	},
+	{
+		id: "INV-003",
+		item: "Áo Hoodie chắp Tweed (UP-2026-003)",
+		category: "Đang sản xuất",
+		type: "Bán thành phẩm",
+		quantity: 1,
+		unit: "Chiếc",
+		location: "Bàn may mẫu số 2",
+		status: "Đang sửa lỗi QC",
+		lastUpdated: "2026-03-19T14:00:00Z"
+	},
+	{
+		id: "INV-004",
+		item: "Áo khoác denim ghép vải #001",
+		category: "Thành phẩm",
+		type: "Sản phẩm 1-of-1",
+		quantity: 1,
+		unit: "Chiếc",
+		location: "Khu trưng bày & đóng gói SP01",
+		status: "Đã sẵn sàng giao hàng",
+		lastUpdated: "2026-03-10T10:30:00Z"
+	},
+	{
+		id: "INV-005",
+		item: "Áo sơ mi dạ vạt lệch #003",
+		category: "Đã bán",
+		type: "Sản phẩm đã bán",
+		quantity: 0,
+		unit: "Chiếc",
+		location: "Đã giao cho khách RW2026001",
+		status: "Hoàn tất đơn hàng",
+		lastUpdated: "2026-03-08T15:20:00Z"
+	}
+];
+// Promotions
+export const mockPromotions = [{
+	id: "PRM-001",
+	name: "Ưu đãi Tri ân Người Quyên Góp (ECO HERO)",
+	code: "ECOHERO50K",
+	discountType: "Fixed Amount",
+	discountValue: 5e4,
+	minOrder: 3e5,
+	startDate: "2026-03-01T00:00:00Z",
+	endDate: "2026-04-30T23:59:59Z",
+	usageLimit: 500,
+	usedCount: 142,
+	status: "Active"
+}, {
+	id: "PRM-002",
+	name: "Miễn phí vận chuyển Đơn hàng đầu tiên",
+	code: "FREESHIPREWEAR",
+	discountType: "Free Shipping",
+	discountValue: 35e3,
+	minOrder: 4e5,
+	startDate: "2026-01-01T00:00:00Z",
+	endDate: "2026-12-31T23:59:59Z",
+	usageLimit: 1e3,
+	usedCount: 468,
+	status: "Active"
+}];
+// Staff
+export const mockStaff = [
+	{
+		id: "STF-001",
+		name: "Quang (quản trị viên)",
+		email: "admin@rewear.vn",
+		phone: "0909998877",
+		role: ROLES.ADMIN,
+		status: "Active",
+		avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150",
+		joinedDate: "2025-08-01",
+		department: "Ban điều hành (Operations)"
+	},
+	{
+		id: "STF-002",
+		name: "Linh (nhân viên)",
+		email: "linh.craft@rewear.vn",
+		phone: "0918887766",
+		role: ROLES.STAFF,
+		status: "Active",
+		avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150",
+		joinedDate: "2025-10-15",
+		department: "Xưởng tái chế (Upcycling Lab)"
+	},
+	{
+		id: "STF-003",
+		name: "Lê Văn Hoàng",
+		email: "hoang.logistics@rewear.vn",
+		phone: "0937776655",
+		role: ROLES.STAFF,
+		status: "Active",
+		avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150",
+		joinedDate: "2025-11-20",
+		department: "Điều phối thu gom (Collection & Logistics)"
+	},
+	{
+		id: "STF-004",
+		name: "Đỗ Quốc Việt",
+		email: "viet.qc@rewear.vn",
+		phone: "0946665544",
+		role: ROLES.STAFF,
+		status: "Active",
+		avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150",
+		joinedDate: "2025-12-01",
+		department: "Kiểm soát chất lượng (QC)"
+	}
+];
+// Notifications
+export const mockNotifications = [
+	{
+		id: "NOTIF-01",
+		title: "Yêu cầu quyên góp mới",
+		message: "Khách hàng Nguyễn Minh Anh vừa gửi yêu cầu thu gom 6 món đồ cũ.",
+		time: "15 phút trước",
+		read: false,
+		type: "collection"
+	},
+	{
+		id: "NOTIF-02",
+		title: "Đơn hàng mới #RW2026002",
+		message: "Khách hàng Vũ Đức Thịnh vừa thanh toán thành công 890.000 ₫ cho áo khoác denim ghép vải #001.",
+		time: "1 giờ trước",
+		read: false,
+		type: "order"
+	},
+	{
+		id: "NOTIF-03",
+		title: "Dự án UP-2026-001 đạt QC",
+		message: "Áo khoác Boro Denim đã vượt qua kiểm định QC và đủ điều kiện mở bán.",
+		time: "3 giờ trước",
+		read: true,
+		type: "qc"
+	}
+];
+
+//# sourceMappingURL=data:application/json;base64,eyJtYXBwaW5ncyI6IkFBQUEsU0FDRSxnQkFDQSxtQkFDQSxtQkFDQSxrQkFDQSxhQUNBLGNBQ0EsZ0JBQ0EsYUFDSzs7QUFHUCxPQUFPLE1BQU0sV0FBVztDQUN0QixTQUFTO0NBQ1QsYUFBYTtDQUNiLGtCQUFrQjtDQUNsQixrQkFBa0I7Q0FDbEIsY0FBYztDQUNkLGdCQUFnQjtDQUNoQixpQkFBaUI7QUFDbkI7O0FBR0EsT0FBTyxNQUFNLG9CQUFvQjtDQUMvQjtFQUFFLE9BQU87RUFBTSxTQUFTO0VBQVUsUUFBUTtFQUFJLFdBQVc7Q0FBSTtDQUM3RDtFQUFFLE9BQU87RUFBTSxTQUFTO0VBQVUsUUFBUTtFQUFJLFdBQVc7Q0FBSTtDQUM3RDtFQUFFLE9BQU87RUFBTSxTQUFTO0VBQVUsUUFBUTtFQUFLLFdBQVc7Q0FBSTtDQUM5RDtFQUFFLE9BQU87RUFBTSxTQUFTO0VBQVUsUUFBUTtFQUFJLFdBQVc7Q0FBSTtDQUM3RDtFQUFFLE9BQU87RUFBTSxTQUFTO0VBQVUsUUFBUTtFQUFLLFdBQVc7Q0FBSTtDQUM5RDtFQUFFLE9BQU87RUFBTSxTQUFTO0VBQVUsUUFBUTtFQUFLLFdBQVc7Q0FBSTtBQUNoRTs7QUFHQSxPQUFPLE1BQU0sb0JBQW9CO0NBQy9CO0VBQUUsTUFBTTtFQUFzQixPQUFPO0VBQUksT0FBTztDQUFVO0NBQzFEO0VBQUUsTUFBTTtFQUFxQixPQUFPO0VBQUksT0FBTztDQUFVO0NBQ3pEO0VBQUUsTUFBTTtFQUFtQixPQUFPO0VBQUksT0FBTztDQUFVO0NBQ3ZEO0VBQUUsTUFBTTtFQUFtQixPQUFPO0VBQUksT0FBTztDQUFVO0FBQ3pEOztBQUdBLE9BQU8sTUFBTSxpQkFBaUI7Q0FDNUI7RUFBRSxJQUFJO0VBQVMsTUFBTTtFQUFzQixNQUFNO0VBQWtCLGNBQWM7RUFBSSxhQUFhO0NBQStDO0NBQ2pKO0VBQUUsSUFBSTtFQUFTLE1BQU07RUFBcUIsTUFBTTtFQUF1QixjQUFjO0VBQUksYUFBYTtDQUE0QztDQUNsSjtFQUFFLElBQUk7RUFBUyxNQUFNO0VBQVksTUFBTTtFQUFhLGNBQWM7RUFBSSxhQUFhO0NBQWdEO0NBQ25JO0VBQUUsSUFBSTtFQUFTLE1BQU07RUFBbUIsTUFBTTtFQUFpQixjQUFjO0VBQUksYUFBYTtDQUFzQztDQUNwSTtFQUFFLElBQUk7RUFBUyxNQUFNO0VBQXdCLE1BQU07RUFBbUIsY0FBYztFQUFJLGFBQWE7Q0FBa0M7QUFDekk7O0FBR0EsT0FBTyxNQUFNLGVBQWU7Q0FDMUI7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLGFBQWE7RUFDYixPQUFPO0VBQ1AsVUFBVTtFQUNWLE1BQU07RUFDTixPQUFPO0VBQ1AsVUFBVTtFQUNWLFVBQVU7RUFDVixZQUFZO0VBQ1osUUFBUSxlQUFlO0VBQ3ZCLG9CQUFvQjtFQUNwQixrQkFBa0I7RUFDbEIsZ0JBQWdCO0VBQ2hCLFFBQVEsQ0FDTixzRUFDQSxpRUFDRjtFQUNBLGFBQWE7R0FDWCxhQUFhO0dBQ2IsY0FBYztHQUNkLFlBQVk7RUFDZDtFQUNBLFdBQVc7Q0FDYjtDQUNBO0VBQ0UsSUFBSTtFQUNKLE1BQU07RUFDTixhQUFhO0VBQ2IsT0FBTztFQUNQLFVBQVU7RUFDVixNQUFNO0VBQ04sT0FBTztFQUNQLFVBQVU7RUFDVixVQUFVO0VBQ1YsWUFBWTtFQUNaLFFBQVEsZUFBZTtFQUN2QixvQkFBb0I7RUFDcEIsa0JBQWtCO0VBQ2xCLGdCQUFnQjtFQUNoQixRQUFRLENBQ04saUVBQ0Y7RUFDQSxhQUFhO0dBQ1gsYUFBYTtHQUNiLGNBQWM7R0FDZCxZQUFZO0VBQ2Q7RUFDQSxXQUFXO0NBQ2I7Q0FDQTtFQUNFLElBQUk7RUFDSixNQUFNO0VBQ04sYUFBYTtFQUNiLE9BQU87RUFDUCxVQUFVO0VBQ1YsTUFBTTtFQUNOLE9BQU87RUFDUCxVQUFVO0VBQ1YsVUFBVTtFQUNWLFlBQVk7RUFDWixRQUFRLGVBQWU7RUFDdkIsb0JBQW9CO0VBQ3BCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsUUFBUSxDQUNOLG9FQUNGO0VBQ0EsYUFBYTtHQUNYLGFBQWE7R0FDYixjQUFjO0dBQ2QsWUFBWTtFQUNkO0VBQ0EsV0FBVztDQUNiO0FBQ0Y7O0FBR0EsT0FBTyxNQUFNLHlCQUF5QjtDQUNwQztFQUNFLElBQUk7RUFDSixVQUFVO0dBQ1IsSUFBSTtHQUNKLE1BQU07R0FDTixPQUFPO0dBQ1AsU0FBUztFQUNYO0VBQ0EsY0FBYztFQUNkLGNBQWM7RUFDZCxXQUFXO0VBQ1gsVUFBVTtFQUNWLE9BQU87RUFDUCxrQkFBa0I7RUFDbEIsYUFBYTtFQUNiLFlBQVk7RUFDWixlQUFlO0VBQ2YsUUFBUSxrQkFBa0I7RUFDMUIscUJBQXFCO0VBQ3JCLE9BQU87RUFDUCxRQUFRLENBQ04sc0VBQ0Esb0VBQ0Y7Q0FDRjtDQUNBO0VBQ0UsSUFBSTtFQUNKLFVBQVU7R0FDUixJQUFJO0dBQ0osTUFBTTtHQUNOLE9BQU87R0FDUCxTQUFTO0VBQ1g7RUFDQSxjQUFjO0VBQ2QsY0FBYztFQUNkLFdBQVc7RUFDWCxVQUFVO0VBQ1YsT0FBTztFQUNQLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2IsWUFBWTtFQUNaLGVBQWU7RUFDZixRQUFRLGtCQUFrQjtFQUMxQixxQkFBcUI7RUFDckIsT0FBTztFQUNQLFFBQVEsQ0FDTixvRUFDRjtDQUNGO0NBQ0E7RUFDRSxJQUFJO0VBQ0osVUFBVTtHQUNSLElBQUk7R0FDSixNQUFNO0dBQ04sT0FBTztHQUNQLFNBQVM7RUFDWDtFQUNBLGNBQWM7RUFDZCxjQUFjO0VBQ2QsV0FBVztFQUNYLFVBQVU7RUFDVixPQUFPO0VBQ1Asa0JBQWtCO0VBQ2xCLGFBQWE7RUFDYixZQUFZO0VBQ1osZUFBZTtFQUNmLFFBQVEsa0JBQWtCO0VBQzFCLHFCQUFxQjtFQUNyQixPQUFPO0VBQ1AsUUFBUSxDQUFDO0NBQ1g7QUFDRjs7QUFHQSxPQUFPLE1BQU0sc0JBQXNCO0NBQ2pDO0VBQ0UsSUFBSTtFQUNKLFdBQVc7RUFDWCxNQUFNO0VBQ04sVUFBVTtFQUNWLE9BQU87RUFDUCxXQUFXO0VBQ1gsYUFBYTtFQUNiLHdCQUF3QjtFQUN4QixrQkFBa0Isa0JBQWtCO0VBQ3BDLE9BQU87RUFDUCxRQUFRLENBQUMsb0VBQW9FO0NBQy9FO0NBQ0E7RUFDRSxJQUFJO0VBQ0osV0FBVztFQUNYLE1BQU07RUFDTixVQUFVO0VBQ1YsT0FBTztFQUNQLFdBQVc7RUFDWCxhQUFhO0VBQ2Isd0JBQXdCO0VBQ3hCLGtCQUFrQixrQkFBa0I7RUFDcEMsT0FBTztFQUNQLFFBQVEsQ0FBQyxvRUFBb0U7Q0FDL0U7Q0FDQTtFQUNFLElBQUk7RUFDSixXQUFXO0VBQ1gsTUFBTTtFQUNOLFVBQVU7RUFDVixPQUFPO0VBQ1AsV0FBVztFQUNYLGFBQWE7RUFDYix3QkFBd0I7RUFDeEIsa0JBQWtCLGtCQUFrQjtFQUNwQyxPQUFPO0VBQ1AsUUFBUSxDQUFDO0NBQ1g7QUFDRjs7QUFHQSxPQUFPLE1BQU0sd0JBQXdCO0NBQ25DO0VBQ0UsSUFBSTtFQUNKLE9BQU87RUFDUCxVQUFVO0VBQ1YsUUFBUSxpQkFBaUI7RUFDekIsbUJBQW1CO0VBQ25CLGNBQWMsQ0FDWixvRUFDRjtFQUNBLGVBQWUsQ0FDYixpRUFDRjtFQUNBLGFBQWEsQ0FDWCxvRUFDRjtFQUNBLGdCQUFnQjtFQUNoQixlQUFlO0VBQ2YsaUJBQWlCO0VBQ2pCLFdBQVc7RUFDWCxnQkFBZ0I7RUFDaEIsVUFBVSxZQUFZO0NBQ3hCO0NBQ0E7RUFDRSxJQUFJO0VBQ0osT0FBTztFQUNQLFVBQVU7RUFDVixRQUFRLGlCQUFpQjtFQUN6QixtQkFBbUI7RUFDbkIsY0FBYyxDQUNaLG9FQUNGO0VBQ0EsZUFBZSxDQUNiLG9FQUNGO0VBQ0EsYUFBYSxDQUFDO0VBQ2QsZ0JBQWdCO0VBQ2hCLGVBQWU7RUFDZixpQkFBaUI7RUFDakIsV0FBVztFQUNYLGdCQUFnQjtFQUNoQixVQUFVLFlBQVk7Q0FDeEI7Q0FDQTtFQUNFLElBQUk7RUFDSixPQUFPO0VBQ1AsVUFBVTtFQUNWLFFBQVEsaUJBQWlCO0VBQ3pCLG1CQUFtQjtFQUNuQixjQUFjLENBQ1osaUVBQ0Y7RUFDQSxlQUFlLENBQ2IsaUVBQ0Y7RUFDQSxhQUFhLENBQ1gsaUVBQ0Y7RUFDQSxnQkFBZ0I7RUFDaEIsZUFBZTtFQUNmLGlCQUFpQjtFQUNqQixXQUFXO0VBQ1gsZ0JBQWdCO0VBQ2hCLFVBQVUsWUFBWTtDQUN4QjtBQUNGOztBQUdBLE9BQU8sTUFBTSxnQkFBZ0IsQ0FDM0I7Q0FDRSxJQUFJO0NBQ0osV0FBVztDQUNYLGFBQWE7Q0FDYixXQUFXO0NBQ1gsa0JBQWtCO0NBQ2xCLGlCQUFpQjtDQUNqQixnQkFBZ0I7Q0FDaEIsZUFBZTtDQUNmLGNBQWM7Q0FDZCxlQUFlLFlBQVk7Q0FDM0IsV0FBVztDQUNYLGdCQUFnQjtBQUNsQixHQUNBO0NBQ0UsSUFBSTtDQUNKLFdBQVc7Q0FDWCxhQUFhO0NBQ2IsV0FBVztDQUNYLGtCQUFrQjtDQUNsQixpQkFBaUI7Q0FDakIsZ0JBQWdCO0NBQ2hCLGVBQWU7Q0FDZixjQUFjO0NBQ2QsZUFBZSxZQUFZO0NBQzNCLFdBQVc7Q0FDWCxnQkFBZ0I7QUFDbEIsQ0FDRjs7QUFHQSxPQUFPLE1BQU0sYUFBYTtDQUN4QjtFQUNFLElBQUk7RUFDSixVQUFVO0dBQ1IsSUFBSTtHQUNKLE1BQU07R0FDTixPQUFPO0dBQ1AsU0FBUztFQUNYO0VBQ0EsT0FBTyxDQUNMO0dBQ0UsV0FBVztHQUNYLE1BQU07R0FDTixPQUFPO0dBQ1AsVUFBVTtHQUNWLFlBQVk7R0FDWixPQUFPO0VBQ1QsQ0FDRjtFQUNBLFVBQVU7RUFDVixhQUFhO0VBQ2IsVUFBVTtFQUNWLE9BQU87RUFDUCxlQUFlO0VBQ2YsZUFBZSxlQUFlO0VBQzlCLGVBQWU7RUFDZixhQUFhLGFBQWE7RUFDMUIsaUJBQWlCO0VBQ2pCLGNBQWM7RUFDZCxXQUFXO0VBQ1gsT0FBTztDQUNUO0NBQ0E7RUFDRSxJQUFJO0VBQ0osVUFBVTtHQUNSLElBQUk7R0FDSixNQUFNO0dBQ04sT0FBTztHQUNQLFNBQVM7RUFDWDtFQUNBLE9BQU8sQ0FDTDtHQUNFLFdBQVc7R0FDWCxNQUFNO0dBQ04sT0FBTztHQUNQLFVBQVU7R0FDVixZQUFZO0dBQ1osT0FBTztFQUNULENBQ0Y7RUFDQSxVQUFVO0VBQ1YsYUFBYTtFQUNiLFVBQVU7RUFDVixPQUFPO0VBQ1AsZUFBZTtFQUNmLGVBQWUsZUFBZTtFQUM5QixlQUFlO0VBQ2YsYUFBYSxhQUFhO0VBQzFCLGlCQUFpQjtFQUNqQixjQUFjO0VBQ2QsV0FBVztFQUNYLE9BQU87Q0FDVDtDQUNBO0VBQ0UsSUFBSTtFQUNKLFVBQVU7R0FDUixJQUFJO0dBQ0osTUFBTTtHQUNOLE9BQU87R0FDUCxTQUFTO0VBQ1g7RUFDQSxPQUFPLENBQ0w7R0FDRSxXQUFXO0dBQ1gsTUFBTTtHQUNOLE9BQU87R0FDUCxVQUFVO0dBQ1YsWUFBWTtHQUNaLE9BQU87RUFDVCxDQUNGO0VBQ0EsVUFBVTtFQUNWLGFBQWE7RUFDYixVQUFVO0VBQ1YsT0FBTztFQUNQLGVBQWU7RUFDZixlQUFlLGVBQWU7RUFDOUIsZUFBZTtFQUNmLGFBQWEsYUFBYTtFQUMxQixpQkFBaUI7RUFDakIsY0FBYztFQUNkLFdBQVc7RUFDWCxPQUFPO0NBQ1Q7QUFDRjs7QUFHQSxPQUFPLE1BQU0sZ0JBQWdCO0NBQzNCO0VBQ0UsSUFBSTtFQUNKLE1BQU07RUFDTixPQUFPO0VBQ1AsT0FBTztFQUNQLFFBQVE7RUFDUixTQUFTO0VBQ1QsY0FBYztFQUNkLGFBQWE7RUFDYixlQUFlO0VBQ2YsUUFBUTtFQUNSLFdBQVc7RUFDWCxlQUFlO0VBQ2Ysd0JBQXdCO0NBQzFCO0NBQ0E7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLE9BQU87RUFDUCxPQUFPO0VBQ1AsUUFBUTtFQUNSLFNBQVM7RUFDVCxjQUFjO0VBQ2QsYUFBYTtFQUNiLGVBQWU7RUFDZixRQUFRO0VBQ1IsV0FBVztFQUNYLGVBQWU7RUFDZix3QkFBd0I7Q0FDMUI7Q0FDQTtFQUNFLElBQUk7RUFDSixNQUFNO0VBQ04sT0FBTztFQUNQLE9BQU87RUFDUCxRQUFRO0VBQ1IsU0FBUztFQUNULGNBQWM7RUFDZCxhQUFhO0VBQ2IsZUFBZTtFQUNmLFFBQVE7RUFDUixXQUFXO0VBQ1gsZUFBZTtFQUNmLHdCQUF3QjtDQUMxQjtDQUNBO0VBQ0UsSUFBSTtFQUNKLE1BQU07RUFDTixPQUFPO0VBQ1AsT0FBTztFQUNQLFFBQVE7RUFDUixTQUFTO0VBQ1QsY0FBYztFQUNkLGFBQWE7RUFDYixlQUFlO0VBQ2YsUUFBUTtFQUNSLFdBQVc7RUFDWCxlQUFlO0VBQ2Ysd0JBQXdCO0NBQzFCO0FBQ0Y7O0FBR0EsT0FBTyxNQUFNLGdCQUFnQjtDQUMzQjtFQUNFLElBQUk7RUFDSixNQUFNO0VBQ04sVUFBVTtFQUNWLE1BQU07RUFDTixVQUFVO0VBQ1YsTUFBTTtFQUNOLFVBQVU7RUFDVixRQUFRO0VBQ1IsYUFBYTtDQUNmO0NBQ0E7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLFVBQVU7RUFDVixNQUFNO0VBQ04sVUFBVTtFQUNWLE1BQU07RUFDTixVQUFVO0VBQ1YsUUFBUTtFQUNSLGFBQWE7Q0FDZjtDQUNBO0VBQ0UsSUFBSTtFQUNKLE1BQU07RUFDTixVQUFVO0VBQ1YsTUFBTTtFQUNOLFVBQVU7RUFDVixNQUFNO0VBQ04sVUFBVTtFQUNWLFFBQVE7RUFDUixhQUFhO0NBQ2Y7Q0FDQTtFQUNFLElBQUk7RUFDSixNQUFNO0VBQ04sVUFBVTtFQUNWLE1BQU07RUFDTixVQUFVO0VBQ1YsTUFBTTtFQUNOLFVBQVU7RUFDVixRQUFRO0VBQ1IsYUFBYTtDQUNmO0NBQ0E7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLFVBQVU7RUFDVixNQUFNO0VBQ04sVUFBVTtFQUNWLE1BQU07RUFDTixVQUFVO0VBQ1YsUUFBUTtFQUNSLGFBQWE7Q0FDZjtBQUNGOztBQUdBLE9BQU8sTUFBTSxpQkFBaUIsQ0FDNUI7Q0FDRSxJQUFJO0NBQ0osTUFBTTtDQUNOLE1BQU07Q0FDTixjQUFjO0NBQ2QsZUFBZTtDQUNmLFVBQVU7Q0FDVixXQUFXO0NBQ1gsU0FBUztDQUNULFlBQVk7Q0FDWixXQUFXO0NBQ1gsUUFBUTtBQUNWLEdBQ0E7Q0FDRSxJQUFJO0NBQ0osTUFBTTtDQUNOLE1BQU07Q0FDTixjQUFjO0NBQ2QsZUFBZTtDQUNmLFVBQVU7Q0FDVixXQUFXO0NBQ1gsU0FBUztDQUNULFlBQVk7Q0FDWixXQUFXO0NBQ1gsUUFBUTtBQUNWLENBQ0Y7O0FBR0EsT0FBTyxNQUFNLFlBQVk7Q0FDdkI7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLE9BQU87RUFDUCxPQUFPO0VBQ1AsTUFBTSxNQUFNO0VBQ1osUUFBUTtFQUNSLFFBQVE7RUFDUixZQUFZO0VBQ1osWUFBWTtDQUNkO0NBQ0E7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLE9BQU87RUFDUCxPQUFPO0VBQ1AsTUFBTSxNQUFNO0VBQ1osUUFBUTtFQUNSLFFBQVE7RUFDUixZQUFZO0VBQ1osWUFBWTtDQUNkO0NBQ0E7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLE9BQU87RUFDUCxPQUFPO0VBQ1AsTUFBTSxNQUFNO0VBQ1osUUFBUTtFQUNSLFFBQVE7RUFDUixZQUFZO0VBQ1osWUFBWTtDQUNkO0NBQ0E7RUFDRSxJQUFJO0VBQ0osTUFBTTtFQUNOLE9BQU87RUFDUCxPQUFPO0VBQ1AsTUFBTSxNQUFNO0VBQ1osUUFBUTtFQUNSLFFBQVE7RUFDUixZQUFZO0VBQ1osWUFBWTtDQUNkO0FBQ0Y7O0FBR0EsT0FBTyxNQUFNLG9CQUFvQjtDQUMvQjtFQUNFLElBQUk7RUFDSixPQUFPO0VBQ1AsU0FBUztFQUNULE1BQU07RUFDTixNQUFNO0VBQ04sTUFBTTtDQUNSO0NBQ0E7RUFDRSxJQUFJO0VBQ0osT0FBTztFQUNQLFNBQVM7RUFDVCxNQUFNO0VBQ04sTUFBTTtFQUNOLE1BQU07Q0FDUjtDQUNBO0VBQ0UsSUFBSTtFQUNKLE9BQU87RUFDUCxTQUFTO0VBQ1QsTUFBTTtFQUNOLE1BQU07RUFDTixNQUFNO0NBQ1I7QUFDRiIsIm5hbWVzIjpbXSwic291cmNlcyI6WyJtb2NrRGF0YS5qcyJdLCJ2ZXJzaW9uIjozLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBcclxuICBQUk9EVUNUX1NUQVRVUywgXHJcbiAgQ09MTEVDVElPTl9TVEFUVVMsIFxyXG4gIElOU1BFQ1RJT05fUkVTVUxULCBcclxuICBVUENZQ0xJTkdfU1RBVFVTLCBcclxuICBRQ19ERUNJU0lPTiwgXHJcbiAgT1JERVJfU1RBVFVTLCBcclxuICBQQVlNRU5UX1NUQVRVUyxcclxuICBST0xFUyBcclxufSBmcm9tICcuLi91dGlscy9jb25zdGFudHMnO1xyXG5cclxuLy8gSW5pdGlhbCBEYXNoYm9hcmQgS1BJc1xyXG5leHBvcnQgY29uc3QgbW9ja0tQSXMgPSB7XHJcbiAgcmV2ZW51ZTogNDUyMDAwMDAsXHJcbiAgb3JkZXJzQ291bnQ6IDEyOCxcclxuICBjb2xsZWN0ZWRDbG90aGVzOiAzNTYsXHJcbiAgdXBjeWNsZWRQcm9kdWN0czogMjE0LFxyXG4gIHByb2R1Y3RzU29sZDogMTczLFxuICBjdXN0b21lcnNDb3VudDogODkyLFxyXG4gIHdhc3RlRGl2ZXJ0ZWRLZzogMTg1LjQsXHJcbn07XHJcblxyXG4vLyBNb250aGx5IFJldmVudWUgJiBUcmVuZCBEYXRhXHJcbmV4cG9ydCBjb25zdCBtb2NrUmV2ZW51ZVRyZW5kcyA9IFtcclxuICB7IG1vbnRoOiAnVDEnLCByZXZlbnVlOiAyODUwMDAwMCwgb3JkZXJzOiA3NCwgY29sbGVjdGVkOiAxODAgfSxcclxuICB7IG1vbnRoOiAnVDInLCByZXZlbnVlOiAzMjEwMDAwMCwgb3JkZXJzOiA4NiwgY29sbGVjdGVkOiAyMTAgfSxcclxuICB7IG1vbnRoOiAnVDMnLCByZXZlbnVlOiAzODkwMDAwMCwgb3JkZXJzOiAxMDIsIGNvbGxlY3RlZDogMjYwIH0sXHJcbiAgeyBtb250aDogJ1Q0JywgcmV2ZW51ZTogMzQ1MDAwMDAsIG9yZGVyczogOTUsIGNvbGxlY3RlZDogMjMwIH0sXHJcbiAgeyBtb250aDogJ1Q1JywgcmV2ZW51ZTogNDEyMDAwMDAsIG9yZGVyczogMTE1LCBjb2xsZWN0ZWQ6IDMxMCB9LFxyXG4gIHsgbW9udGg6ICdUNicsIHJldmVudWU6IDQ1MjAwMDAwLCBvcmRlcnM6IDEyOCwgY29sbGVjdGVkOiAzNTYgfSxcclxuXTtcclxuXHJcbi8vIENhdGVnb3J5IEJyZWFrZG93biBEYXRhXHJcbmV4cG9ydCBjb25zdCBtb2NrQ2F0ZWdvcnlTdGF0cyA9IFtcclxuICB7IG5hbWU6ICdEZW5pbSB0w6FpIHRoaeG6v3Qga+G6vycsIHZhbHVlOiA0MiwgY29sb3I6ICcjMTAxMDBmJyB9LFxuICB7IG5hbWU6ICfDgW8ga2hvw6FjIGdow6lwIHbhuqNpJywgdmFsdWU6IDI4LCBjb2xvcjogJyMyNjI5MmEnIH0sXG4gIHsgbmFtZTogJ1TDumkgdsOgIHBo4bulIGtp4buHbicsIHZhbHVlOiAxOCwgY29sb3I6ICcjNzA3MDZmJyB9LFxuICB7IG5hbWU6ICfDgW8gdMOhaSB0aGnhur90IGvhur8nLCB2YWx1ZTogMTIsIGNvbG9yOiAnI2IzYjNiMicgfSxcbl07XHJcblxyXG4vLyBQcm9kdWN0IENhdGVnb3JpZXNcclxuZXhwb3J0IGNvbnN0IG1vY2tDYXRlZ29yaWVzID0gW1xyXG4gIHsgaWQ6ICdjYXRfMScsIG5hbWU6ICdEZW5pbSB0w6FpIHRoaeG6v3Qga+G6vycsIHNsdWc6ICdkZW5pbS11cGN5Y2xlZCcsIHByb2R1Y3RDb3VudDogNDIsIGRlc2NyaXB0aW9uOiAnU+G6o24gcGjhuqltIHTDoWkgY2jhur8gdOG7qyBxdeG6p24gdsOgIMOhbyBraG/DoWMgamVhbiBjxaknIH0sXG4gIHsgaWQ6ICdjYXRfMicsIG5hbWU6ICfDgW8ga2hvw6FjIGdow6lwIHbhuqNpJywgc2x1ZzogJ3BhdGNod29yay1vdXRlcndlYXInLCBwcm9kdWN0Q291bnQ6IDI4LCBkZXNjcmlwdGlvbjogJ8OBbyBraG/DoWMgZ2jDqXAgduG6o2kgbmdo4buHIHRodeG6rXQgxJFhIGNo4bqldCBsaeG7h3UnIH0sXG4gIHsgaWQ6ICdjYXRfMycsIG5hbWU6ICdUw7ppIHjDoWNoJywgc2x1ZzogJ3RvdGUtYmFncycsIHByb2R1Y3RDb3VudDogMzUsIGRlc2NyaXB0aW9uOiAnVMO6aSB4w6FjaCB2w6AgcGjhu6Uga2nhu4duIHThu6sgY2jhuqV0IGxp4buHdSB0w6FpIHPhu60gZOG7pW5nJyB9LFxuICB7IGlkOiAnY2F0XzQnLCBuYW1lOiAnw4FvIHTDoWkgdGhp4bq/dCBr4bq/Jywgc2x1ZzogJ3Jld29ya2VkLXRvcHMnLCBwcm9kdWN0Q291bnQ6IDIyLCBkZXNjcmlwdGlvbjogJ8OBbyB0aHVuIHbDoCBzxqEgbWkgYmnhur9uIHThuqV1IHBob20gZMOhbmcnIH0sXG4gIHsgaWQ6ICdjYXRfNScsIG5hbWU6ICdQaOG7pSBraeG7h24gdMOhaSBz4butIGThu6VuZycsIHNsdWc6ICdlY28tYWNjZXNzb3JpZXMnLCBwcm9kdWN0Q291bnQ6IDE1LCBkZXNjcmlwdGlvbjogJ07Ds24sIGtoxINuIHF1w6BuZyB2w6AgcGjhu6Uga2nhu4duIG5o4buPJyB9LFxuXTtcclxuXHJcbi8vIFByb2R1Y3RzXHJcbmV4cG9ydCBjb25zdCBtb2NrUHJvZHVjdHMgPSBbXHJcbiAge1xyXG4gICAgaWQ6ICdQUkQtMDAxJyxcclxuICAgIG5hbWU6ICfDgW8ga2hvw6FjIGRlbmltIGdow6lwIHbhuqNpICMwMDEnLFxuICAgIGRlc2NyaXB0aW9uOiAnw4FvIGtob8OhYyBkZW5pbSBjaOG6r3AgdsOhIHBob25nIGPDoWNoIEJvcm8gTmjhuq10IELhuqNuLCDEkcaw4bujYyBtYXkgdGjhu6cgY8O0bmcgdOG7qyAzIGNoaeG6v2MgcXXhuqduIGplYW4gY8WpIMSRw6MgcXVhIGto4butIGtodeG6qW4gdsOgIHjhu60gbMO9IG3hu4FtLicsXHJcbiAgICBwcmljZTogODkwMDAwLFxyXG4gICAgY2F0ZWdvcnk6ICfDgW8ga2hvw6FjIGdow6lwIHbhuqNpJyxcbiAgICBzaXplOiAnTCcsXHJcbiAgICBjb2xvcjogJ0luZGlnbyBJbmRpZ28gQmxlbmQnLFxyXG4gICAgbWF0ZXJpYWw6ICdVcGN5Y2xlZCBEZW5pbSAoMTAwJSBDb3R0b24pJyxcclxuICAgIHF1YW50aXR5OiAxLFxyXG4gICAgaXNPbmVPZk9uZTogdHJ1ZSxcclxuICAgIHN0YXR1czogUFJPRFVDVF9TVEFUVVMuQVZBSUxBQkxFLFxuICAgIHVwY3ljbGluZ1Byb2plY3RJZDogJ1VQLTIwMjYtMDAxJyxcclxuICAgIG9yaWdpbmFsTWF0ZXJpYWw6ICczIHF14bqnbiBqZWFuIExldmnigJlzICYgVW5pcWxvIHF1ecOqbiBnw7NwJyxcclxuICAgIHVwY3ljbGluZ1N0b3J5OiAnTeG7l2kgbeG6o25nIHbhuqNpIMSR4bqhaSBkaeG7h24gY2hvIG3hu5l0IGPDonUgY2h1eeG7h24gcmnDqm5nIGPhu6dhIHThu6tuZyBjaGnhur9jIHF14bqnbiBqZWFuIGPFqSDEkcaw4bujYyBjaOG7pyBuaMOibiBjxakgcXV5w6puIGfDs3AgdOG6oWkgSMOgIE7hu5lpLiDEkOG7mWkgbmfFqSB0aOG7oyBtYXkgdGjhu6cgY8O0bmcgUkVXRUFSIMSRw6MgcGjDom4gdMOhY2ggxJHGsOG7nW5nIG1heSwgeOG7rSBsw70gYuG6oWMgbcOgdSB04buxIG5oacOqbiB2w6Aga2jDonUgbOG6oWkgdHJvbmcgMTYgZ2nhu50gbMOgbSB2aeG7h2MuJyxcclxuICAgIGltYWdlczogW1xyXG4gICAgICAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1NzY5OTU4NTMxMjMtNWExMDMwNWQ5M2MwP3c9ODAwJyxcclxuICAgICAgJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTQ0NDQxODkzLTY3NTk3M2UzMTk4NT93PTgwMCcsXHJcbiAgICBdLFxyXG4gICAgYmVmb3JlQWZ0ZXI6IHtcclxuICAgICAgYmVmb3JlSW1hZ2U6ICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU0MTA5OTY0OTEwNS1mNjlhZDIxZjMyNDY/dz04MDAnLFxyXG4gICAgICBwcm9jZXNzSW1hZ2U6ICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU1ODc2OTEzMi1jYjFhZWE0NThjNWU/dz04MDAnLFxyXG4gICAgICBhZnRlckltYWdlOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1NzY5OTU4NTMxMjMtNWExMDMwNWQ5M2MwP3c9ODAwJyxcclxuICAgIH0sXHJcbiAgICBjcmVhdGVkQXQ6ICcyMDI2LTAzLTEwVDEwOjMwOjAwWicsXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogJ1BSRC0wMDInLFxyXG4gICAgbmFtZTogJ1TDumkgdG90ZSBrYWtpIMSRYSBk4bulbmcgIzAwMicsXG4gICAgZGVzY3JpcHRpb246ICdUw7ppIHRvdGUgcXVhaSDEkWVvIGNow6lvIGzDoG0gdOG7qyDDoW8ga2hvw6FjIGzDrW5oIGtha2kgY8WpLCBjw7MgNCB0w7ppIGjhu5lwIMSRYSBuxINuZyB2w6AgbMOzdCB24bqjaSBkw7kgY2jhu5FuZyB0aOG6pW0gdMOhaSBzaW5oLicsXHJcbiAgICBwcmljZTogNDUwMDAwLFxyXG4gICAgY2F0ZWdvcnk6ICdUw7ppIHjDoWNoJyxcbiAgICBzaXplOiAnRnJlZSBTaXplJyxcclxuICAgIGNvbG9yOiAnT2xpdmUgR3JlZW4nLFxyXG4gICAgbWF0ZXJpYWw6ICdVcGN5Y2xlZCBDYW52YXMgJiBLYWtpJyxcclxuICAgIHF1YW50aXR5OiAxLFxyXG4gICAgaXNPbmVPZk9uZTogdHJ1ZSxcclxuICAgIHN0YXR1czogUFJPRFVDVF9TVEFUVVMuQVZBSUxBQkxFLFxuICAgIHVwY3ljbGluZ1Byb2plY3RJZDogJ1VQLTIwMjYtMDAyJyxcclxuICAgIG9yaWdpbmFsTWF0ZXJpYWw6ICcxIMOhbyBqYWNrZXQga2FraSBy4bqxbiByaSBo4buPbmcga2jDs2Ega8OpbycsXHJcbiAgICB1cGN5Y2xpbmdTdG9yeTogJ1Thuq1uIGThu6VuZyB0w7ppIGjhu5lwIG5ndXnDqm4gYuG6o24gY+G7p2Egw6FvIGzDrW5oIMSR4buDIHThuqFvIG7Dqm4gY2hp4bq/YyB0w7ppIHRo4budaSB0aMaw4bujbmcsIGPDsyDEkeG7mSBi4buBbiBjaOG7i3UgdOG6o2kgdHLDqm4gMTBrZy4nLFxyXG4gICAgaW1hZ2VzOiBbXHJcbiAgICAgICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU0NDgxNjE1NS0xMmRmOTY0M2YzNjM/dz04MDAnLFxyXG4gICAgXSxcclxuICAgIGJlZm9yZUFmdGVyOiB7XHJcbiAgICAgIGJlZm9yZUltYWdlOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1MTc0NDUzMTI4ODItYmM5OTEwZDAxNmI3P3c9ODAwJyxcclxuICAgICAgcHJvY2Vzc0ltYWdlOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1Mjg0NTg4NzY4ODUtNTQ0MjQzMzI0OTUwP3c9ODAwJyxcclxuICAgICAgYWZ0ZXJJbWFnZTogJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTQ0ODE2MTU1LTEyZGY5NjQzZjM2Mz93PTgwMCcsXHJcbiAgICB9LFxyXG4gICAgY3JlYXRlZEF0OiAnMjAyNi0wMy0xMlQxNDoxNTowMFonLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdQUkQtMDAzJyxcclxuICAgIG5hbWU6ICfDgW8gc8ahIG1pIGThuqEgduG6oXQgbOG7h2NoICMwMDMnLFxuICAgIGRlc2NyaXB0aW9uOiAnw4FvIHPGoSBtaSBkw6FuZyBy4buZbmcgduG6oXQgbOG7h2NoIGdow6lwIHThu6sgMiDDoW8gZOG6oSBr4bq7IGNhcm8gdmludGFnZSDEkeG7jyB2w6AgeGFuaCByw6p1LicsXHJcbiAgICBwcmljZTogNTIwMDAwLFxyXG4gICAgY2F0ZWdvcnk6ICfDgW8gdMOhaSB0aGnhur90IGvhur8nLFxuICAgIHNpemU6ICdYTCcsXHJcbiAgICBjb2xvcjogJ1JlZCAmIEZvcmVzdCBHcmVlbiBQbGFpZCcsXHJcbiAgICBtYXRlcmlhbDogJ1VwY3ljbGVkIEZsYW5uZWwgQ290dG9uJyxcclxuICAgIHF1YW50aXR5OiAwLFxyXG4gICAgaXNPbmVPZk9uZTogdHJ1ZSxcclxuICAgIHN0YXR1czogUFJPRFVDVF9TVEFUVVMuU09MRCxcclxuICAgIHVwY3ljbGluZ1Byb2plY3RJZDogJ1VQLTIwMjYtMDAzJyxcclxuICAgIG9yaWdpbmFsTWF0ZXJpYWw6ICcyIMOhbyBzxqEgbWkga+G6uyBjYXJvIGPFqSByw6FjaCB0YXknLFxyXG4gICAgdXBjeWNsaW5nU3Rvcnk6ICdIYWkgY2hp4bq/YyDDoW8gc8ahIG1pIGNhcm8gYuG7iyBz4budbiDhu58gY+G7lSB0YXkgxJHGsOG7o2MgY+G6r3QgZ2jDqXAgdGluaCB04bq/LCBiaeG6v24ga2h1eeG6v3QgxJFp4buDbSB0aMOgbmggxJFp4buDbSBuaOG6pW4gdGjhu51pIHRyYW5nIHVuaXNleC4nLFxyXG4gICAgaW1hZ2VzOiBbXHJcbiAgICAgICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTYwMjgxMDMxODM4My1lMzg2Y2MyYTNjY2Y/dz04MDAnLFxyXG4gICAgXSxcclxuICAgIGJlZm9yZUFmdGVyOiB7XHJcbiAgICAgIGJlZm9yZUltYWdlOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1OTY3NTUwOTQ1MTQtZjg3ZTM0MDg1YjJjP3c9ODAwJyxcclxuICAgICAgcHJvY2Vzc0ltYWdlOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1NTg3NjkxMzItY2IxYWVhNDU4YzVlP3c9ODAwJyxcclxuICAgICAgYWZ0ZXJJbWFnZTogJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNjAyODEwMzE4MzgzLWUzODZjYzJhM2NjZj93PTgwMCcsXHJcbiAgICB9LFxyXG4gICAgY3JlYXRlZEF0OiAnMjAyNi0wMy0wNVQwOTowMDowMFonLFxyXG4gIH0sXHJcbl07XHJcblxyXG4vLyBDb2xsZWN0aW9uIFJlcXVlc3RzXHJcbmV4cG9ydCBjb25zdCBtb2NrQ29sbGVjdGlvblJlcXVlc3RzID0gW1xyXG4gIHtcclxuICAgIGlkOiAnQ09MLTIwMjYtMDAxJyxcclxuICAgIGN1c3RvbWVyOiB7XHJcbiAgICAgIGlkOiAnQ1VTVC0wMDEnLFxyXG4gICAgICBuYW1lOiAnTmd1eeG7hW4gTWluaCBBbmgnLFxyXG4gICAgICBwaG9uZTogJzA5MDEyMzQ1NjcnLFxyXG4gICAgICBhZGRyZXNzOiAnNDUgTMOqIER14bqpbiwgUGjGsOG7nW5nIELhur9uIE5naMOpLCBRdeG6rW4gMSwgVFAuIEhDTScsXHJcbiAgICB9LFxyXG4gICAgY2xvdGhlc0NvdW50OiA2LFxyXG4gICAgY2xvdGhpbmdUeXBlOiAnUXXhuqduIGplYW5zICgzKSwgw4FvIHRodW4gKDIpLCDDgW8ga2hvw6FjIGThuqEgKDEpJyxcclxuICAgIGNvbmRpdGlvbjogJ1Thu5F0ICg2MC04MCUpLCBjw7MgduG6v3Qgc+G7nW4gbmjhurkg4bufIGfhuqV1JyxcclxuICAgIG1hdGVyaWFsOiAnRGVuaW0sIENvdHRvbiwgTGVuIHBoYScsXHJcbiAgICBjb2xvcjogJ1hhbmggaW5kaWdvLCBUcuG6r25nLCDEkGVuLCBYw6FtJyxcclxuICAgIGNvbGxlY3Rpb25NZXRob2Q6ICdUaHUgZ29tIHThuq1uIG5ow6AgKEhvbWUgUGlja3VwKScsXHJcbiAgICByZXF1ZXN0RGF0ZTogJzIwMjYtMDMtMThUMDg6MzA6MDBaJyxcclxuICAgIHBpY2t1cERhdGU6ICcyMDI2LTAzLTIwVDEwOjAwOjAwWicsXHJcbiAgICBhc3NpZ25lZFN0YWZmOiAnTMOqIFbEg24gSG/DoG5nIChTdGFmZiknLFxyXG4gICAgc3RhdHVzOiBDT0xMRUNUSU9OX1NUQVRVUy5JTlNQRUNUSU5HLFxyXG4gICAgcmV3YXJkUG9pbnRzR3JhbnRlZDogMCxcclxuICAgIG5vdGVzOiAnS2jDoWNoIGjDoG5nIGThurduIGLhuqVtIGNodcO0bmcgY+G7rWEgcGjhu6UgYsOqbiBow7RuZy4nLFxyXG4gICAgcGhvdG9zOiBbXHJcbiAgICAgICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU0MTA5OTY0OTEwNS1mNjlhZDIxZjMyNDY/dz02MDAnLFxyXG4gICAgICAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1ODI1MzM1NjE3NTEtZWY2ZjZhYjkzYTJlP3c9NjAwJyxcclxuICAgIF0sXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogJ0NPTC0yMDI2LTAwMicsXHJcbiAgICBjdXN0b21lcjoge1xyXG4gICAgICBpZDogJ0NVU1QtMDAyJyxcclxuICAgICAgbmFtZTogJ1Ry4bqnbiBUaOG7iyBNYWknLFxyXG4gICAgICBwaG9uZTogJzA5MTIzNDU2NzgnLFxyXG4gICAgICBhZGRyZXNzOiAnMTI4IEPhuqd1IEdp4bqleSwgUXVhbiBIb2EsIEPhuqd1IEdp4bqleSwgSMOgIE7hu5lpJyxcclxuICAgIH0sXHJcbiAgICBjbG90aGVzQ291bnQ6IDQsXHJcbiAgICBjbG90aGluZ1R5cGU6ICfDgW8gc8ahIG1pIHbEg24gcGjDsm5nICg0KScsXHJcbiAgICBjb25kaXRpb246ICdLaMOhIG3hu5tpLCBt4bqldCB2w6BpIGPDumMgw6FvJyxcclxuICAgIG1hdGVyaWFsOiAnS2F0ZSwgT3hmb3JkIENvdHRvbicsXHJcbiAgICBjb2xvcjogJ1Ry4bqvbmcsIFhhbmggbmjhuqF0LCBI4buTbmcgcGFzdGVsJyxcclxuICAgIGNvbGxlY3Rpb25NZXRob2Q6ICdH4butaSBxdWEgYsawdSBj4bulYyBWaWV0dGVsIFBvc3QnLFxyXG4gICAgcmVxdWVzdERhdGU6ICcyMDI2LTAzLTE5VDE0OjIwOjAwWicsXHJcbiAgICBwaWNrdXBEYXRlOiAnMjAyNi0wMy0yMVQwOTowMDowMFonLFxyXG4gICAgYXNzaWduZWRTdGFmZjogJ1Bo4bqhbSBUaHUgSOG6sW5nIChTdGFmZiknLFxyXG4gICAgc3RhdHVzOiBDT0xMRUNUSU9OX1NUQVRVUy5BQ0NFUFRFRCxcclxuICAgIHJld2FyZFBvaW50c0dyYW50ZWQ6IDgwLFxyXG4gICAgbm90ZXM6ICfEkMOjIG5o4bqtbiBraeG7h24gaMOgbmcgdOG6oWkga2hvIEjDoCBO4buZaSwgxJHhu6cgNCBjaGnhur9jIMSR4bqhdCBjaHXhuqluLicsXHJcbiAgICBwaG90b3M6IFtcclxuICAgICAgJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTk2NzU1MDk0NTE0LWY4N2UzNDA4NWIyYz93PTYwMCcsXHJcbiAgICBdLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdDT0wtMjAyNi0wMDMnLFxyXG4gICAgY3VzdG9tZXI6IHtcclxuICAgICAgaWQ6ICdDVVNULTAwMycsXHJcbiAgICAgIG5hbWU6ICdMw6ogSG/DoG5nIExvbmcnLFxyXG4gICAgICBwaG9uZTogJzA5ODc2NTQzMjEnLFxyXG4gICAgICBhZGRyZXNzOiAnMjIgTmd1eeG7hW4gVGjhu4sgTWluaCBLaGFpLCBI4bqjaSBDaMOidSwgxJDDoCBO4bq1bmcnLFxyXG4gICAgfSxcclxuICAgIGNsb3RoZXNDb3VudDogOCxcclxuICAgIGNsb3RoaW5nVHlwZTogJ8SQ4buTIHRy4bq7IGVtLCDDgW8gbuG7iSBtw7lhIMSRw7RuZycsXHJcbiAgICBjb25kaXRpb246ICfEkMOjIGPFqSwgc+G7nW4gcsOhY2ggbmhp4buBdScsXHJcbiAgICBtYXRlcmlhbDogJ07hu4kgYsO0bmcsIENvdHRvbicsXHJcbiAgICBjb2xvcjogJ8SQYSBz4bqvYycsXHJcbiAgICBjb2xsZWN0aW9uTWV0aG9kOiAnR+G7rWkgdOG6oWkgxJFp4buDbSBEcm9wLWJveCBSRVdFQVInLFxyXG4gICAgcmVxdWVzdERhdGU6ICcyMDI2LTAzLTIyVDExOjAwOjAwWicsXHJcbiAgICBwaWNrdXBEYXRlOiAnMjAyNi0wMy0yNFQxNDowMDowMFonLFxyXG4gICAgYXNzaWduZWRTdGFmZjogJ0NoxrBhIHBow6JuIGPDtG5nJyxcclxuICAgIHN0YXR1czogQ09MTEVDVElPTl9TVEFUVVMuUEVORElORyxcclxuICAgIHJld2FyZFBvaW50c0dyYW50ZWQ6IDAsXHJcbiAgICBub3RlczogJ0tow6FjaCBtdeG7kW4g4bunbmcgaOG7mSBsw6BtIHRo4bqjbSBob+G6t2MgZ+G7kWkgbMOzdC4nLFxyXG4gICAgcGhvdG9zOiBbXSxcclxuICB9LFxyXG5dO1xyXG5cclxuLy8gSW5zcGVjdGlvbiBJdGVtc1xyXG5leHBvcnQgY29uc3QgbW9ja0luc3BlY3Rpb25JdGVtcyA9IFtcclxuICB7XHJcbiAgICBpZDogJ0lURU0tMDEnLFxyXG4gICAgcmVxdWVzdElkOiAnQ09MLTIwMjYtMDAxJyxcclxuICAgIHR5cGU6ICdRdeG6p24gSmVhbnMgTGV2aeKAmXMgNTAxJyxcclxuICAgIG1hdGVyaWFsOiAnRGVuaW0gMTAwJSBDb3R0b24nLFxyXG4gICAgY29sb3I6ICdEYXJrIEluZGlnbycsXHJcbiAgICBjb25kaXRpb246ICdU4buRdCAoNzUlKScsXHJcbiAgICBkYW1hZ2VMZXZlbDogJ1Phu51uIGfhuqV1IHF14bqnbiwgYuG6oWMgbmjhurkg4bufIMSR4bqndSBn4buRaScsXHJcbiAgICBlc3RpbWF0ZWRSZXVzYWJsZVZhbHVlOiAnQ2FvIChS4bqldCBwaMO5IGjhu6NwIHTDoWkgY2jhur8gdGjDoG5oIMOBbyBraG/DoWMgLyBUw7ppKScsXHJcbiAgICBpbnNwZWN0aW9uUmVzdWx0OiBJTlNQRUNUSU9OX1JFU1VMVC5BQ0NFUFRFRF9VUENZQ0xJTkcsXHJcbiAgICBub3RlczogJ1bhuqNpIGTDoHksIGvhur90IGPhuqV1IHPhu6NpIGPDsm4gcuG6pXQga2jhu49lLCBtw6B1IGLhuqFjIHThu7Egbmhpw6puIHLhuqV0IMSR4bq5cC4nLFxyXG4gICAgcGhvdG9zOiBbJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTQxMDk5NjQ5MTA1LWY2OWFkMjFmMzI0Nj93PTYwMCddLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdJVEVNLTAyJyxcclxuICAgIHJlcXVlc3RJZDogJ0NPTC0yMDI2LTAwMScsXHJcbiAgICB0eXBlOiAnw4FvIHBow7RuZyBDb3R0b24gdHLhuq9uZycsXHJcbiAgICBtYXRlcmlhbDogJzEwMCUgQ290dG9uJyxcclxuICAgIGNvbG9yOiAnVHLhuq9uZyDhu5EgdsOgbmcgbsOhY2gnLFxyXG4gICAgY29uZGl0aW9uOiAnS8OpbSAoMzAlKScsXHJcbiAgICBkYW1hZ2VMZXZlbDogJ1bhur90IOG7kSBt4buTIGjDtGkga2jDtG5nIHRo4buDIHThuql5IHPhuqFjaCcsXHJcbiAgICBlc3RpbWF0ZWRSZXVzYWJsZVZhbHVlOiAnVGjhuqVwIChD4bqvdCBz4bujaSBsw6BtIMSR4buHbSBob+G6t2MgdMOhaSBzaW5oIHPhu6NpKScsXHJcbiAgICBpbnNwZWN0aW9uUmVzdWx0OiBJTlNQRUNUSU9OX1JFU1VMVC5BQ0NFUFRFRF9NQVRFUklBTCxcclxuICAgIG5vdGVzOiAnS2jDtG5nIHRo4buDIGzDqm4gc+G6o24gcGjhuqltIHRo4budaSB0cmFuZywgxJHGsGEgdsOgbyBraG8gcGjhu6UgbGnhu4d1IHTDoWkgY2jhur8uJyxcclxuICAgIHBob3RvczogWydodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU4MjUzMzU2MTc1MS1lZjZmNmFiOTNhMmU/dz02MDAnXSxcclxuICB9LFxyXG4gIHtcclxuICAgIGlkOiAnSVRFTS0wMycsXHJcbiAgICByZXF1ZXN0SWQ6ICdDT0wtMjAyNi0wMDEnLFxyXG4gICAgdHlwZTogJ8OBbyBraG/DoWMgZ2nDsyBo4buPbmcgdHLDoW5nIG5o4buxYScsXHJcbiAgICBtYXRlcmlhbDogJ1BvbHllc3RlciB0csOhbmcgUFUnLFxyXG4gICAgY29sb3I6ICfEkOG7jycsXHJcbiAgICBjb25kaXRpb246ICdI4buPbmcgbuG6t25nICgxMCUpJyxcclxuICAgIGRhbWFnZUxldmVsOiAnTcOgbmcgUFUgYuG7iyB24buhIG7DoXQsIGJvbmcgdHLDs2MgbeG6o25nIGzhu5tuJyxcclxuICAgIGVzdGltYXRlZFJldXNhYmxlVmFsdWU6ICdLaMO0bmcgdGjhu4Mgc+G7rSBk4bulbmcnLFxyXG4gICAgaW5zcGVjdGlvblJlc3VsdDogSU5TUEVDVElPTl9SRVNVTFQuUkVKRUNURUQsXHJcbiAgICBub3RlczogJ0tow7RuZyBhbiB0b8OgbiBjaG8gc+G7qWMga2jhu49lIHbDoCBraMO0bmcgbWF5IGzhuqFpIMSRxrDhu6NjLicsXHJcbiAgICBwaG90b3M6IFtdLFxyXG4gIH0sXHJcbl07XHJcblxyXG4vLyBVcGN5Y2xpbmcgUHJvamVjdHNcclxuZXhwb3J0IGNvbnN0IG1vY2tVcGN5Y2xpbmdQcm9qZWN0cyA9IFtcclxuICB7XHJcbiAgICBpZDogJ1VQLTIwMjYtMDAxJyxcclxuICAgIHRpdGxlOiAnROG7sSDDoW4gw4FvIGtob8OhYyBkZW5pbSBCb3JvJyxcbiAgICBkZXNpZ25lcjogJ1F1YW5nIChMZWFkIENyZWF0aXZlKScsXHJcbiAgICBzdGF0dXM6IFVQQ1lDTElOR19TVEFUVVMuUkVBRFlfVE9fU0VMTCxcclxuICAgIG9yaWdpbmFsTWF0ZXJpYWxzOiAnMyBxdeG6p24gamVhbiB0aHUgZ29tIHThu6sgecOqdSBj4bqndSBDT0wtMjAyNi0wMDEnLFxyXG4gICAgYmVmb3JlSW1hZ2VzOiBbXHJcbiAgICAgICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU0MTA5OTY0OTEwNS1mNjlhZDIxZjMyNDY/dz02MDAnLFxyXG4gICAgXSxcclxuICAgIHByb2Nlc3NJbWFnZXM6IFtcclxuICAgICAgJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTU4NzY5MTMyLWNiMWFlYTQ1OGM1ZT93PTYwMCcsXHJcbiAgICBdLFxyXG4gICAgZmluYWxJbWFnZXM6IFtcclxuICAgICAgJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTc2OTk1ODUzMTIzLTVhMTAzMDVkOTNjMD93PTgwMCcsXHJcbiAgICBdLFxyXG4gICAgZmluYWxQcm9kdWN0SWQ6ICdQUkQtMDAxJyxcclxuICAgIGRlc2lnbkNvbmNlcHQ6ICdL4bq/dCBo4bujcCB0cmnhur90IGzDvSBXYWJpLVNhYmkgdsOgIHBob25nIGPDoWNoIMSRxrDhu51uZyBwaOG7kSBHZW4gWiwgYmnhur9uIGPDoWMgbeG6o25nIHPhu51uIGPhu6dhIGRlbmltIHRow6BuaCBo4buNYSB0aeG6v3QgdHJhbmcgdHLDrSBow6xuaCBo4buNYy4nLFxyXG4gICAgcHJvZHVjdGlvbk5vdGVzOiAnQ+G6p24ga2jhu60ga2h14bqpbiBuaGnhu4d0IMSR4buZIGNhbyA4MCDEkeG7mSBDIHRyxrDhu5tjIGtoaSBtYXksIHPhu60gZOG7pW5nIGNo4buJIGLDsiBz4buRIDIwIHNpw6p1IGLhu4FuLicsXHJcbiAgICBzdGFydERhdGU6ICcyMDI2LTAzLTAxVDA4OjAwOjAwWicsXHJcbiAgICBjb21wbGV0aW9uRGF0ZTogJzIwMjYtMDMtMDlUMTc6MDA6MDBaJyxcclxuICAgIHFjU3RhdHVzOiBRQ19ERUNJU0lPTi5BUFBST1ZFRCxcclxuICB9LFxyXG4gIHtcclxuICAgIGlkOiAnVVAtMjAyNi0wMDInLFxyXG4gICAgdGl0bGU6ICdUw7ppIFTDumkga2FraSDEkWEgZOG7pW5nJyxcbiAgICBkZXNpZ25lcjogJ0jhuqNpIFnhur9uIChVcGN5Y2xpbmcgQXJ0aXNhbiknLFxyXG4gICAgc3RhdHVzOiBVUENZQ0xJTkdfU1RBVFVTLlBST0RVQ1RJT04sXHJcbiAgICBvcmlnaW5hbE1hdGVyaWFsczogJzEgw6FvIGphY2tldCBsw61uaCBrYWtpIHThu6sgxJHhu6N0IHF1ecOqbiBnw7NwIHPhu5EgNCcsXHJcbiAgICBiZWZvcmVJbWFnZXM6IFtcclxuICAgICAgJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTE3NDQ1MzEyODgyLWJjOTkxMGQwMTZiNz93PTYwMCcsXHJcbiAgICBdLFxyXG4gICAgcHJvY2Vzc0ltYWdlczogW1xyXG4gICAgICAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1Mjg0NTg4NzY4ODUtNTQ0MjQzMzI0OTUwP3c9NjAwJyxcclxuICAgIF0sXHJcbiAgICBmaW5hbEltYWdlczogW10sXHJcbiAgICBmaW5hbFByb2R1Y3RJZDogJ1BSRC0wMDInLFxyXG4gICAgZGVzaWduQ29uY2VwdDogJ1TDoWkgY2jhur8gdMO6aSBo4buZcCB2w6Aga2jDs2EgYuG6pW0gY+G7p2Egw6FvIGtob8OhYyDEkeG7gyB04bqhbyB0w7ppIMSRZW8gY2jDqW8gxJFhIG7Eg25nLicsXHJcbiAgICBwcm9kdWN0aW9uTm90ZXM6ICfEkGFuZyBnaWEgY+G7kSDEkcaw4budbmcgdmnhu4FuIHF1YWkgdMO6aSBjaOG7i3UgbOG7sWMuJyxcclxuICAgIHN0YXJ0RGF0ZTogJzIwMjYtMDMtMTFUMDk6MzA6MDBaJyxcclxuICAgIGNvbXBsZXRpb25EYXRlOiBudWxsLFxyXG4gICAgcWNTdGF0dXM6IFFDX0RFQ0lTSU9OLkFQUFJPVkVELFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdVUC0yMDI2LTAwMycsXHJcbiAgICB0aXRsZTogJ8OBbyBIb29kaWUgY2jhuq9wIHbhuqNpIEThuqEgdHdlZWQnLFxyXG4gICAgZGVzaWduZXI6ICdRdWFuZyAoTGVhZCBDcmVhdGl2ZSknLFxyXG4gICAgc3RhdHVzOiBVUENZQ0xJTkdfU1RBVFVTLlFVQUxJVFlfQ0hFQ0ssXHJcbiAgICBvcmlnaW5hbE1hdGVyaWFsczogJzEgw6FvIGhvb2RpZSB4w6FtICsgMSBjaMOibiB2w6F5IGThuqEgdHdlZWQgY8WpJyxcclxuICAgIGJlZm9yZUltYWdlczogW1xyXG4gICAgICAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1NTY5MDUwNTUtOGYzNThhN2E0N2IyP3c9NjAwJyxcclxuICAgIF0sXHJcbiAgICBwcm9jZXNzSW1hZ2VzOiBbXHJcbiAgICAgICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU1ODc2OTEzMi1jYjFhZWE0NThjNWU/dz02MDAnLFxyXG4gICAgXSxcclxuICAgIGZpbmFsSW1hZ2VzOiBbXHJcbiAgICAgICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU0MzA4NzkwMy0xYWMyZWM3YWE4YzU/dz04MDAnLFxyXG4gICAgXSxcclxuICAgIGZpbmFsUHJvZHVjdElkOiBudWxsLFxyXG4gICAgZGVzaWduQ29uY2VwdDogJ1Bo4buRaSBtxakgdsOgIHTDumkga2FuZ2Fyb28gYuG6sW5nIHbhuqNpIGThuqEgdHdlZWQgaG9hIHbEg24gaG91bmRzdG9vdGggdGhhbmggbOG7i2NoLicsXHJcbiAgICBwcm9kdWN0aW9uTm90ZXM6ICfEkMOjIGhvw6BuIHRow6BuaCBtYXksIGNodXnhu4NuIHF1YSBraMOidSBraeG7g20gxJHhu4tuaCBjaOG6pXQgbMaw4bujbmcgaG/DoG4gdGhp4buHbi4nLFxyXG4gICAgc3RhcnREYXRlOiAnMjAyNi0wMy0xNFQxMDowMDowMFonLFxyXG4gICAgY29tcGxldGlvbkRhdGU6ICcyMDI2LTAzLTE4VDE2OjAwOjAwWicsXHJcbiAgICBxY1N0YXR1czogUUNfREVDSVNJT04uTkVFRFNfUkVWSVNJT04sXHJcbiAgfSxcclxuXTtcclxuXHJcbi8vIFFDIFJlY29yZHNcclxuZXhwb3J0IGNvbnN0IG1vY2tRQ1JlY29yZHMgPSBbXHJcbiAge1xyXG4gICAgaWQ6ICdRQy0yMDI2LTAwMScsXHJcbiAgICBwcm9qZWN0SWQ6ICdVUC0yMDI2LTAwMScsXHJcbiAgICBwcm9kdWN0TmFtZTogJ8OBbyBraG/DoWMgZGVuaW0gZ2jDqXAgduG6o2kgIzAwMScsXG4gICAgaW5zcGVjdG9yOiAnxJDhu5cgUXXhu5FjIFZp4buHdCAoUUMgTGVhZCknLFxyXG4gICAgc3RpdGNoaW5nUXVhbGl0eTogJ1h14bqldCBz4bqvYyAoxJDGsOG7nW5nIGNo4buJIGvDqXAgxJHhu5NuZyDEkeG7gXUsIGtow7RuZyBzw7N0IG3hu5FpIGNo4buJIHRo4burYSknLFxyXG4gICAgbWF0ZXJpYWxRdWFsaXR5OiAnxJDhuqF0IGNodeG6qW4gKMSQw6MgeOG7rSBsw70gbeG7gW0sIGtow7RuZyBjw7MgbcO5aSBs4bqhLCDEkeG7mSBi4buBbiBjYW8pJyxcclxuICAgIGNsZWFuaW5nU3RhdHVzOiAnxJDhuqF0IChLaOG7rSBraHXhuqluIGLhurFuZyB0aWEgVVYgdsOgIGdp4bq3dCBzaW5oIGjhu41jKScsXHJcbiAgICB2aXN1YWxRdWFsaXR5OiAnxJDhurlwLCBtw6B1IHPhuq9jIHTGsMahbmcgcGjhuqNuIGjDoGkgaMOyYSDEkcO6bmcgYuG6o24gduG6vSB0aGnhur90IGvhur8nLFxyXG4gICAgc2l6ZUFjY3VyYWN5OiAnxJDDum5nIGLhuqNuZyBzaXplIEwgY2h14bqpbiAoRMOgaSDDoW8gNjhjbSwgUuG7mW5nIG5n4buxYyA1OGNtKScsXHJcbiAgICBmaW5hbERlY2lzaW9uOiBRQ19ERUNJU0lPTi5BUFBST1ZFRCxcclxuICAgIGNoZWNrZWRBdDogJzIwMjYtMDMtMDlUMTg6MDA6MDBaJyxcclxuICAgIGNhbkJlUHVibGlzaGVkOiB0cnVlLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdRQy0yMDI2LTAwMicsXHJcbiAgICBwcm9qZWN0SWQ6ICdVUC0yMDI2LTAwMycsXHJcbiAgICBwcm9kdWN0TmFtZTogJ8OBbyBIb29kaWUgY2jhuq9wIHbhuqNpIEThuqEgdHdlZWQnLFxyXG4gICAgaW5zcGVjdG9yOiAnxJDhu5cgUXXhu5FjIFZp4buHdCAoUUMgTGVhZCknLFxyXG4gICAgc3RpdGNoaW5nUXVhbGl0eTogJ0NoxrBhIMSR4bqhdCAoR8OzYyBu4buRaSBnaeG7r2EgduG6o2kgbuG7iSB2w6AgZOG6oSB0d2VlZCDhu58gdMO6aSBi4buLIG5oxINuKScsXHJcbiAgICBtYXRlcmlhbFF1YWxpdHk6ICfEkOG6oXQgY2h14bqpbicsXHJcbiAgICBjbGVhbmluZ1N0YXR1czogJ8SQ4bqhdCcsXHJcbiAgICB2aXN1YWxRdWFsaXR5OiAnUGhvbSBkw6FuZyDhu5VuLCBuaMawbmcgxJHGsOG7nW5nIG1heSB0w7ppIGPhuqduIGzDoCBwaOG6s25nIHbDoCBtYXkgbOG6oWkgbcOtJyxcclxuICAgIHNpemVBY2N1cmFjeTogJ8SQ4bqhdCBzaXplIE0nLFxyXG4gICAgZmluYWxEZWNpc2lvbjogUUNfREVDSVNJT04uTkVFRFNfUkVWSVNJT04sXHJcbiAgICBjaGVja2VkQXQ6ICcyMDI2LTAzLTE5VDExOjAwOjAwWicsXHJcbiAgICBjYW5CZVB1Ymxpc2hlZDogZmFsc2UsXHJcbiAgfSxcclxuXTtcclxuXHJcbi8vIE9yZGVyc1xyXG5leHBvcnQgY29uc3QgbW9ja09yZGVycyA9IFtcclxuICB7XHJcbiAgICBpZDogJ1JXMjAyNjAwMScsXHJcbiAgICBjdXN0b21lcjoge1xyXG4gICAgICBpZDogJ0NVU1QtMDAxJyxcclxuICAgICAgbmFtZTogJ05ndXnhu4VuIE1pbmggQW5oJyxcclxuICAgICAgcGhvbmU6ICcwOTAxMjM0NTY3JyxcclxuICAgICAgYWRkcmVzczogJzQ1IEzDqiBEdeG6qW4sIFBoxrDhu51uZyBC4bq/biBOZ2jDqSwgUXXhuq1uIDEsIFRQLiBIQ00nLFxyXG4gICAgfSxcclxuICAgIGl0ZW1zOiBbXHJcbiAgICAgIHtcclxuICAgICAgICBwcm9kdWN0SWQ6ICdQUkQtMDAzJyxcclxuICAgICAgICBuYW1lOiAnw4FvIHPGoSBtaSBk4bqhIHbhuqF0IGzhu4djaCAjMDAzJyxcbiAgICAgICAgcHJpY2U6IDUyMDAwMCxcclxuICAgICAgICBxdWFudGl0eTogMSxcclxuICAgICAgICBpc09uZU9mT25lOiB0cnVlLFxyXG4gICAgICAgIGltYWdlOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE2MDI4MTAzMTgzODMtZTM4NmNjMmEzY2NmP3c9NDAwJyxcclxuICAgICAgfSxcclxuICAgIF0sXHJcbiAgICBzdWJ0b3RhbDogNTIwMDAwLFxyXG4gICAgc2hpcHBpbmdGZWU6IDMwMDAwLFxyXG4gICAgZGlzY291bnQ6IDUwMDAwLFxyXG4gICAgdG90YWw6IDUwMDAwMCxcclxuICAgIHBheW1lbnRNZXRob2Q6ICdDaHV54buDbiBraG/huqNuIFZpZXRRUiAvIE1vTW8nLFxyXG4gICAgcGF5bWVudFN0YXR1czogUEFZTUVOVF9TVEFUVVMuUEFJRCxcclxuICAgIHRyYW5zYWN0aW9uSWQ6ICdUWE4tOTk4ODIyMzEnLFxyXG4gICAgb3JkZXJTdGF0dXM6IE9SREVSX1NUQVRVUy5ERUxJVkVSRUQsXHJcbiAgICBzaGlwcGluZ0NhcnJpZXI6ICdHaWFvIEjDoG5nIFRp4bq/dCBLaeG7h20gKEdIVEspJyxcclxuICAgIHRyYWNraW5nQ29kZTogJ0dIVEstOTgxMjQ5ODEnLFxyXG4gICAgY3JlYXRlZEF0OiAnMjAyNi0wMy0wNlQxNDozMDowMFonLFxyXG4gICAgbm90ZXM6ICdHaWFvIGdp4budIGjDoG5oIGNow61uaCwgZ+G7jWkgdHLGsOG7m2MgMTUgcGjDunQuJyxcclxuICB9LFxyXG4gIHtcclxuICAgIGlkOiAnUlcyMDI2MDAyJyxcclxuICAgIGN1c3RvbWVyOiB7XHJcbiAgICAgIGlkOiAnQ1VTVC0wMDQnLFxyXG4gICAgICBuYW1lOiAnVsWpIMSQ4bupYyBUaOG7i25oJyxcclxuICAgICAgcGhvbmU6ICcwOTMzNDQ1NTY2JyxcclxuICAgICAgYWRkcmVzczogJ1Rvw6AgTGFuZG1hcmsgODEsIDIwOCBOZ3V54buFbiBI4buvdSBD4bqjbmgsIFAuMjIsIELDrG5oIFRo4bqhbmgsIFRQLiBIQ00nLFxyXG4gICAgfSxcclxuICAgIGl0ZW1zOiBbXHJcbiAgICAgIHtcclxuICAgICAgICBwcm9kdWN0SWQ6ICdQUkQtMDAxJyxcclxuICAgICAgICBuYW1lOiAnw4FvIGtob8OhYyBkZW5pbSBnaMOpcCB24bqjaSAjMDAxJyxcbiAgICAgICAgcHJpY2U6IDg5MDAwMCxcclxuICAgICAgICBxdWFudGl0eTogMSxcclxuICAgICAgICBpc09uZU9mT25lOiB0cnVlLFxyXG4gICAgICAgIGltYWdlOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1NzY5OTU4NTMxMjMtNWExMDMwNWQ5M2MwP3c9NDAwJyxcclxuICAgICAgfSxcclxuICAgIF0sXHJcbiAgICBzdWJ0b3RhbDogODkwMDAwLFxyXG4gICAgc2hpcHBpbmdGZWU6IDAsXHJcbiAgICBkaXNjb3VudDogMCxcclxuICAgIHRvdGFsOiA4OTAwMDAsXHJcbiAgICBwYXltZW50TWV0aG9kOiAnVGjhursgdMOtbiBk4bulbmcgLyBWaXNhIE1hc3RlcicsXHJcbiAgICBwYXltZW50U3RhdHVzOiBQQVlNRU5UX1NUQVRVUy5QQUlELFxyXG4gICAgdHJhbnNhY3Rpb25JZDogJ1RYTi03NzMzMjIxMScsXHJcbiAgICBvcmRlclN0YXR1czogT1JERVJfU1RBVFVTLlNISVBQSU5HLFxyXG4gICAgc2hpcHBpbmdDYXJyaWVyOiAnR3JhYkV4cHJlc3MnLFxyXG4gICAgdHJhY2tpbmdDb2RlOiAnR1JBQi04ODIzMScsXHJcbiAgICBjcmVhdGVkQXQ6ICcyMDI2LTAzLTIxVDEwOjE1OjAwWicsXHJcbiAgICBub3RlczogJ0dpYW8gbMOqbiB04bqnbmcgMzQgc+G6o25oIGzhu4UgdMOibi4nLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdSVzIwMjYwMDMnLFxyXG4gICAgY3VzdG9tZXI6IHtcclxuICAgICAgaWQ6ICdDVVNULTAwMicsXHJcbiAgICAgIG5hbWU6ICdUcuG6p24gVGjhu4sgTWFpJyxcclxuICAgICAgcGhvbmU6ICcwOTEyMzQ1Njc4JyxcclxuICAgICAgYWRkcmVzczogJzEyOCBD4bqndSBHaeG6pXksIFF1YW4gSG9hLCBD4bqndSBHaeG6pXksIEjDoCBO4buZaScsXHJcbiAgICB9LFxyXG4gICAgaXRlbXM6IFtcclxuICAgICAge1xyXG4gICAgICAgIHByb2R1Y3RJZDogJ1BSRC0wMDInLFxyXG4gICAgICAgIG5hbWU6ICdUw7ppIHRvdGUga2FraSDEkWEgZOG7pW5nICMwMDInLFxuICAgICAgICBwcmljZTogNDUwMDAwLFxyXG4gICAgICAgIHF1YW50aXR5OiAxLFxyXG4gICAgICAgIGlzT25lT2ZPbmU6IHRydWUsXHJcbiAgICAgICAgaW1hZ2U6ICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTU0NDgxNjE1NS0xMmRmOTY0M2YzNjM/dz00MDAnLFxyXG4gICAgICB9LFxyXG4gICAgXSxcclxuICAgIHN1YnRvdGFsOiA0NTAwMDAsXHJcbiAgICBzaGlwcGluZ0ZlZTogMzAwMDAsXHJcbiAgICBkaXNjb3VudDogNDAwMDAsXHJcbiAgICB0b3RhbDogNDQwMDAwLFxyXG4gICAgcGF5bWVudE1ldGhvZDogJ0NPRCAoVGhhbmggdG/DoW4ga2hpIG5o4bqtbiBow6BuZyknLFxyXG4gICAgcGF5bWVudFN0YXR1czogUEFZTUVOVF9TVEFUVVMuVU5QQUlELFxyXG4gICAgdHJhbnNhY3Rpb25JZDogbnVsbCxcclxuICAgIG9yZGVyU3RhdHVzOiBPUkRFUl9TVEFUVVMuUFJFUEFSSU5HLFxyXG4gICAgc2hpcHBpbmdDYXJyaWVyOiAnVmlldHRlbCBQb3N0JyxcclxuICAgIHRyYWNraW5nQ29kZTogbnVsbCxcclxuICAgIGNyZWF0ZWRBdDogJzIwMjYtMDMtMjJUMTY6NDU6MDBaJyxcclxuICAgIG5vdGVzOiAnxJDDs25nIGfDs2kgaOG7mXAgZ2nhuqV5IGLhuqNvIHbhu4cgbcO0aSB0csaw4budbmcuJyxcclxuICB9LFxyXG5dO1xyXG5cclxuLy8gQ3VzdG9tZXJzXHJcbmV4cG9ydCBjb25zdCBtb2NrQ3VzdG9tZXJzID0gW1xyXG4gIHtcclxuICAgIGlkOiAnQ1VTVC0wMDEnLFxyXG4gICAgbmFtZTogJ05ndXnhu4VuIE1pbmggQW5oJyxcclxuICAgIGVtYWlsOiAnbWluaGFuaC5uZ3V5ZW5AZ21haWwuY29tJyxcclxuICAgIHBob25lOiAnMDkwMTIzNDU2NycsXHJcbiAgICBhdmF0YXI6ICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTQ5NDc5MDEwODM3Ny1iZTljMjliMjkzMzA/dz0xNTAnLFxyXG4gICAgYWRkcmVzczogJzQ1IEzDqiBEdeG6qW4sIFBoxrDhu51uZyBC4bq/biBOZ2jDqSwgUXXhuq1uIDEsIFRQLiBIQ00nLFxyXG4gICAgcmV3YXJkUG9pbnRzOiAzMjAsXHJcbiAgICB0b3RhbE9yZGVyczogNCxcclxuICAgIHRvdGFsU3BlbmRpbmc6IDIzNTAwMDAsXHJcbiAgICBzdGF0dXM6ICdBY3RpdmUnLFxyXG4gICAgY3JlYXRlZEF0OiAnMjAyNS0xMS0xMlQwOTowMDowMFonLFxyXG4gICAgZG9uYXRpb25Db3VudDogMyxcclxuICAgIGFjY2VwdGVkQ2xvdGhlc0RvbmF0ZWQ6IDE0LFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdDVVNULTAwMicsXHJcbiAgICBuYW1lOiAnVHLhuqduIFRo4buLIE1haScsXHJcbiAgICBlbWFpbDogJ21haS50cmFuOThAb3V0bG9vay5jb20nLFxyXG4gICAgcGhvbmU6ICcwOTEyMzQ1Njc4JyxcclxuICAgIGF2YXRhcjogJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNDM4NzYxNjgxMDMzLTY0NjFmZmFkOGQ4MD93PTE1MCcsXHJcbiAgICBhZGRyZXNzOiAnMTI4IEPhuqd1IEdp4bqleSwgUXVhbiBIb2EsIEPhuqd1IEdp4bqleSwgSMOgIE7hu5lpJyxcclxuICAgIHJld2FyZFBvaW50czogMTgwLFxyXG4gICAgdG90YWxPcmRlcnM6IDIsXHJcbiAgICB0b3RhbFNwZW5kaW5nOiA5NjAwMDAsXHJcbiAgICBzdGF0dXM6ICdBY3RpdmUnLFxyXG4gICAgY3JlYXRlZEF0OiAnMjAyNi0wMS0wNVQxNDoyMDowMFonLFxyXG4gICAgZG9uYXRpb25Db3VudDogMixcclxuICAgIGFjY2VwdGVkQ2xvdGhlc0RvbmF0ZWQ6IDgsXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogJ0NVU1QtMDAzJyxcclxuICAgIG5hbWU6ICdMw6ogSG/DoG5nIExvbmcnLFxyXG4gICAgZW1haWw6ICdsb25nLmxlQHlhaG9vLmNvbScsXHJcbiAgICBwaG9uZTogJzA5ODc2NTQzMjEnLFxyXG4gICAgYXZhdGFyOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1MDcwMDMyMTExNjktMGExZGQ3MjI4ZjJkP3c9MTUwJyxcclxuICAgIGFkZHJlc3M6ICcyMiBOZ3V54buFbiBUaOG7iyBNaW5oIEtoYWksIEjhuqNpIENow6J1LCDEkMOgIE7hurVuZycsXHJcbiAgICByZXdhcmRQb2ludHM6IDYwLFxyXG4gICAgdG90YWxPcmRlcnM6IDEsXHJcbiAgICB0b3RhbFNwZW5kaW5nOiA0NTAwMDAsXHJcbiAgICBzdGF0dXM6ICdBY3RpdmUnLFxyXG4gICAgY3JlYXRlZEF0OiAnMjAyNi0wMi0xOFQxMDoxMDowMFonLFxyXG4gICAgZG9uYXRpb25Db3VudDogMSxcclxuICAgIGFjY2VwdGVkQ2xvdGhlc0RvbmF0ZWQ6IDMsXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogJ0NVU1QtMDA0JyxcclxuICAgIG5hbWU6ICdWxakgxJDhu6ljIFRo4buLbmgnLFxyXG4gICAgZW1haWw6ICd0aGluaC52dUB0ZWNoY29ycC52bicsXHJcbiAgICBwaG9uZTogJzA5MzM0NDU1NjYnLFxyXG4gICAgYXZhdGFyOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1MDA2NDg3Njc3OTEtMDBkY2M5OTRhNDNlP3c9MTUwJyxcclxuICAgIGFkZHJlc3M6ICdMYW5kbWFyayA4MSwgQsOsbmggVGjhuqFuaCwgVFAuIEhDTScsXHJcbiAgICByZXdhcmRQb2ludHM6IDQ1MCxcclxuICAgIHRvdGFsT3JkZXJzOiA1LFxyXG4gICAgdG90YWxTcGVuZGluZzogMzg5MDAwMCxcclxuICAgIHN0YXR1czogJ0FjdGl2ZScsXHJcbiAgICBjcmVhdGVkQXQ6ICcyMDI1LTEwLTAxVDA4OjAwOjAwWicsXHJcbiAgICBkb25hdGlvbkNvdW50OiA1LFxyXG4gICAgYWNjZXB0ZWRDbG90aGVzRG9uYXRlZDogMjIsXHJcbiAgfSxcclxuXTtcclxuXHJcbi8vIEludmVudG9yeVxyXG5leHBvcnQgY29uc3QgbW9ja0ludmVudG9yeSA9IFtcclxuICB7XHJcbiAgICBpZDogJ0lOVi0wMDEnLFxyXG4gICAgaXRlbTogJ0zDtCBRdeG6p24gSmVhbiBDxakgxJHhu6N0IFQzLzIwMjYnLFxyXG4gICAgY2F0ZWdvcnk6ICdRdeG6p24gw6FvIMSRw6MgdGh1IGdvbScsXG4gICAgdHlwZTogJ1VzZWQgRGVuaW0nLFxyXG4gICAgcXVhbnRpdHk6IDQ4LFxyXG4gICAgdW5pdDogJ0NoaeG6v2MnLFxyXG4gICAgbG9jYXRpb246ICdLaG8gQSAtIEvhu4cgMDEgKEtodSBzxqEgY2jhur8pJyxcclxuICAgIHN0YXR1czogJ1PhurVuIHPDoG5nIGto4butIGtodeG6qW4nLFxyXG4gICAgbGFzdFVwZGF0ZWQ6ICcyMDI2LTAzLTIxVDExOjAwOjAwWicsXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogJ0lOVi0wMDInLFxyXG4gICAgaXRlbTogJ1bhuqNpIERlbmltIGPhuq90IG3huqNuZyBCb3JvJyxcclxuICAgIGNhdGVnb3J5OiAnTmd1ecOqbiBsaeG7h3UgdGjDtCcsXG4gICAgdHlwZTogJ1Bo4bulIGxp4buHdSB24bqjaSB4w6knLFxyXG4gICAgcXVhbnRpdHk6IDE2LjUsXHJcbiAgICB1bml0OiAnS2cnLFxyXG4gICAgbG9jYXRpb246ICdLaG8gQiAtIEvhu4cgMDQgKFjGsOG7n25nIG1heSknLFxyXG4gICAgc3RhdHVzOiAnxJDDoyBnaeG6t3Qgc+G6pXkgdGnhu4d0IHRyw7luZycsXHJcbiAgICBsYXN0VXBkYXRlZDogJzIwMjYtMDMtMjBUMTY6MzA6MDBaJyxcclxuICB9LFxyXG4gIHtcclxuICAgIGlkOiAnSU5WLTAwMycsXHJcbiAgICBpdGVtOiAnw4FvIEhvb2RpZSBjaOG6r3AgVHdlZWQgKFVQLTIwMjYtMDAzKScsXHJcbiAgICBjYXRlZ29yeTogJ8SQYW5nIHPhuqNuIHh14bqldCcsXG4gICAgdHlwZTogJ0LDoW4gdGjDoG5oIHBo4bqpbScsXHJcbiAgICBxdWFudGl0eTogMSxcclxuICAgIHVuaXQ6ICdDaGnhur9jJyxcclxuICAgIGxvY2F0aW9uOiAnQsOgbiBtYXkgbeG6q3Ugc+G7kSAyJyxcclxuICAgIHN0YXR1czogJ8SQYW5nIHPhu61hIGzhu5dpIFFDJyxcclxuICAgIGxhc3RVcGRhdGVkOiAnMjAyNi0wMy0xOVQxNDowMDowMFonLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdJTlYtMDA0JyxcclxuICAgIGl0ZW06ICfDgW8ga2hvw6FjIGRlbmltIGdow6lwIHbhuqNpICMwMDEnLFxuICAgIGNhdGVnb3J5OiAnVGjDoG5oIHBo4bqpbScsXG4gICAgdHlwZTogJ1PhuqNuIHBo4bqpbSAxLW9mLTEnLFxyXG4gICAgcXVhbnRpdHk6IDEsXHJcbiAgICB1bml0OiAnQ2hp4bq/YycsXHJcbiAgICBsb2NhdGlvbjogJ0todSB0csawbmcgYsOgeSAmIMSRw7NuZyBnw7NpIFNQMDEnLFxyXG4gICAgc3RhdHVzOiAnxJDDoyBz4bq1biBzw6BuZyBnaWFvIGjDoG5nJyxcclxuICAgIGxhc3RVcGRhdGVkOiAnMjAyNi0wMy0xMFQxMDozMDowMFonLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdJTlYtMDA1JyxcclxuICAgIGl0ZW06ICfDgW8gc8ahIG1pIGThuqEgduG6oXQgbOG7h2NoICMwMDMnLFxuICAgIGNhdGVnb3J5OiAnxJDDoyBiw6FuJyxcbiAgICB0eXBlOiAnU+G6o24gcGjhuqltIMSRw6MgYsOhbicsXHJcbiAgICBxdWFudGl0eTogMCxcclxuICAgIHVuaXQ6ICdDaGnhur9jJyxcclxuICAgIGxvY2F0aW9uOiAnxJDDoyBnaWFvIGNobyBraMOhY2ggUlcyMDI2MDAxJyxcclxuICAgIHN0YXR1czogJ0hvw6BuIHThuqV0IMSRxqFuIGjDoG5nJyxcclxuICAgIGxhc3RVcGRhdGVkOiAnMjAyNi0wMy0wOFQxNToyMDowMFonLFxyXG4gIH0sXHJcbl07XHJcblxyXG4vLyBQcm9tb3Rpb25zXHJcbmV4cG9ydCBjb25zdCBtb2NrUHJvbW90aW9ucyA9IFtcclxuICB7XHJcbiAgICBpZDogJ1BSTS0wMDEnLFxyXG4gICAgbmFtZTogJ8avdSDEkcOjaSBUcmkgw6JuIE5nxrDhu51pIFF1ecOqbiBHw7NwIChFQ08gSEVSTyknLFxyXG4gICAgY29kZTogJ0VDT0hFUk81MEsnLFxyXG4gICAgZGlzY291bnRUeXBlOiAnRml4ZWQgQW1vdW50JyxcclxuICAgIGRpc2NvdW50VmFsdWU6IDUwMDAwLFxyXG4gICAgbWluT3JkZXI6IDMwMDAwMCxcclxuICAgIHN0YXJ0RGF0ZTogJzIwMjYtMDMtMDFUMDA6MDA6MDBaJyxcclxuICAgIGVuZERhdGU6ICcyMDI2LTA0LTMwVDIzOjU5OjU5WicsXHJcbiAgICB1c2FnZUxpbWl0OiA1MDAsXHJcbiAgICB1c2VkQ291bnQ6IDE0MixcclxuICAgIHN0YXR1czogJ0FjdGl2ZScsXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogJ1BSTS0wMDInLFxyXG4gICAgbmFtZTogJ01p4buFbiBwaMOtIHbhuq1uIGNodXnhu4NuIMSQxqFuIGjDoG5nIMSR4bqndSB0acOqbicsXHJcbiAgICBjb2RlOiAnRlJFRVNISVBSRVdFQVInLFxyXG4gICAgZGlzY291bnRUeXBlOiAnRnJlZSBTaGlwcGluZycsXHJcbiAgICBkaXNjb3VudFZhbHVlOiAzNTAwMCxcclxuICAgIG1pbk9yZGVyOiA0MDAwMDAsXHJcbiAgICBzdGFydERhdGU6ICcyMDI2LTAxLTAxVDAwOjAwOjAwWicsXHJcbiAgICBlbmREYXRlOiAnMjAyNi0xMi0zMVQyMzo1OTo1OVonLFxyXG4gICAgdXNhZ2VMaW1pdDogMTAwMCxcclxuICAgIHVzZWRDb3VudDogNDY4LFxyXG4gICAgc3RhdHVzOiAnQWN0aXZlJyxcclxuICB9LFxyXG5dO1xyXG5cclxuLy8gU3RhZmZcclxuZXhwb3J0IGNvbnN0IG1vY2tTdGFmZiA9IFtcclxuICB7XHJcbiAgICBpZDogJ1NURi0wMDEnLFxyXG4gICAgbmFtZTogJ1F1YW5nIChxdeG6o24gdHLhu4sgdmnDqm4pJyxcbiAgICBlbWFpbDogJ2FkbWluQHJld2Vhci52bicsXHJcbiAgICBwaG9uZTogJzA5MDk5OTg4NzcnLFxyXG4gICAgcm9sZTogUk9MRVMuQURNSU4sXHJcbiAgICBzdGF0dXM6ICdBY3RpdmUnLFxyXG4gICAgYXZhdGFyOiAnaHR0cHM6Ly9pbWFnZXMudW5zcGxhc2guY29tL3Bob3RvLTE1MzQ1Mjg3NDE3NzUtNTM5OTRhNjlkYWViP3c9MTUwJyxcclxuICAgIGpvaW5lZERhdGU6ICcyMDI1LTA4LTAxJyxcclxuICAgIGRlcGFydG1lbnQ6ICdCYW4gxJFp4buBdSBow6BuaCAoT3BlcmF0aW9ucyknLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdTVEYtMDAyJyxcclxuICAgIG5hbWU6ICdMaW5oIChuaMOibiB2acOqbiknLFxuICAgIGVtYWlsOiAnbGluaC5jcmFmdEByZXdlYXIudm4nLFxyXG4gICAgcGhvbmU6ICcwOTE4ODg3NzY2JyxcclxuICAgIHJvbGU6IFJPTEVTLlNUQUZGLFxyXG4gICAgc3RhdHVzOiAnQWN0aXZlJyxcclxuICAgIGF2YXRhcjogJ2h0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTQ0MDA1MzEzLTk0ZGRmMDI4NmRmMj93PTE1MCcsXHJcbiAgICBqb2luZWREYXRlOiAnMjAyNS0xMC0xNScsXHJcbiAgICBkZXBhcnRtZW50OiAnWMaw4bufbmcgdMOhaSBjaOG6vyAoVXBjeWNsaW5nIExhYiknLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdTVEYtMDAzJyxcclxuICAgIG5hbWU6ICdMw6ogVsSDbiBIb8OgbmcnLFxyXG4gICAgZW1haWw6ICdob2FuZy5sb2dpc3RpY3NAcmV3ZWFyLnZuJyxcclxuICAgIHBob25lOiAnMDkzNzc3NjY1NScsXHJcbiAgICByb2xlOiBST0xFUy5TVEFGRixcclxuICAgIHN0YXR1czogJ0FjdGl2ZScsXHJcbiAgICBhdmF0YXI6ICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTUwNjc5NDc3ODIwMi1jYWQ4NGNmNDVmMWQ/dz0xNTAnLFxyXG4gICAgam9pbmVkRGF0ZTogJzIwMjUtMTEtMjAnLFxyXG4gICAgZGVwYXJ0bWVudDogJ8SQaeG7gXUgcGjhu5FpIHRodSBnb20gKENvbGxlY3Rpb24gJiBMb2dpc3RpY3MpJyxcclxuICB9LFxyXG4gIHtcclxuICAgIGlkOiAnU1RGLTAwNCcsXHJcbiAgICBuYW1lOiAnxJDhu5cgUXXhu5FjIFZp4buHdCcsXHJcbiAgICBlbWFpbDogJ3ZpZXQucWNAcmV3ZWFyLnZuJyxcclxuICAgIHBob25lOiAnMDk0NjY2NTU0NCcsXHJcbiAgICByb2xlOiBST0xFUy5TVEFGRixcclxuICAgIHN0YXR1czogJ0FjdGl2ZScsXHJcbiAgICBhdmF0YXI6ICdodHRwczovL2ltYWdlcy51bnNwbGFzaC5jb20vcGhvdG8tMTUyMjA3NTQ2OTc1MS0zYTY2OTRmYjJmNjE/dz0xNTAnLFxyXG4gICAgam9pbmVkRGF0ZTogJzIwMjUtMTItMDEnLFxyXG4gICAgZGVwYXJ0bWVudDogJ0tp4buDbSBzb8OhdCBjaOG6pXQgbMaw4bujbmcgKFFDKScsXHJcbiAgfSxcclxuXTtcclxuXHJcbi8vIE5vdGlmaWNhdGlvbnNcclxuZXhwb3J0IGNvbnN0IG1vY2tOb3RpZmljYXRpb25zID0gW1xyXG4gIHtcclxuICAgIGlkOiAnTk9USUYtMDEnLFxyXG4gICAgdGl0bGU6ICdZw6p1IGPhuqd1IHF1ecOqbiBnw7NwIG3hu5tpJyxcclxuICAgIG1lc3NhZ2U6ICdLaMOhY2ggaMOgbmcgTmd1eeG7hW4gTWluaCBBbmggduG7q2EgZ+G7rWkgecOqdSBj4bqndSB0aHUgZ29tIDYgbcOzbiDEkeG7kyBjxakuJyxcclxuICAgIHRpbWU6ICcxNSBwaMO6dCB0csaw4bubYycsXHJcbiAgICByZWFkOiBmYWxzZSxcclxuICAgIHR5cGU6ICdjb2xsZWN0aW9uJyxcclxuICB9LFxyXG4gIHtcclxuICAgIGlkOiAnTk9USUYtMDInLFxyXG4gICAgdGl0bGU6ICfEkMahbiBow6BuZyBt4bubaSAjUlcyMDI2MDAyJyxcclxuICAgIG1lc3NhZ2U6ICdLaMOhY2ggaMOgbmcgVsWpIMSQ4bupYyBUaOG7i25oIHbhu6thIHRoYW5oIHRvw6FuIHRow6BuaCBjw7RuZyA4OTAuMDAwIOKCqyBjaG8gw6FvIGtob8OhYyBkZW5pbSBnaMOpcCB24bqjaSAjMDAxLicsXG4gICAgdGltZTogJzEgZ2nhu50gdHLGsOG7m2MnLFxyXG4gICAgcmVhZDogZmFsc2UsXHJcbiAgICB0eXBlOiAnb3JkZXInLFxyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6ICdOT1RJRi0wMycsXHJcbiAgICB0aXRsZTogJ0Thu7Egw6FuIFVQLTIwMjYtMDAxIMSR4bqhdCBRQycsXHJcbiAgICBtZXNzYWdlOiAnw4FvIGtob8OhYyBCb3JvIERlbmltIMSRw6Mgdsaw4bujdCBxdWEga2nhu4NtIMSR4buLbmggUUMgdsOgIMSR4bunIMSRaeG7gXUga2nhu4duIG3hu58gYsOhbi4nLFxyXG4gICAgdGltZTogJzMgZ2nhu50gdHLGsOG7m2MnLFxyXG4gICAgcmVhZDogdHJ1ZSxcclxuICAgIHR5cGU6ICdxYycsXHJcbiAgfSxcclxuXTtcclxuIl19

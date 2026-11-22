@@ -1,0 +1,388 @@
+/* REWEAR Shipping & Shipper Hub Styles - Nordic Editorial */
+.shipping-page {
+  padding: 28px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.shipping-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.shipping-heading h1 {
+  margin: 6px 0 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #10100f;
+}
+
+/* Shipper Greeting Hub Banner */
+.shipper-hub-banner {
+  background: #ffffff;
+  border: 1px solid #e7e7e2;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.shipper-hub-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.shipper-hub-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #10100f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.shipper-hub-details h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #10100f;
+}
+
+.shipper-hub-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.shipper-hub-status-tag .pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+  animation: rwPulse 2s infinite;
+}
+
+@keyframes rwPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* Sub-nav Tab Switcher */
+.shipper-nav-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e7e7e2;
+  padding-bottom: 12px;
+  overflow-x: auto;
+}
+
+.shipper-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.shipper-nav-btn:hover {
+  color: #10100f;
+  background: #f8fafc;
+}
+
+.shipper-nav-btn.active {
+  background: #10100f;
+  color: #ffffff;
+  border-color: #10100f;
+}
+
+.shipper-nav-btn .badge-count {
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.shipper-nav-btn.active .badge-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Metric summary grid */
+.shipping-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.shipping-summary .ant-card {
+  border-radius: 10px;
+  border: 1px solid #e7e7e2;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shipping-summary .ant-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Toolbar & Filters */
+.shipping-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.shipping-filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-pill:hover {
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.filter-pill.active {
+  background: #10100f;
+  border-color: #10100f;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Cards Grid View */
+.shipper-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.shipper-card {
+  background: #ffffff;
+  border: 1px solid #e7e7e2;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.shipper-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.shipper-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.shipper-card-code {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #10100f;
+  letter-spacing: 0.02em;
+}
+
+.shipper-card-body {
+  margin-bottom: 16px;
+}
+
+.shipper-card-customer {
+  margin-bottom: 12px;
+}
+
+.shipper-card-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #10100f;
+  margin-bottom: 4px;
+}
+
+.shipper-card-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #475569;
+  margin: 6px 0 12px;
+}
+
+.shipper-card-address svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: #64748b;
+}
+
+.shipper-card-contact-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.shipper-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.shipper-action-link.phone {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.shipper-action-link.phone:hover {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.shipper-action-link.maps {
+  background: #f8fafc;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.shipper-action-link.maps:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.shipper-card-package-info {
+  background: #fbfbf9;
+  border: 1px solid #f1f1ee;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #555554;
+  margin-bottom: 14px;
+}
+
+.shipper-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.shipper-card-footer .actions-left {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+/* Modal detail styling */
+.shipping-detail {
+  border: 1px solid #e5e5e4;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 18px 0;
+  background: #fdfdfc;
+}
+
+.shipping-detail p {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.shipping-detail p:last-child {
+  margin-bottom: 0;
+}
+
+.shipping-detail ol, .shipping-detail ul {
+  padding-left: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .shipping-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .shipping-page {
+    padding: 16px;
+  }
+  .shipping-toolbar .ant-select {
+    width: 100%;
+  }
+  .shipper-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .shipper-hub-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

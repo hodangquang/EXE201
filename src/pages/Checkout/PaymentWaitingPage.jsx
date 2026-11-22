@@ -29,8 +29,8 @@ const readOrderId = response => {
 
 const PAYMENT_STATUS_BY_NUMBER = {
   0: 'PENDING',
-  1: 'FAILED',
-  2: 'PAID',
+  1: 'PAID',
+  2: 'FAILED',
   3: 'EXPIRED',
   4: 'REFUNDED',
 };
@@ -39,12 +39,14 @@ const normalizePaymentState = value => {
   if (typeof value === 'number' && Number.isInteger(value)) return PAYMENT_STATUS_BY_NUMBER[value] || '';
   if (typeof value !== 'string') return '';
   const normalized = value.trim().toUpperCase();
+  if (normalized === 'RECONCILIATIONREQUIRED') return 'RECONCILIATION_REQUIRED';
   return /^\d+$/.test(normalized) ? PAYMENT_STATUS_BY_NUMBER[Number(normalized)] || '' : normalized;
 };
 
 const getPaymentState = response => {
   if (typeof response === 'string') return normalizePaymentState(response);
 
+  if (findNestedValue(response, 'requiresReconciliation') === true) return 'RECONCILIATION_REQUIRED';
   const isPaid = findNestedValue(response, 'isPaid');
   if (isPaid === true) return 'PAID';
 
@@ -80,6 +82,7 @@ const PAYMENT_TITLES = {
   expired: 'Phiên thanh toán đã hết hạn',
   failed: 'Thanh toán thất bại',
   refunded: 'Giao dịch đã được hoàn tiền',
+  reconciliation_required: 'Giao dịch cần được đối soát',
 };
 
 export default function PaymentWaitingPage() {
@@ -158,7 +161,7 @@ export default function PaymentWaitingPage() {
               return;
             }
 
-            if (['CANCELLED', 'EXPIRED', 'FAILED', 'REFUNDED'].includes(paymentState)) {
+            if (['CANCELLED', 'EXPIRED', 'FAILED', 'REFUNDED', 'RECONCILIATION_REQUIRED'].includes(paymentState)) {
               finished = true;
               clearSavedPayment(orderId);
               setState(paymentState.toLowerCase());
@@ -167,6 +170,7 @@ export default function PaymentWaitingPage() {
                 EXPIRED: 'Phiên thanh toán đã hết hạn. Vui lòng kiểm tra đơn mua để biết bước tiếp theo.',
                 FAILED: 'Thanh toán thất bại. Vui lòng kiểm tra đơn mua để biết bước tiếp theo.',
                 REFUNDED: 'Giao dịch đã được hoàn tiền. Vui lòng kiểm tra đơn mua.',
+                RECONCILIATION_REQUIRED: 'Hệ thống đã ghi nhận giao dịch cần đối soát. Đơn chưa được xác nhận giao; vui lòng liên hệ REWEAR và xem lại đơn mua.',
               };
               setMessage(terminalMessages[paymentState]);
               return;

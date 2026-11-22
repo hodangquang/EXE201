@@ -1,0 +1,90 @@
+.pp-modal-content.srd-dialog {
+  max-width: 720px;
+  max-height: min(860px, calc(100dvh - 32px));
+}
+
+.srd-dialog .pp-modal-head {
+  flex: none;
+  gap: 16px;
+}
+
+.srd-dialog .pp-modal-close {
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.srd-dialog .pp-modal-body {
+  min-height: 0;
+  overflow-x: hidden;
+}
+
+.srd-dialog .pp-modal-footer {
+  flex: none;
+  flex-wrap: wrap;
+}
+
+.srd-dialog .pp-modal-footer .pp-btn { min-height: 44px; }
+
+.srd { display: grid; gap: 24px; min-width: 0; }
+.srd * { min-width: 0; }
+.srd-intro { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.srd-intro-copy { min-width: 0; }
+.srd-eyebrow, .srd-section h5, .srd-field dt, .srd-prices span {
+  color: #666660;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .025em;
+}
+.srd-eyebrow { display: block; margin-bottom: 8px; }
+.srd-intro h4 { color: #10100f; font-size: clamp(20px, 3vw, 26px); line-height: 1.2; overflow-wrap: anywhere; }
+.srd-intro-copy > p { margin-top: 8px; color: #666660; font-size: 12px; }
+.srd-intro > .pp-sourcing-status { flex: none; margin-top: 3px; }
+.srd-section { border-top: 1px solid #e5e5df; padding-top: 20px; }
+.srd-section h5 { color: #10100f; font-size: 13px; text-transform: uppercase; margin-bottom: 14px; }
+.srd-section h5 span { color: #666660; }
+.srd-description { color: #333330; font-size: 14px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; margin-bottom: 16px; }
+.srd-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; }
+.srd-field { min-width: 0; }
+.srd-field dt { margin-bottom: 6px; }
+.srd-field dd { margin: 0; color: #10100f; font-size: 14px; font-weight: 600; line-height: 1.45; overflow-wrap: anywhere; }
+.srd-prices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.srd-prices > div { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 18px; border: 1px solid #e6e6e0; border-radius: 10px; background: #fafaf8; }
+.srd-prices .srd-price-offer { background: #f1f1ed; border-color: #d9d9d3; }
+.srd-prices strong { color: #10100f; font-size: clamp(18px, 3vw, 23px); line-height: 1.2; overflow-wrap: anywhere; }
+.srd-notice { margin-top: 12px; padding: 12px 14px; border-left: 3px solid #9c6813; background: #fff8e7; color: #4b3615; font-size: 13px; line-height: 1.5; }
+.srd-note { margin-top: 16px; font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+.srd-note strong { display: block; margin-bottom: 4px; }
+.srd-note p { color: #44443f; white-space: pre-wrap; }
+.srd-payout { padding: 16px 18px; border-radius: 10px; background: #f5f5f2; color: #555550; font-size: 13px; line-height: 1.5; }
+.srd-payout.confirmed { background: #edf5ee; color: #23492d; }
+.srd-payout > strong { color: #1f4429; font-size: 15px; }
+.srd-payout > p { margin-top: 5px; }
+.srd-payout-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #c9dfce; }
+.srd-payout-meta .srd-field dt { color: #45624b; }
+.srd-payout-meta .srd-field dd { font-size: 13px; }
+.srd-image-stage { display: flex; align-items: center; justify-content: center; width: 100%; height: clamp(240px, 42vw, 430px); overflow: hidden; border-radius: 10px; background: #f4f4f0; }
+.srd-image-stage img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.srd-image-stage p, .srd-no-image { color: #666660; font-size: 13px; text-align: center; }
+.srd-thumbnails { display: flex; gap: 10px; overflow-x: auto; padding: 12px 2px 3px; }
+.srd-thumbnails button { flex: 0 0 68px; width: 68px; height: 68px; overflow: hidden; border: 2px solid transparent; border-radius: 8px; background: #f4f4f0; cursor: pointer; }
+.srd-thumbnails button.selected { border-color: #10100f; }
+.srd-thumbnails button img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.srd-evidence { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
+.srd-evidence img { display: block; width: 100%; max-height: 240px; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 8px; background: #f4f4f0; }
+.srd-thumbnails button:focus-visible, .srd-dialog .pp-modal-close:focus-visible, .srd-dialog .pp-modal-footer button:focus-visible { outline: 2px solid #335eea; outline-offset: 3px; }
+
+@media (max-width: 560px) {
+  .pp-modal-overlay:has(.srd-dialog) { padding: 8px; }
+  .pp-modal-content.srd-dialog { max-height: calc(100dvh - 16px); border-radius: 10px; }
+  .srd-dialog .pp-modal-head { padding: 16px; }
+  .srd-dialog .pp-modal-head h3 { font-size: 22px; }
+  .srd-dialog .pp-modal-body { padding: 18px 16px; }
+  .srd-dialog .pp-modal-footer { padding: 12px 16px; }
+  .srd-dialog .pp-modal-footer .pp-btn { flex: 1 1 auto; padding-inline: 12px; }
+  .srd { gap: 20px; }
+  .srd-intro { flex-direction: column; gap: 10px; }
+  .srd-intro > .pp-sourcing-status { margin: 0; }
+  .srd-facts, .srd-prices, .srd-payout-meta { grid-template-columns: minmax(0, 1fr); }
+  .srd-image-stage { height: 300px; max-height: 45dvh; }
+}

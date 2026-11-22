@@ -458,6 +458,7 @@
 }
 
 .rw-prod-photo {
+  position: relative;
   aspect-ratio: 0.666;
   overflow: hidden;
   background: #EAEAEA;

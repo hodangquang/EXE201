@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "collectionId": "rewear-upcycled-ideas-2026-10-27",
+  "brand": "REWEAR",
+  "title": "Vòng đời mới, phong cách riêng",
+  "status": "Draft",
+  "createdAt": "2026-10-25",
+  "imageSource": "ai-generated",
+  "disclosure": "Bộ sản phẩm đề xuất. Toàn bộ hình ảnh là minh họa tạo bằng AI; tên, thiết kế, giá và kích cỡ là đề xuất. Chưa xác nhận hàng thực tế, tồn kho, chất liệu hay tình trạng kiểm định. Chưa mở bán.",
+  "products": [
+    {
+      "sku": "RW-UP-001",
+      "productType": "Upcycled",
+      "title": "Túi tote tái chế từ quần jean",
+      "categoryName": "Túi xách",
+      "brandName": "REWEAR",
+      "proposedPrice": 329000,
+      "proposedSize": "Một cỡ",
+      "color": "Xanh chàm",
+      "description": "Thiết kế túi tote dáng chữ nhật từ quần jean cũ, giữ lại túi quần làm ngăn ngoài. Hai quai cùng chất liệu, phối đường chỉ màu nâu để nhấn vào dấu vết của món đồ ban đầu. Dễ phối với trang phục thường ngày.",
+      "transformationDescription": "Ý tưởng đề xuất: chọn phần vải còn sử dụng được của quần jean, cắt ghép thân túi và quai, tận dụng túi quần làm ngăn ngoài rồi gia cố các điểm chịu lực. Ảnh trước và sau minh họa ý tưởng; chưa phải hồ sơ một dự án đã hoàn thành.",
+      "proposedSourceMaterial": "Quần jean đã qua sử dụng",
+      "imageUrls": [
+        "/images/catalog-drafts/denim-after.png",
+        "/images/catalog-drafts/denim-after-back.png",
+        "/images/catalog-drafts/denim-after-angle.png",
+        "/images/catalog-drafts/denim-after-detail.png"
+      ],
+      "beforeImages": [
+        "/images/catalog-drafts/denim-before.png"
+      ],
+      "stockQuantity": null,
+      "condition": null,
+      "measurements": null,
+      "imageLabels": [
+        "Mặt trước",
+        "Mặt sau",
+        "Góc nghiêng",
+        "Cận cảnh"
+      ]
+    },
+    {
+      "sku": "RW-UP-002",
+      "productType": "Upcycled",
+      "title": "Áo sơ mi ghép vải xanh kem",
+      "categoryName": "Áo sơ mi",
+      "brandName": "REWEAR",
+      "proposedPrice": 349000,
+      "proposedSize": "M",
+      "color": "Xanh sọc phối kem",
+      "description": "Sơ mi tay dài với những mảng xanh sọc và kem ghép bất đối xứng. Túi ngực tương phản tạo điểm nhấn, trong khi cổ bẻ và hàng cúc giữ phom áo dễ mặc. Gợi ý phối cùng quần jean hoặc chân váy trơn.",
+      "transformationDescription": "Ý tưởng đề xuất: kết hợp phần vải còn dùng được của hai áo sơ mi cũ thành một thiết kế mới, phối lại thân áo, tay và túi ngực. Ảnh trước và sau là minh họa AI, chưa xác nhận việc thu mua, sản xuất hay QC.",
+      "proposedSourceMaterial": "Hai áo sơ mi cũ màu kem và xanh sọc",
+      "imageUrls": [
+        "/images/catalog-drafts/shirt-after.png",
+        "/images/catalog-drafts/shirt-after-back.png",
+        "/images/catalog-drafts/shirt-after-angle.png",
+        "/images/catalog-drafts/shirt-after-detail.png"
+      ],
+      "beforeImages": [
+        "/images/catalog-drafts/shirt-before.png"
+      ],
+      "stockQuantity": null,
+      "condition": null,
+      "measurements": null,
+      "imageLabels": [
+        "Mặt trước",
+        "Mặt sau",
+        "Góc nghiêng",
+        "Cận cảnh"
+      ]
+    }
+  ]
+}

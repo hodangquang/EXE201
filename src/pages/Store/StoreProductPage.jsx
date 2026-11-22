@@ -12,18 +12,21 @@ import {
   ChevronDown,
   ChevronRight,
 } from "lucide-react";
-import { usePublicProducts } from "../../hooks/usePublicProducts";
+import { usePublicProducts, usePublicProduct } from "../../hooks/usePublicProducts";
 import RainsFooter from "../../components/common/RainsFooter";
 import AccountMenu from "../../components/common/AccountMenu";
 import { useCart } from "../../contexts/CartContext";
 import { toast } from 'react-toastify';
+import ProductJourney from '../../components/common/ProductJourney';
 import "./StoreProductPage.css";
 
 export default function StoreProductPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { products, loading, getProductById } = usePublicProducts();
+  const { products } = usePublicProducts();
+  const { product, loading, error, retry } = usePublicProduct(id);
+  const canPurchase = product && !product.isPreview && [0, '0', 'Available'].includes(product.status) && product.stockQuantity > 0;
   const { addToCart, openCart, cartOpen, cartItemCount } = useCart();
 
   // RECOMMENDED_PRODUCTS
@@ -36,7 +39,7 @@ export default function StoreProductPage() {
   }));
 
   // Load product
-  const product = getProductById(id);
+
 
   // States
   const [isPlaying, setIsPlaying] = useState(true);
@@ -65,7 +68,8 @@ export default function StoreProductPage() {
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
-  const [detailImage, setDetailImage] = useState(product?.images?.[2]?.src || product?.images?.[0]?.src || "");
+  const [detailImage, setDetailImage] = useState('');
+  const imageSignature = product?.images?.map(image => image.src).join('|') || '';
 
   const conveyorTrackRef = useRef(null);
   const heroSectionRef = useRef(null);
@@ -89,13 +93,13 @@ export default function StoreProductPage() {
   // If product changes, reset defaults
   useEffect(() => {
     if (product) {
-      setDetailImage(product?.images?.[2]?.src || product?.images?.[0]?.src || "");
+      setDetailImage(product?.images?.[3]?.src || product?.images?.[2]?.src || product?.images?.[0]?.src || "");
     }
-  }, [product?.id]);
+  }, [product?.id, imageSignature]);
 
   // Handle Add to Cart
   const handleAddToCart = async () => {
-    if (!product?.id || isAdding || !Number.isFinite(product.rawPrice)) return;
+    if (!canPurchase || !product?.id || isAdding || !Number.isFinite(product.rawPrice)) return;
 
     setIsAdding(true);
     try {
@@ -128,10 +132,12 @@ export default function StoreProductPage() {
 
   // Duplicate images for infinite seamless loop
   const galleryImages = product?.images || [];
-  const baseImages = galleryImages.length <= 3 ? [...galleryImages, ...galleryImages] : galleryImages;
-  const loopedImages = [...baseImages, ...baseImages];
+  const selectedDetailImage = galleryImages.find(image => image.src === detailImage);
+  // One complete ordered set per loop; additional sets only join the animation seam.
+  const loopedImages = galleryImages.length > 1 ? [...galleryImages, ...galleryImages] : galleryImages;
 
   if (loading) return <div className="rains-pdp-state" role="status">Đang tải sản phẩm...</div>;
+  if (error) return <main className="rains-pdp-state" role="alert"><h1>Chưa tải được sản phẩm</h1><p>{error}</p><button type="button" onClick={retry}>Thử lại</button></main>;
   if (!product) return <main className="rains-pdp-state"><h1>Không tìm thấy sản phẩm</h1><p>Sản phẩm có thể không còn hiển thị hoặc chưa tải được.</p><Link to="/new-in">Xem sản phẩm mới</Link></main>;
 
   return (
@@ -226,9 +232,9 @@ export default function StoreProductPage() {
               type="button"
               className="rains-product-quickbar-button"
               onClick={handleAddToCart}
-              disabled={isAdding || !Number.isFinite(product.rawPrice)}
+              disabled={!canPurchase || isAdding || !Number.isFinite(product.rawPrice)}
             >
-              {isAdding ? "ĐANG THÊM..." : addedSuccess ? "ĐÃ THÊM VÀO GIỎ" : "THÊM VÀO GIỎ"}
+              {product.isPreview ? "SẮP MỞ BÁN" : isAdding ? "ĐANG THÊM..." : addedSuccess ? "ĐÃ THÊM VÀO GIỎ" : "THÊM VÀO GIỎ"}
             </button>
           </div>
         </div>
@@ -238,11 +244,11 @@ export default function StoreProductPage() {
           HERO STAGE: CONTINUOUS CONVEYOR BELT + FLOATING CARD
       ══════════════════════════════════════════ */}
       <section className="rains-hero-viewport" ref={heroSectionRef}>
-        <button type="button" className="rains-gallery-pause" aria-pressed={!isPlaying} onClick={() => setIsPlaying(value => !value)}>{isPlaying ? 'Dừng chuyển ảnh' : 'Tiếp tục chuyển ảnh'}</button>
+        {galleryImages.length > 1 && <button type="button" className="rains-gallery-pause" aria-pressed={!isPlaying} onClick={() => setIsPlaying(value => !value)}>{isPlaying ? 'Dừng chuyển ảnh' : 'Tiếp tục chuyển ảnh'}</button>}
         <main className="rains-conveyor-viewport">
           {/* Conveyor Track Container */}
           <div
-            className={`rains-conveyor-track ${!isPlaying ? "rains-conveyor-track--paused" : ""}`}
+            className={`rains-conveyor-track ${!isPlaying || galleryImages.length < 2 ? "rains-conveyor-track--paused" : ""}`}
             ref={conveyorTrackRef}
             style={{
               animationDuration: `${conveyorSpeed}s`,
@@ -338,6 +344,7 @@ export default function StoreProductPage() {
             </div>
 
             {product.description && <p className="rains-product-subtitle">{product.description}</p>}
+            {product.productType && <p className="rains-product-subtitle">{'Tái chế sáng tạo'}{!product.isPreview && product.isUnique ? ' · Độc bản, một món duy nhất' : ''}{product.isPreview ? ' · Thiết kế đề xuất, sắp mở bán' : ''}</p>}
           </div>
 
           {product.color && (
@@ -366,7 +373,7 @@ export default function StoreProductPage() {
               className={`rains-add-to-cart-btn ${isAdding ? "rains-add-to-cart-btn--loading" : ""} ${addedSuccess ? "rains-add-to-cart-btn--success" : ""
                 }`}
               onClick={handleAddToCart}
-              disabled={isAdding || !Number.isFinite(product.rawPrice)}
+              disabled={!canPurchase || isAdding || !Number.isFinite(product.rawPrice)}
             >
               {addedSuccess ? (
                 <span className="rains-btn-content">
@@ -376,7 +383,7 @@ export default function StoreProductPage() {
                 <span className="rains-btn-content">ĐANG CẬP NHẬT GIỎ...</span>
               ) : (
                 <span className="rains-btn-content">
-                  {product.price ? `${product.price} — THÊM VÀO GIỎ` : 'Chưa có giá từ API'}
+                  {product.isPreview ? 'SẮP MỞ BÁN' : !canPurchase ? 'Sản phẩm hiện không còn sẵn để mua' : product.price ? `${product.price} — THÊM VÀO GIỎ` : 'Chưa có giá từ API'}
                 </span>
               )}
             </button>
@@ -400,6 +407,7 @@ export default function StoreProductPage() {
           Left: Close-up product image
           Right: Breadcrumbs + Expandable Accordions
       ══════════════════════════════════════════ */}
+      <ProductJourney productId={product.id} />
       <section className="rains-detail-section" id="product-details">
         <div className="rains-detail-container">
           {/* Left Column: Product Image (Dài bằng 100% form bên cạnh) */}
@@ -407,19 +415,19 @@ export default function StoreProductPage() {
             <div className="rains-detail-img-card">
               <img
                 src={detailImage}
-                alt={product.name}
+                alt={selectedDetailImage?.alt || product.name}
                 className="rains-detail-img"
               />
-              <div className="rains-detail-view-switches">
-                {product?.images?.slice(0, 3).map((img, idx) => (
+              <div className="rains-detail-view-switches" role="group" aria-label="Chọn góc chụp sản phẩm">
+                {product?.images?.map((img) => (
                   <button
-                    key={idx}
+                    key={img.src}
                     type="button"
                     className={`rains-detail-switch-btn ${detailImage === img.src ? "rains-detail-switch-btn--active" : ""}`}
                     onClick={() => setDetailImage(img.src)}
                     aria-pressed={detailImage === img.src}
                   >
-                    {idx === 0 ? "Ảnh 1" : idx === 1 ? "Ảnh 2" : "Ảnh 3"}
+                    {img.label}
                   </button>
                 ))}
               </div>

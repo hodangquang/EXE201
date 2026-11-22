@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import { ArrowUpRight, Search, ShoppingBag, SlidersHorizontal, X } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, Search, ShoppingBag, SlidersHorizontal, X } from 'lucide-react';
 import { usePublicProducts } from '../../hooks/usePublicProducts';
 import { useCart } from '../../contexts/CartContext';
 import AccountMenu from './AccountMenu';
@@ -117,18 +117,95 @@ export default function CatalogPage({ title, description, route, slides, stories
     <EditorialHero key={route} title={title} description={description} slides={slides} primaryHref="#catalog-tools" primaryLabel="Khám phá tủ đồ" />
     <div className="catalog-intro-strip"><span>CHỌN LẠI. MẶC TIẾP.</span><p>Một món đồ quen. Một góc nhìn mới.</p><a href="#catalog-tools">Tìm phong cách của bạn <ArrowUpRight size={18} aria-hidden="true" /></a></div>
     <section className="catalog-workspace" aria-label="Khám phá sản phẩm">
-      <div className="catalog-section-heading"><div><p className="catalog-eyebrow">KHÁM PHÁ TỦ ĐỒ</p><h2>Phong cách tiếp theo của bạn.</h2></div><p>Lọc trong các sản phẩm đã tải{route !== '/new-in' ? ' · Chưa phân loại theo giới tính' : ''}.</p></div>
+      <div className="catalog-section-heading"><div><p className="catalog-eyebrow">KHÁM PHÁ TỦ ĐỒ</p><h2>Phong cách tiếp theo của bạn.</h2></div><p>Lọc trong các sản phẩm đã tải{route !== '/new-in' ? ' · Chưa phân loại theo giới tính' : ''}. <Link to="/profile?tab=style">Theo dõi gu đồ của bạn →</Link></p></div>
       <div className="catalog-tools" id="catalog-tools">
-        <label className="catalog-search"><Search size={19} aria-hidden="true" /><span className="catalog-sr-only">Tìm sản phẩm</span><input ref={searchRef} type="search" placeholder="Tìm theo tên, màu hoặc kích cỡ…" value={query} onChange={e => setQuery(e.target.value)} /></label>
-        <label className="catalog-sort"><span>Sắp xếp</span><select aria-label="Sắp xếp" value={sort} onChange={e => setSort(e.target.value)}><option value="original">Thứ tự hiện tại</option><option value="price-asc">Giá: thấp đến cao</option><option value="price-desc">Giá: cao đến thấp</option><option value="name">Tên: A đến Z</option></select></label>
-        <button className={`catalog-filter-toggle ${filtersOpen ? 'is-active' : ''}`} type="button" aria-expanded={filtersOpen} aria-controls="catalog-filters" onClick={() => setFiltersOpen(!filtersOpen)}><SlidersHorizontal size={17} aria-hidden="true" />Bộ lọc{activeFilters > 0 && <span>{activeFilters}</span>}</button>
+        <label className="catalog-search">
+          <Search size={17} className="catalog-search-icon" aria-hidden="true" />
+          <span className="catalog-sr-only">Tìm sản phẩm</span>
+          <input
+            ref={searchRef}
+            type="search"
+            placeholder="Tìm theo tên, màu hoặc kích cỡ…"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+          />
+          {query && (
+            <button
+              type="button"
+              className="catalog-search-clear"
+              onClick={() => setQuery('')}
+              aria-label="Xóa tìm kiếm"
+            >
+              <X size={14} aria-hidden="true" />
+            </button>
+          )}
+        </label>
+        <div className="catalog-tools-actions">
+          <label className="catalog-sort">
+            <span className="catalog-sort-label">Sắp xếp:</span>
+            <div className="catalog-select-box">
+              <select aria-label="Sắp xếp" value={sort} onChange={e => setSort(e.target.value)}>
+                <option value="original">Thứ tự hiện tại</option>
+                <option value="price-asc">Giá: Thấp đến cao</option>
+                <option value="price-desc">Giá: Cao đến thấp</option>
+                <option value="name">Tên: A đến Z</option>
+              </select>
+              <ChevronDown size={14} className="catalog-select-chevron" aria-hidden="true" />
+            </div>
+          </label>
+          <button
+            className={`catalog-filter-toggle ${filtersOpen ? 'is-active' : ''}`}
+            type="button"
+            aria-expanded={filtersOpen}
+            aria-controls="catalog-filters"
+            onClick={() => setFiltersOpen(!filtersOpen)}
+          >
+            <SlidersHorizontal size={15} aria-hidden="true" />
+            <span>Bộ lọc</span>
+            {activeFilters > 0 && <span className="catalog-filter-badge">{activeFilters}</span>}
+          </button>
+        </div>
       </div>
-      <div className="catalog-filters" id="catalog-filters" hidden={!filtersOpen}>
-        <label>Màu sắc<select aria-label="Màu sắc" value={color} onChange={e => setColor(e.target.value)}><option value="">Tất cả màu</option>{colors.map(c => <option key={c}>{c}</option>)}</select></label>
-        <label>Kích cỡ<select aria-label="Kích cỡ" value={size} onChange={e => setSize(e.target.value)}><option value="">Tất cả kích cỡ</option>{sizes.map(s => <option key={s}>{s}</option>)}</select></label>
-        <button type="button" onClick={reset}>Đặt lại lựa chọn <X size={16} aria-hidden="true" /></button>
+      <div className={`catalog-filters ${filtersOpen ? 'is-open' : ''}`} id="catalog-filters" hidden={!filtersOpen}>
+        <div className="catalog-filters-grid">
+          <label className="catalog-filter-field">
+            <span className="catalog-filter-field-label">Màu sắc</span>
+            <div className="catalog-select-box">
+              <select aria-label="Màu sắc" value={color} onChange={e => setColor(e.target.value)}>
+                <option value="">Tất cả màu</option>
+                {colors.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+              <ChevronDown size={14} className="catalog-select-chevron" aria-hidden="true" />
+            </div>
+          </label>
+          <label className="catalog-filter-field">
+            <span className="catalog-filter-field-label">Kích cỡ</span>
+            <div className="catalog-select-box">
+              <select aria-label="Kích cỡ" value={size} onChange={e => setSize(e.target.value)}>
+                <option value="">Tất cả kích cỡ</option>
+                {sizes.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+              <ChevronDown size={14} className="catalog-select-chevron" aria-hidden="true" />
+            </div>
+          </label>
+          {(color || size) && (
+            <button type="button" className="catalog-filter-reset-action" onClick={reset}>
+              <X size={14} aria-hidden="true" /> Đặt lại lựa chọn
+            </button>
+          )}
+        </div>
       </div>
-      <div className="catalog-results-bar"><p role="status" aria-live="polite">{loading ? 'Đang tải tủ đồ…' : <><strong>{filtered.length}</strong> sản phẩm{query.trim() && ` cho “${query.trim()}”`}</>}</p>
+      <div className="catalog-results-bar">
+        <p className="catalog-count" role="status" aria-live="polite">
+          {loading ? (
+            'Đang tải tủ đồ…'
+          ) : (
+            <>
+              <span className="catalog-count-num">{filtered.length}</span> sản phẩm
+              {query.trim() && <span className="catalog-count-query"> cho “{query.trim()}”</span>}
+            </>
+          )}
+        </p>
         <div className="new-in-layout-toggles" role="group" aria-label="Số cột sản phẩm trên màn hình lớn">
           <span className="toggle-group-label">Bố cục</span>
           <div className="layout-segmented-control">

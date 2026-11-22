@@ -1,0 +1,86 @@
+{
+  "results": [
+    {
+      "action": "record-production-cost"
+    }
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/notifications",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects/333333333333333333333333/costs",
+      "method": "POST"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/inventory",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/projects",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/operations/operators",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Brands?isActive=true",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:5196/api/Categories?isActive=true",
+      "method": "GET"
+    }
+  ]
+}

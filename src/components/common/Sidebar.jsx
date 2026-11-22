@@ -6,15 +6,16 @@ import {
   Shirt,
   Recycle,
   ShoppingBag,
+  Truck,
   Users,
   Boxes,
-  TicketPercent,
   BarChart3,
-  UserCog,
-  Settings,
-  Inbox
+  Inbox,
+  Bell,
+  ExternalLink,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNotificationCount } from './NotificationCenter';
 import { ROLES } from '../../utils/constants';
 
 const { Sider } = Layout;
@@ -23,104 +24,112 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
+  const unreadCount = useNotificationCount(Boolean(user));
   const isAdmin = user?.role === ROLES.ADMIN;
+  const isShipper = user?.role === ROLES.SHIPPER;
 
-  const menuItems = [
-    ...(isAdmin ? [{
-      key: '/dashboard',
-      icon: <LayoutDashboard size={17} strokeWidth={1.8} />,
-      label: 'Tổng quan',
-    }] : []),
+  const notificationLabel = (
+    <span className="rw-admin-menu-label-row">
+      <span>Thông báo</span>
+      {unreadCount > 0 && (
+        <span className="rw-admin-sidebar-badge">
+          {unreadCount > 99 ? '99+' : unreadCount}
+        </span>
+      )}
+    </span>
+  );
 
-    {
-      key: 'products-group',
-      icon: <Shirt size={17} strokeWidth={1.8} />,
-      label: 'Sản phẩm (1-of-1)',
-      children: [
+  const menuItems = isShipper
+    ? [
+        { key: '/notifications', icon: <Bell size={17} strokeWidth={1.9} />, label: notificationLabel },
+        { key: '/shipper/orders', icon: <Truck size={17} strokeWidth={1.9} />, label: 'Đơn giao hàng (Bán lẻ)' },
+        { key: '/shipper/orders?mode=pickup', icon: <Boxes size={17} strokeWidth={1.9} />, label: 'Thu gom đồ cũ (Inbound)' },
+        { key: '/shipper/orders?mode=history', icon: <BarChart3 size={17} strokeWidth={1.9} />, label: 'Lịch sử & Hiệu suất' },
+      ]
+    : [
+        ...(isAdmin
+          ? [
+              {
+                key: '/dashboard',
+                icon: <LayoutDashboard size={17} strokeWidth={1.9} />,
+                label: 'Tổng quan kinh doanh',
+              },
+            ]
+          : []),
         {
-          key: '/products',
-          label: 'Tất cả sản phẩm',
-        },
-        ...(isAdmin ? [{
-          key: '/products/new',
-          label: 'Thêm sản phẩm mới',
-        }] : []),
-        {
-          key: '/products/categories',
-          label: 'Danh mục',
-        },
-        ...(isAdmin ? [{
-          key: '/products/brands',
-          label: 'Thương hiệu',
-        }] : []),
-      ],
-    },
-
-    {
-      key: 'collections-group',
-      icon: <Inbox size={17} strokeWidth={1.8} />,
-      label: 'Thu gom quần áo',
-      children: [
-        {
-          key: '/collections/sourcing',
-          label: 'Duyệt yêu cầu đồ cũ',
+          key: '/notifications',
+          icon: <Bell size={17} strokeWidth={1.9} />,
+          label: notificationLabel,
         },
         {
-          key: '/collections',
-          label: 'Yêu cầu quyên góp',
+          key: 'products-group',
+          icon: <Shirt size={17} strokeWidth={1.9} />,
+          label: 'Sản phẩm (1-of-1)',
+          children: [
+            { key: '/products', label: 'Tất cả sản phẩm' },
+            ...(isAdmin ? [{ key: '/products/new', label: 'Tạo từ dự án tái chế' }] : []),
+            { key: '/products/categories', label: 'Danh mục' },
+            ...(isAdmin ? [{ key: '/products/brands', label: 'Thương hiệu' }] : []),
+          ],
         },
         {
-          key: '/collections/inspection',
-          label: 'Kiểm định đồ cũ',
+          key: 'collections-group',
+          icon: <Inbox size={17} strokeWidth={1.9} />,
+          label: 'Thu gom quần áo',
+          children: [{ key: '/collections/sourcing', label: 'Yêu cầu thu mua' }],
         },
-      ],
-    },
-
-
-
-    {
-      key: '/orders',
-      icon: <ShoppingBag size={17} strokeWidth={1.8} />,
-      label: 'Đơn hàng',
-    },
-
-    ...(isAdmin ? [{
-      key: '/customers',
-      icon: <Users size={17} strokeWidth={1.8} />,
-      label: 'Khách hàng ',
-    }] : []),
-
-    {
-      key: '/inventory',
-      icon: <Boxes size={17} strokeWidth={1.8} />,
-      label: 'Kho vòng đời',
-    },
-
-    ...(isAdmin ? [
-      {
-        key: '/promotions',
-        icon: <TicketPercent size={17} strokeWidth={1.8} />,
-        label: 'Khuyến mãi & Voucher',
-      },
-
-      {
-        key: '/settings',
-        icon: <Settings size={17} strokeWidth={1.8} />,
-        label: 'Cài đặt hệ thống',
-      },
-    ] : []),
-  ];
+        {
+          key: 'upcycling-group',
+          icon: <Recycle size={17} strokeWidth={1.9} />,
+          label: 'Tái chế và QC',
+          children: [
+            { key: '/upcycling', label: 'Dự án tái chế' },
+            { key: '/upcycling/qc', label: 'Kiểm định thành phẩm' },
+          ],
+        },
+        {
+          key: '/orders',
+          icon: <ShoppingBag size={17} strokeWidth={1.9} />,
+          label: 'Đơn hàng',
+        },
+        {
+          key: '/shipping',
+          icon: <Truck size={17} strokeWidth={1.9} />,
+          label: 'Vận chuyển',
+        },
+        {
+          key: '/inventory',
+          icon: <Boxes size={17} strokeWidth={1.9} />,
+          label: 'Kho vòng đời',
+        },
+        ...(isAdmin
+          ? [
+              {
+                key: '/customers',
+                icon: <Users size={17} strokeWidth={1.9} />,
+                label: 'Khách hàng',
+              },
+            ]
+          : []),
+      ];
 
   const handleMenuClick = ({ key }) => {
     navigate(key);
   };
 
-  const paths = menuItems.flatMap(item => item.children || [item]).map(item => item.key);
-  const selectedKey = paths.sort((a, b) => b.length - a.length).find(path => location.pathname === path || location.pathname.startsWith(`${path}/`));
+  const paths = menuItems.flatMap((item) => item.children || [item]).map((item) => item.key);
+  const currentPath = location.pathname + location.search;
+  const selectedKey =
+    paths.find((path) => path === currentPath) ||
+    [...paths]
+      .sort((a, b) => b.length - a.length)
+      .find((path) => location.pathname === path || location.pathname.startsWith(`${path}/`)) ||
+    paths[0];
 
   return (
     <Sider
       id="rw-admin-sidebar"
+      className="rw-admin-sider"
       inert={collapsed}
       trigger={null}
       breakpoint="lg"
@@ -128,90 +137,61 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
-      width={250}
+      width={264}
       theme="dark"
-      style={{
-        overflow: 'auto',
-        height: '100vh',
-        position: 'sticky',
-        top: 0,
-        left: 0,
-        zIndex: 100,
-        backgroundColor: '#10100f', // Ink
-        borderRight: '1px solid #26292a',
-      }}
     >
-      {/* Brand Header */}
-      <Link className="rw-admin-brand" to={isAdmin ? '/dashboard' : '/collections'} aria-label="REWEAR — Quản trị"
-        style={{
-          height: 64,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: collapsed ? 'center' : 'flex-start',
-          padding: collapsed ? '0' : '0 24px',
-          borderBottom: '1px solid #26292a',
-          cursor: 'pointer',
-        }}
-      >
-        {collapsed ? (
-          <div
-            style={{
-              fontFamily: "'Barlow Condensed', sans-serif",
-              fontSize: 24,
-              fontWeight: 900,
-              color: '#ffffff',
-              letterSpacing: '0.05em',
-            }}
-          >
-            RW
-          </div>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <div
-              style={{
-                fontFamily: "'Barlow Condensed', 'Inter', sans-serif",
-                fontSize: 24,
-                fontWeight: 900,
-                color: '#ffffff',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                lineHeight: 1,
-                marginBottom: '4px',
-              }}
-            >
-              REWEAR
+      <div className="rw-admin-sider-inner">
+        {/* Brand Header */}
+        <Link
+          className="rw-admin-brand"
+          to={isShipper ? '/shipper/orders' : isAdmin ? '/dashboard' : '/collections/sourcing'}
+          aria-label={isShipper ? 'REWEAR — Giao hàng' : 'REWEAR — Quản trị'}
+        >
+          {collapsed ? (
+            <div className="rw-admin-brand-mark">RW</div>
+          ) : (
+            <div className="rw-admin-brand-wrap">
+              <div className="rw-admin-brand-badge">RW</div>
+              <div className="rw-admin-brand-text">
+                <div className="rw-admin-brand-title">
+                  REWEAR
+                  <span className="rw-admin-brand-tag">
+                    {isShipper ? 'SHIP' : isAdmin ? 'ADMIN' : 'OPS'}
+                  </span>
+                </div>
+                <div className="rw-admin-brand-sub">Thời trang tuần hoàn</div>
+              </div>
             </div>
-            <div
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: 9,
-                fontWeight: 600,
-                color: '#888888',
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-              }}
-            >
-              Thời trang tuần hoàn
+          )}
+        </Link>
+
+        {/* Navigation Menu */}
+        <div className="rw-admin-menu-scroll">
+          {!collapsed && (
+            <div className="rw-admin-menu-section-title">
+              {isShipper ? 'ĐIỀU PHỐI GIAO NHẬN' : 'ĐIỀU HÀNH HỆ THỐNG'}
             </div>
+          )}
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[selectedKey]}
+            defaultOpenKeys={['products-group', 'collections-group', 'upcycling-group']}
+            items={menuItems}
+            onClick={handleMenuClick}
+            className="rw-admin-menu"
+          />
+        </div>
+
+        {/* Footer quick link to Storefront */}
+        {!collapsed && (
+          <div className="rw-admin-sider-footer">
+            <Link to="/" className="rw-admin-store-link">
+              <span>Xem trang cửa hàng</span>
+              <ExternalLink size={14} />
+            </Link>
           </div>
         )}
-      </Link>
-
-      {/* Navigation Menu */}
-      <div style={{ padding: '12px 8px' }}>
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[selectedKey]}
-          defaultOpenKeys={['products-group', 'collections-group', 'upcycling-group']}
-          items={menuItems}
-          onClick={handleMenuClick}
-          style={{
-            backgroundColor: 'transparent',
-            borderRight: 0,
-            fontSize: '13px',
-          }}
-        />
       </div>
     </Sider>
   );

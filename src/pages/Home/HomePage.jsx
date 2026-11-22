@@ -313,6 +313,7 @@ export default function HomePage() {
                   <span className="rw-prod-price">{p.price}</span>
                 </div>
                 <div className="rw-prod-colors">
+                  {p.isPreview && <span className="rw-color-more">Sắp mở bán</span>}
                   {p.colors.map((c) => (
                     <span
                       key={c}

@@ -133,6 +133,8 @@ const mapCartResponse = (response, fallbackProducts, previousItems = []) => {
       price: parsedPrice,
       img: cartImageUrl || catalogImageUrl,
       quantity: Number(readField(item, 'quantity')) > 0 ? Number(readField(item, 'quantity')) : 1,
+      isUnique: readField(item, 'isUnique') === true,
+      maxQuantity: readField(item, 'isUnique') === true ? 1 : Number(readField(item, 'stockQuantity') ?? 20),
     };
   });
 };

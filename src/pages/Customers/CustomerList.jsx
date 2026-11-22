@@ -119,6 +119,27 @@ export const CustomerList = () => {
         </div>
       </div>
 
+      <div className="ops-summary-grid" style={{ marginBottom: 20 }}>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Tổng tài khoản hệ thống</span>
+            <strong className="ops-mini-stat-val">{customers.length} tài khoản</strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Đã xác thực email</span>
+            <strong className="ops-mini-stat-val">{customers.filter((c) => c.isVerified).length} tài khoản</strong>
+          </div>
+        </div>
+        <div className="ops-mini-stat">
+          <div>
+            <span className="ops-mini-stat-label">Đang hiển thị theo tìm kiếm</span>
+            <strong className="ops-mini-stat-val">{filteredCustomers.length} tài khoản</strong>
+          </div>
+        </div>
+      </div>
+
       <div className="flat-card" style={{ padding: '16px 20px', marginBottom: '20px' }}>
         <Input
           prefix={<Search size={16} color="#70706f" style={{ marginRight: 6 }} />}

@@ -10,7 +10,6 @@ const { Title, Text } = Typography;
 
 export const Login = () => {
   const [loading, setLoading] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(ROLES.ADMIN);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -20,7 +19,7 @@ export const Login = () => {
       const data = await login(values.email, values.password);
       const role = data.data?.role || data.role || '';
       message.success(`Đăng nhập thành công với vai trò ${role}`);
-      navigate(role === ROLES.ADMIN ? '/dashboard' : '/collections');
+      navigate(role === ROLES.ADMIN ? '/dashboard' : role === ROLES.SHIPPER ? '/shipper/orders' : '/collections/sourcing');
     } catch (error) {
       message.error(error.message || 'Đăng nhập thất bại');
     } finally {
@@ -112,7 +111,7 @@ export const Login = () => {
               textShadow: '0 2px 10px rgba(0,0,0,0.5)',
             }}
           >
-            Nền tảng quản trị vòng đời thời trang tuần hoàn. Từ khâu thu gom quần áo cũ, phân loại, khử khuẩn, tái thiết kế thành các tác phẩm độc bản 1-of-1 đến khách hàng.
+            Cổng vận hành REWEAR dành cho quản trị, nhân viên và người giao hàng.
           </p>
         </div>
 
@@ -144,7 +143,7 @@ export const Login = () => {
         >
           <div style={{ marginBottom: '32px' }}>
             <div className="editorial-sub" style={{ marginBottom: '8px' }}>
-              CỔNG QUẢN TRỊ REWEAR
+              CỔNG VẬN HÀNH REWEAR
             </div>
             <h1
               style={{
@@ -155,7 +154,7 @@ export const Login = () => {
                 letterSpacing: '-0.5px',
               }}
             >
-              Đăng nhập quản trị
+              Đăng nhập vận hành
             </h1>
             <Text type="secondary" style={{ fontSize: '13px', display: 'block', marginTop: '6px' }}>
               Nhập thông tin tài khoản để truy cập hệ thống
@@ -168,7 +167,7 @@ export const Login = () => {
             layout="vertical"
             initialValues={{
               email: '',
-              password: 'password123',
+              password: '',
               remember: true,
             }}
             onFinish={onFinish}
@@ -181,7 +180,7 @@ export const Login = () => {
             >
               <Input autoComplete="username"
                 prefix={<Mail size={16} color="#70706f" style={{ marginRight: 6 }} />}
-                placeholder="admin@rewear.vn"
+                placeholder="Email tài khoản"
                 style={{ height: '42px', borderRadius: 0 }}
               />
             </Form.Item>

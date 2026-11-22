@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="f18b6c46-9e76-4584-9ee3-69051a8d2864" name="Quang@DESKTOP-EU1F40H 2026-10-27 11:13:33" runUser="DESKTOP-EU1F40H\CodexSandboxOffline" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-27T11:13:33.2462131+07:00" queuing="2026-10-27T11:13:33.2462135+07:00" start="2026-10-27T11:13:28.5513041+07:00" finish="2026-10-27T11:14:10.5358276+07:00" />
+  <TestSettings name="default" id="65091916-00a1-4a00-b52e-3eb74b8f7fee">
+    <Deployment runDeploymentRoot="Quang_DESKTOP-EU1F40H_2026-10-27_11_13_33" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="74dd01d7-5057-4c48-a9cc-bedd4dbaaf0a" testId="a98ba180-5ecf-00c3-6e50-76c8df2b1be2" testName="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;Unknown&quot;)" computerName="DESKTOP-EU1F40H" duration="00:00:00.3407880" startTime="2026-10-27T11:13:56.4243814+07:00" endTime="2026-10-27T11:13:56.7651693+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="74dd01d7-5057-4c48-a9cc-bedd4dbaaf0a" />
+    <UnitTestResult executionId="1f6c5e64-ae44-4d57-bcd0-3aafa4df5ec9" testId="aa4ebd13-42b0-32f1-398a-876c89064fc4" testName="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;&quot;)" computerName="DESKTOP-EU1F40H" duration="00:00:00.2635110" startTime="2026-10-27T11:13:56.1608334+07:00" endTime="2026-10-27T11:13:56.4243435+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1f6c5e64-ae44-4d57-bcd0-3aafa4df5ec9" />
+    <UnitTestResult executionId="717ce63c-a2d7-415e-b683-90aa91c6dfb9" testId="c579f032-928e-b826-5961-606904f03579" testName="LegacyRawQcItemsCanEnterRecyclingWithoutLosingHistory(&quot;Rework&quot;)" computerName="DESKTOP-EU1F40H" duration="00:00:00.3241690" startTime="2026-10-27T11:13:54.6989745+07:00" endTime="2026-10-27T11:13:55.0231430+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="717ce63c-a2d7-415e-b683-90aa91c6dfb9" />
+    <UnitTestResult executionId="db447ce5-ddad-42e4-9d21-1164888d5950" testId="b6867a6e-0ff8-2e69-0239-e42493dce9d4" testName="LatePaymentCannotTakeInventoryReservedByAnotherOrder" computerName="DESKTOP-EU1F40H" duration="00:00:00.3585999" startTime="2026-10-27T11:13:53.9931675+07:00" endTime="2026-10-27T11:13:54.3517670+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db447ce5-ddad-42e4-9d21-1164888d5950" />
+    <UnitTestResult executionId="810bc04e-b084-4fce-9088-e89331f0da8a" testId="097b1574-f432-c567-5b9d-0ae0bb9eb5d5" testName="ProductWithActiveOrderReservationCannotBeHidden" computerName="DESKTOP-EU1F40H" duration="00:00:00.2808120" startTime="2026-10-27T11:14:01.9100130+07:00" endTime="2026-10-27T11:14:02.1908239+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="810bc04e-b084-4fce-9088-e89331f0da8a" />
+    <UnitTestResult executionId="c93c6f02-ed30-4ae3-a0b1-84fbb2c1ed76" testId="17be61a6-19dc-4a96-3faa-542b08b810d3" testName="MongoTransactionRollsBackPartialWrites" computerName="DESKTOP-EU1F40H" duration="00:00:00.2489480" startTime="2026-10-27T11:13:55.6362292+07:00" endTime="2026-10-27T11:13:55.8851768+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c93c6f02-ed30-4ae3-a0b1-84fbb2c1ed76" />
+    <UnitTestResult executionId="7818fd0e-4db6-4f4a-b806-293e662839cc" testId="aec487aa-8c54-2059-db73-b8f4c1e4ca08" testName="PublicCatalogExcludesResaleButOperationsCanReadHistoricalRecords" computerName="DESKTOP-EU1F40H" duration="00:00:00.4219530" startTime="2026-10-27T11:14:02.1908566+07:00" endTime="2026-10-27T11:14:02.6128087+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7818fd0e-4db6-4f4a-b806-293e662839cc" />
+    <UnitTestResult executionId="9ca208eb-cb9a-40ae-a25b-9039c0768a62" testId="13bcb482-0128-c330-55ab-054bf710e2c2" testName="ReconciliationRejectsMismatchedGatewayOrderCode" computerName="DESKTOP-EU1F40H" duration="00:00:00.3628690" startTime="2026-10-27T11:14:02.6128375+07:00" endTime="2026-10-27T11:14:02.9757060+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9ca208eb-cb9a-40ae-a25b-9039c0768a62" />
+    <UnitTestResult executionId="8d559af4-d3f1-46e8-8934-2f929151c544" testId="66ca6777-4482-a519-192e-77b76e579bcd" testName="NotificationApiRequiresLoginAndCannotReadAnotherMembersItem" computerName="DESKTOP-EU1F40H" duration="00:00:02.3871520" startTime="2026-10-27T11:13:56.7652767+07:00" endTime="2026-10-27T11:13:59.1524285+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8d559af4-d3f1-46e8-8934-2f929151c544" />
+    <UnitTestResult executionId="eba23864-b3c0-4d89-9b6b-2a0cbe762ada" testId="9c09a9ec-91ec-50e3-000e-cda8f7e7a708" testName="CatalogReplacementUploadFailureLeavesOldCatalogVisible" computerName="DESKTOP-EU1F40H" duration="00:00:00.2553820" startTime="2026-10-27T11:13:35.1851324+07:00" endTime="2026-10-27T11:13:35.4405139+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eba23864-b3c0-4d89-9b6b-2a0cbe762ada" />
+    <UnitTestResult executionId="7c921168-ff41-4805-b8a1-ee871c1724e1" testId="1b4152b0-8536-07d3-5d52-1ce77b7c5c84" testName="ShippingRejectsForeignShipperAndSkippedSteps" computerName="DESKTOP-EU1F40H" duration="00:00:00.3353930" startTime="2026-10-27T11:14:04.8219118+07:00" endTime="2026-10-27T11:14:05.1573031+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7c921168-ff41-4805-b8a1-ee871c1724e1" />
+    <UnitTestResult executionId="cf45e1be-7b8d-43a6-a99a-1a1afa3e646b" testId="3d2004de-2511-8f22-aaf6-08524cc507a6" testName="HttpDeliveryThreeRolesShareActualHistoryAndEnforceAssignment" computerName="DESKTOP-EU1F40H" duration="00:00:02.7065870" startTime="2026-10-27T11:13:47.9231893+07:00" endTime="2026-10-27T11:13:50.6297760+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cf45e1be-7b8d-43a6-a99a-1a1afa3e646b" />
+    <UnitTestResult executionId="a1eacbab-7e54-416b-95ad-2c1c9fbe7594" testId="b6a5f64d-6fe2-da4c-e340-2809d8e6b954" testName="HttpFailedDeliveryKeepsPrivateNotesAndRedeliveryRetainsHistory" computerName="DESKTOP-EU1F40H" duration="00:00:02.6094800" startTime="2026-10-27T11:13:50.6298184+07:00" endTime="2026-10-27T11:13:53.2392975+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a1eacbab-7e54-416b-95ad-2c1c9fbe7594" />
+    <UnitTestResult executionId="19a4a36f-d4b0-4f35-9d28-4ee08e5ed3f3" testId="afacf160-5021-2df6-b8d9-51bc4f7140c2" testName="DeliveredBuyerCanRequestReturnOnceAndSeesOwnRecord" computerName="DESKTOP-EU1F40H" duration="00:00:00.3636300" startTime="2026-10-27T11:13:37.0000699+07:00" endTime="2026-10-27T11:13:37.3636995+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="19a4a36f-d4b0-4f35-9d28-4ee08e5ed3f3" />
+    <UnitTestResult executionId="8fdb4900-16ff-4f56-9c1d-03cda500151d" testId="d3b0c0e7-20e6-1e91-0ad4-ae9ac7281e85" testName="VersionedMigrationIsAdditiveIdempotentAndPreservesLegacyDocuments" computerName="DESKTOP-EU1F40H" duration="00:00:00.6215000" startTime="2026-10-27T11:14:09.1565404+07:00" endTime="2026-10-27T11:14:09.7780404+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8fdb4900-16ff-4f56-9c1d-03cda500151d" />
+    <UnitTestResult executionId="4dc63787-dbfc-426d-a08b-2636ff6054b1" testId="2cdb4815-1d69-7cfd-d7c8-2197bff43e9d" testName="AmountMismatchDoesNotConfirmFulfillment" computerName="DESKTOP-EU1F40H" duration="00:00:00.6220130" startTime="2026-10-27T11:13:33.2175519+07:00" endTime="2026-10-27T11:13:33.8395643+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4dc63787-dbfc-426d-a08b-2636ff6054b1" />
+    <UnitTestResult executionId="cc2061f6-2158-4747-a01f-e8e16b4f0e88" testId="d9a36717-80ba-e922-5d9e-0aea15e0da8f" testName="PickupAndWarehouseReceiptAreDistinctStepsWithRealContactDetails" computerName="DESKTOP-EU1F40H" duration="00:00:00.3823710" startTime="2026-10-27T11:14:01.0306297+07:00" endTime="2026-10-27T11:14:01.4130009+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cc2061f6-2158-4747-a01f-e8e16b4f0e88" />
+    <UnitTestResult executionId="8ff57ac9-8829-489d-a231-ef3caa36cc2a" testId="dd569aa2-bdbf-2780-2e81-ca9e2d65a1db" testName="PaidSourceCannotUseLegacyResaleAndRemainsAvailableForRecycling" computerName="DESKTOP-EU1F40H" duration="00:00:00.3777070" startTime="2026-10-27T11:13:59.9939027+07:00" endTime="2026-10-27T11:14:00.3716090+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8ff57ac9-8829-489d-a231-ef3caa36cc2a" />
+    <UnitTestResult executionId="f46a04bb-2e39-4433-bea4-8ad453e00434" testId="2bfdaefe-bbd4-8e03-0249-3c147fe205ff" testName="OtpCannotBeUsedAfterFiveWrongAttempts" computerName="DESKTOP-EU1F40H" duration="00:00:00.2600509" startTime="2026-10-27T11:13:59.4177686+07:00" endTime="2026-10-27T11:13:59.6778189+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f46a04bb-2e39-4433-bea4-8ad453e00434" />
+    <UnitTestResult executionId="036a8789-5368-431c-ab4f-0cb5a26c26ac" testId="7b6df95a-9e2a-9a33-6c39-57560648b562" testName="DisablingEmailSkipsPendingDelivery" computerName="DESKTOP-EU1F40H" duration="00:00:00.3165970" startTime="2026-10-27T11:13:38.3241446+07:00" endTime="2026-10-27T11:13:38.6407416+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="036a8789-5368-431c-ab4f-0cb5a26c26ac" />
+    <UnitTestResult executionId="905ff7e5-46aa-497d-9822-ea9990893d4d" testId="e88fa54d-7018-d276-50e1-c2ee5af1725d" testName="CatalogReplacementPreservesOldStockAndHistoryAndDoesNotDuplicateOnRetry" computerName="DESKTOP-EU1F40H" duration="00:00:00.2863730" startTime="2026-10-27T11:13:34.4461849+07:00" endTime="2026-10-27T11:13:34.7325576+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="905ff7e5-46aa-497d-9822-ea9990893d4d" />
+    <UnitTestResult executionId="cbfffcba-5cf6-49f8-b686-c779e9324da9" testId="f0f5c481-965f-8c24-308d-973684b145dd" testName="ConcurrentCheckoutsCannotBothReserveUniqueItem" computerName="DESKTOP-EU1F40H" duration="00:00:00.2768890" startTime="2026-10-27T11:13:35.7338312+07:00" endTime="2026-10-27T11:13:36.0107192+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cbfffcba-5cf6-49f8-b686-c779e9324da9" />
+    <UnitTestResult executionId="d57541e2-c78d-4777-ac00-ce29f0f5da6b" testId="2de3ed74-82d4-e683-14a2-eba991afb7ab" testName="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;SecondHand&quot;)" computerName="DESKTOP-EU1F40H" duration="00:00:00.2755310" startTime="2026-10-27T11:13:55.8852527+07:00" endTime="2026-10-27T11:13:56.1607833+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d57541e2-c78d-4777-ac00-ce29f0f5da6b" />
+    <UnitTestResult executionId="304e9321-9e6f-4fdb-999a-d56170b86f9b" testId="e64f6e39-5f98-6645-89bc-90401321ad61" testName="ActualApiEntrypointResolvesCommerceServicesWithIsolatedConfiguration" computerName="DESKTOP-EU1F40H" duration="00:00:03.7405610" startTime="2026-10-27T11:13:29.4760557+07:00" endTime="2026-10-27T11:13:33.2165628+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="304e9321-9e6f-4fdb-999a-d56170b86f9b" />
+    <UnitTestResult executionId="6aa78180-12af-491c-b3d2-e877213ffcd0" testId="e748b605-5190-56a7-ad05-37bde066e283" testName="RegistrationAlwaysCreatesMember" computerName="DESKTOP-EU1F40H" duration="00:00:00.9007910" startTime="2026-10-27T11:14:02.9757509+07:00" endTime="2026-10-27T11:14:03.8765415+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6aa78180-12af-491c-b3d2-e877213ffcd0" />
+    <UnitTestResult executionId="ea1085ee-fcae-4ec3-adf2-55dedde74150" testId="1d69d7a8-f4b7-3994-6925-7c3c401684de" testName="UnpaidSourceCannotBecomeRetailProduct" computerName="DESKTOP-EU1F40H" duration="00:00:00.3731190" startTime="2026-10-27T11:14:08.7834021+07:00" endTime="2026-10-27T11:14:09.1565208+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ea1085ee-fcae-4ec3-adf2-55dedde74150" />
+    <UnitTestResult executionId="d2a302f9-62a7-4cb3-9669-d77cd5ce5134" testId="5542326a-4462-1d06-82ab-37ad3f78c2c6" testName="StyleWatchRejectsInvalidCriteriaAndMatchesVietnameseColors" computerName="DESKTOP-EU1F40H" duration="00:00:00.2676170" startTime="2026-10-27T11:14:08.2597280+07:00" endTime="2026-10-27T11:14:08.5273447+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d2a302f9-62a7-4cb3-9669-d77cd5ce5134" />
+    <UnitTestResult executionId="82eda5c2-75f0-45c1-820f-f2a8598d6d5d" testId="8ea50b4b-e6a1-a205-77b4-ecb51b48740a" testName="ShippingBrowserAcceptanceAgainstRealLocalApi" computerName="DESKTOP-EU1F40H" duration="00:00:00.0004690" startTime="2026-10-27T11:14:04.8214337+07:00" endTime="2026-10-27T11:14:04.8219028+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="82eda5c2-75f0-45c1-820f-f2a8598d6d5d">
+      <Output>
+        <StdOut>Starts isolated local API, Vite and headless Chromium; no external gateway calls.</StdOut>
+        <ErrorInfo>
+          <Message>Starts isolated local API, Vite and headless Chromium; no external gateway calls.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9f2dcd73-271a-4e4d-85de-5067ee54d8a5" testId="85e72601-3bc7-956b-d574-756a62c96bd2" testName="CustomerSourcingDetailOmitsInternalInspectionNote" computerName="DESKTOP-EU1F40H" duration="00:00:00.3980830" startTime="2026-10-27T11:13:36.6019500+07:00" endTime="2026-10-27T11:13:37.0000329+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9f2dcd73-271a-4e4d-85de-5067ee54d8a5" />
+    <UnitTestResult executionId="f34cb7e4-9023-48e0-87d3-492da516374b" testId="7f4942ae-ef22-4553-5812-a4b06579405e" testName="LegacyShipmentDoesNotInventPickupOrHistoryDates" computerName="DESKTOP-EU1F40H" duration="00:00:00.3084470" startTime="2026-10-27T11:13:55.0233227+07:00" endTime="2026-10-27T11:13:55.3317694+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f34cb7e4-9023-48e0-87d3-492da516374b" />
+    <UnitTestResult executionId="ebd5ff24-ec96-466e-b11a-464a85ce834b" testId="2306b52e-dfd2-961f-a805-b590fb04842d" testName="InitializationFailureKeepsCartAndExpiresWithoutBrowser" computerName="DESKTOP-EU1F40H" duration="00:00:00.2829310" startTime="2026-10-27T11:13:53.2393375+07:00" endTime="2026-10-27T11:13:53.5222686+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ebd5ff24-ec96-466e-b11a-464a85ce834b" />
+    <UnitTestResult executionId="cd78dad4-259a-4a16-9911-7ca313813e30" testId="69e43c3c-29a5-15eb-4eed-8a6cb8603f15" testName="DifferentReceiptReferencesRecordExtraMoneyWithoutSellingTwice" computerName="DESKTOP-EU1F40H" duration="00:00:00.2971690" startTime="2026-10-27T11:13:37.8266595+07:00" endTime="2026-10-27T11:13:38.1238275+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cd78dad4-259a-4a16-9911-7ca313813e30" />
+    <UnitTestResult executionId="6ca3b75f-f7a2-4c5d-a176-82ed139193a8" testId="b2296f24-d1e0-d461-191a-a56cdad5fc62" testName="CatalogPreviewJourneyUsesIllustrationsWithoutFabricatingLifecycleEvents" computerName="DESKTOP-EU1F40H" duration="00:00:00.2812680" startTime="2026-10-27T11:13:34.1648731+07:00" endTime="2026-10-27T11:13:34.4461407+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6ca3b75f-f7a2-4c5d-a176-82ed139193a8" />
+    <UnitTestResult executionId="642f422f-3ac0-42e5-93b1-6095c19c0d38" testId="c09dffcf-64a4-e901-403c-2a3ecc47dd42" testName="CheckoutWithoutPaymentRecordExpiresAndReleasesOnlyOnce" computerName="DESKTOP-EU1F40H" duration="00:00:00.2932450" startTime="2026-10-27T11:13:35.4405495+07:00" endTime="2026-10-27T11:13:35.7337939+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="642f422f-3ac0-42e5-93b1-6095c19c0d38" />
+    <UnitTestResult executionId="0f4e018a-f408-43c1-a90d-d6d596f0b6d0" testId="8df879ff-1004-5b37-c452-9e0c8ffc5dcc" testName="DeliveryMigrationPreservesLegacyShippingHistoryAndIsIdempotent" computerName="DESKTOP-EU1F40H" duration="00:00:00.4628780" startTime="2026-10-27T11:13:37.3637348+07:00" endTime="2026-10-27T11:13:37.8266125+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0f4e018a-f408-43c1-a90d-d6d596f0b6d0" />
+    <UnitTestResult executionId="740c5d46-97d6-4535-91a0-efd95f0d8efb" testId="e6a23572-dd1a-8603-1a1c-8886d5024035" testName="RepeatedSessionCreationUsesSingleGatewayRequestAndRemovesOnlyPurchasedCartLines" computerName="DESKTOP-EU1F40H" duration="00:00:00.2979319" startTime="2026-10-27T11:14:03.8765611+07:00" endTime="2026-10-27T11:14:04.1744929+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="740c5d46-97d6-4535-91a0-efd95f0d8efb" />
+    <UnitTestResult executionId="aca7f56f-e9ef-4f31-b6e6-b9c38443f146" testId="0ab44bc3-d7f0-9a8c-373d-fe7ef8a0842c" testName="DuplicateCheckoutReturnsSameOrderAndDoesNotExtendReservation" computerName="DESKTOP-EU1F40H" duration="00:00:00.2432470" startTime="2026-10-27T11:13:38.6407807+07:00" endTime="2026-10-27T11:13:38.8840276+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aca7f56f-e9ef-4f31-b6e6-b9c38443f146" />
+    <UnitTestResult executionId="9b2258dd-d103-4e77-9ca6-3fb1a8f08a02" testId="e518d24c-555b-7c2e-6d94-858467cf710e" testName="StyleWatchEndpointsRequireMemberSession" computerName="DESKTOP-EU1F40H" duration="00:00:02.3422500" startTime="2026-10-27T11:14:05.4597274+07:00" endTime="2026-10-27T11:14:07.8019769+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9b2258dd-d103-4e77-9ca6-3fb1a8f08a02" />
+    <UnitTestResult executionId="aa2df060-3bef-420f-9cac-95477530165d" testId="f8739c69-1ad1-10c1-3231-b1e7d32e255d" testName="SourcingNotificationsFollowPriceAndPickupAssignment" computerName="DESKTOP-EU1F40H" duration="00:00:00.3023230" startTime="2026-10-27T11:14:05.1573883+07:00" endTime="2026-10-27T11:14:05.4597108+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aa2df060-3bef-420f-9cac-95477530165d" />
+    <UnitTestResult executionId="69b32247-82fc-4252-b532-5eba6e8497ea" testId="84319ea1-a06c-12bf-c856-3a707f40ca34" testName="ConcurrentDuplicatePaidCallbacksCommitOneOutcome" computerName="DESKTOP-EU1F40H" duration="00:00:00.3117940" startTime="2026-10-27T11:13:36.0107671+07:00" endTime="2026-10-27T11:13:36.3225613+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="69b32247-82fc-4252-b532-5eba6e8497ea" />
+    <UnitTestResult executionId="6d0ca1f8-aa73-4fce-9cd6-0e47106f228d" testId="19483b64-cfc2-69b7-73cd-4ff314340319" testName="HttpAuthorizationRejectsAnonymousMemberAndShipperOnOperations" computerName="DESKTOP-EU1F40H" duration="00:00:02.6826110" startTime="2026-10-27T11:13:45.2405370+07:00" endTime="2026-10-27T11:13:47.9231481+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6d0ca1f8-aa73-4fce-9cd6-0e47106f228d" />
+    <UnitTestResult executionId="44480e97-695f-47cf-8190-0c9f53a6a58b" testId="d3266551-113b-3538-21ea-c4889f36432a" testName="ConcurrentSessionInitializationCreatesOneGatewayIdentity" computerName="DESKTOP-EU1F40H" duration="00:00:00.2793109" startTime="2026-10-27T11:13:36.3225957+07:00" endTime="2026-10-27T11:13:36.6019060+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="44480e97-695f-47cf-8190-0c9f53a6a58b" />
+    <UnitTestResult executionId="9a447a25-91e7-42d7-8a00-d8be3ec4c494" testId="2366395e-fd93-5ee5-715d-c4ff694dafca" testName="UniqueCartItemCannotBeDuplicated" computerName="DESKTOP-EU1F40H" duration="00:00:00.2560230" startTime="2026-10-27T11:14:08.5273629+07:00" endTime="2026-10-27T11:14:08.7833863+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9a447a25-91e7-42d7-8a00-d8be3ec4c494" />
+    <UnitTestResult executionId="9f489b57-1362-41be-9254-821b8002b88a" testId="d13bb295-aaa3-0c00-f3dc-9e0cb4ff34a2" testName="PaidCancellationRequiresManualEvidenceAndRestocksExactlyOnce" computerName="DESKTOP-EU1F40H" duration="00:00:00.3160240" startTime="2026-10-27T11:13:59.6778480+07:00" endTime="2026-10-27T11:13:59.9938720+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9f489b57-1362-41be-9254-821b8002b88a" />
+    <UnitTestResult executionId="2f9e082c-65f8-412a-b8d6-1581f2701d1f" testId="86c8eb79-ce7f-ad05-d8e2-efb652e392a7" testName="FailedQcBlocksPublicationAndSupportsRework" computerName="DESKTOP-EU1F40H" duration="00:00:00.5303139" startTime="2026-10-27T11:13:40.2536790+07:00" endTime="2026-10-27T11:13:40.7839929+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2f9e082c-65f8-412a-b8d6-1581f2701d1f" />
+    <UnitTestResult executionId="439c5682-15b5-4433-a2c9-c9a6ff3be60c" testId="e8bd972c-d41a-a153-81ae-c7e4ed1bf067" testName="GalleryUpdatePreservesFrontBeforeAndProductStateAndIsIdempotent" computerName="DESKTOP-EU1F40H" duration="00:00:00.2660770" startTime="2026-10-27T11:13:44.7043766+07:00" endTime="2026-10-27T11:13:44.9704534+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="439c5682-15b5-4433-a2c9-c9a6ff3be60c" />
+    <UnitTestResult executionId="809fc98c-7c07-4421-8a7d-27bc8db812d3" testId="ae360d77-cb2c-fc5e-f41f-cb52b96743ea" testName="FailedDeliveryReturnRequiresReceiptInspectionAndRefundBeforeRestock(True)" computerName="DESKTOP-EU1F40H" duration="00:00:00.4229590" startTime="2026-10-27T11:13:39.4428085+07:00" endTime="2026-10-27T11:13:39.8657667+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="809fc98c-7c07-4421-8a7d-27bc8db812d3" />
+    <UnitTestResult executionId="397e35b7-d1e1-479c-bfcd-15f3ada57c9e" testId="0e32270c-131c-4e80-c5d7-61e8902728dd" testName="ReturnRequestRejectsOtherOwnerAndUnreceivedOrder" computerName="DESKTOP-EU1F40H" duration="00:00:00.2615000" startTime="2026-10-27T11:14:04.1745136+07:00" endTime="2026-10-27T11:14:04.4360136+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="397e35b7-d1e1-479c-bfcd-15f3ada57c9e" />
+    <UnitTestResult executionId="4b543675-beb3-48bd-92d1-4566e72e3e05" testId="7cc6c5a8-1392-225f-7800-95c0fde2839f" testName="CatalogPreviewCannotBePurchasedEvenIfSomeoneAddsStock" computerName="DESKTOP-EU1F40H" duration="00:00:00.3251910" startTime="2026-10-27T11:13:33.8396371+07:00" endTime="2026-10-27T11:13:34.1648273+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b543675-beb3-48bd-92d1-4566e72e3e05" />
+    <UnitTestResult executionId="3b728a40-b118-4ada-a6b4-68a6f032df7c" testId="bc5bd815-02dc-ca59-eabb-7617fb674104" testName="CatalogReplacementRequiresBeforeAndAfterForUpcyclingAndNoBeforeForResale" computerName="DESKTOP-EU1F40H" duration="00:00:00.2314540" startTime="2026-10-27T11:13:34.9536423+07:00" endTime="2026-10-27T11:13:35.1850962+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3b728a40-b118-4ada-a6b4-68a6f032df7c" />
+    <UnitTestResult executionId="98e209b9-389b-453d-9347-23e48b92cc8b" testId="e8f957ee-92f4-c9e8-7a7d-465aec9b5ef8" testName="ForeignAddressDoesNotReserveStock" computerName="DESKTOP-EU1F40H" duration="00:00:00.2390300" startTime="2026-10-27T11:13:44.1811490+07:00" endTime="2026-10-27T11:13:44.4201786+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="98e209b9-389b-453d-9347-23e48b92cc8b" />
+    <UnitTestResult executionId="cb274e0a-2e1f-48d2-b05e-4f46b4a75d60" testId="b551bdf2-b7d0-8ca5-2b48-512753af93ec" testName="WorkerReconcilesLateMoneyEvenAfterExpiryAndWithoutBrowser" computerName="DESKTOP-EU1F40H" duration="00:00:00.3917669" startTime="2026-10-27T11:14:10.0548087+07:00" endTime="2026-10-27T11:14:10.4465760+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cb274e0a-2e1f-48d2-b05e-4f46b4a75d60" />
+    <UnitTestResult executionId="a38a66a0-312f-4349-ba5c-657690d20e9e" testId="4cb8059a-76b1-f952-afba-6d063b14de4d" testName="WebhookSignatureRejectsModifiedData" computerName="DESKTOP-EU1F40H" duration="00:00:00.2767290" startTime="2026-10-27T11:14:09.7780608+07:00" endTime="2026-10-27T11:14:10.0547899+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a38a66a0-312f-4349-ba5c-657690d20e9e" />
+    <UnitTestResult executionId="f8f2a4ab-4afc-4536-a8c5-29329717c101" testId="e91df086-451e-37ca-96e6-0afc0e57db75" testName="EveryCatalogWriteHasServerAuthorization" computerName="DESKTOP-EU1F40H" duration="00:00:00.2189190" startTime="2026-10-27T11:13:38.8840634+07:00" endTime="2026-10-27T11:13:39.1029824+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f8f2a4ab-4afc-4536-a8c5-29329717c101" />
+    <UnitTestResult executionId="8c414a34-19ae-41f8-866c-6dbc9cc7526f" testId="a7d8e613-ead7-3b29-4e2a-e6ce6d538175" testName="RevisedInspectionOfferNeedsFreshCustomerAcceptance" computerName="DESKTOP-EU1F40H" duration="00:00:00.3853750" startTime="2026-10-27T11:14:04.4360358+07:00" endTime="2026-10-27T11:14:04.8214104+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8c414a34-19ae-41f8-866c-6dbc9cc7526f" />
+    <UnitTestResult executionId="ecb6a989-657a-40dd-8f92-298d64744fa3" testId="39f6d3af-0bab-422a-78f3-14d29622c109" testName="LegacyRawQcItemsCanEnterRecyclingWithoutLosingHistory(&quot;QCApproved&quot;)" computerName="DESKTOP-EU1F40H" duration="00:00:00.3470920" startTime="2026-10-27T11:13:54.3518450+07:00" endTime="2026-10-27T11:13:54.6989369+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ecb6a989-657a-40dd-8f92-298d64744fa3" />
+    <UnitTestResult executionId="f133eed4-798d-4058-bd47-6dcaba5791e0" testId="274af62d-4293-2f66-423e-e553d70c93f3" testName="GalleryUpdateDoesNotOverwriteAConcurrentImageChange" computerName="DESKTOP-EU1F40H" duration="00:00:00.2841220" startTime="2026-10-27T11:13:44.4202151+07:00" endTime="2026-10-27T11:13:44.7043373+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f133eed4-798d-4058-bd47-6dcaba5791e0" />
+    <UnitTestResult executionId="cbf636ba-f7a1-485c-9458-29ccd3b1448c" testId="083cd37d-efd2-9e8d-69c6-299b1fe9a05b" testName="DirectCreationCannotBypassRecyclingProjectQc" computerName="DESKTOP-EU1F40H" duration="00:00:00.2002360" startTime="2026-10-27T11:13:38.1238654+07:00" endTime="2026-10-27T11:13:38.3241007+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cbf636ba-f7a1-485c-9458-29ccd3b1448c" />
+    <UnitTestResult executionId="399e61af-6b27-489a-9964-30ae0dcd8916" testId="3e20f7d5-fa79-b6d8-cdf9-345c6fdc10e5" testName="StyleWatchOnlyAlertsForNewMatchingBuyableUniqueItemsAndDoesNotRepeat" computerName="DESKTOP-EU1F40H" duration="00:00:00.4577200" startTime="2026-10-27T11:14:07.8019920+07:00" endTime="2026-10-27T11:14:08.2597117+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="399e61af-6b27-489a-9964-30ae0dcd8916" />
+    <UnitTestResult executionId="dddc55e6-b962-45af-a07c-e929faee0f76" testId="4c6ea96f-c0da-b41f-92ca-a6d6131d8cac" testName="FailedDeliveryReturnRequiresReceiptInspectionAndRefundBeforeRestock(False)" computerName="DESKTOP-EU1F40H" duration="00:00:00.3862670" startTime="2026-10-27T11:13:39.8658045+07:00" endTime="2026-10-27T11:13:40.2520712+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dddc55e6-b962-45af-a07c-e929faee0f76" />
+    <UnitTestResult executionId="700e22ce-7fd2-4aa5-b10a-06500a373b6f" testId="26b6863e-ba91-27bd-b1e6-42c6af56ea63" testName="MoneyReceivedAfterRefundDoesNotInventAnotherRefundOrRestock" computerName="DESKTOP-EU1F40H" duration="00:00:00.3043880" startTime="2026-10-27T11:13:55.3318040+07:00" endTime="2026-10-27T11:13:55.6361921+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="700e22ce-7fd2-4aa5-b10a-06500a373b6f" />
+    <UnitTestResult executionId="f293b25d-0cf8-404e-b911-b25ededce278" testId="3a0707ef-7b69-8ed3-c41a-9d9d395a4d6d" testName="PreviewCannotBypassRecyclingProjectQc(&quot;SecondHand&quot;)" computerName="DESKTOP-EU1F40H" duration="00:00:00.2554330" startTime="2026-10-27T11:14:01.6545049+07:00" endTime="2026-10-27T11:14:01.9099377+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f293b25d-0cf8-404e-b911-b25ededce278" />
+    <UnitTestResult executionId="e43ea517-97e3-4a8d-b4aa-42d0dbbf7ef4" testId="5392af29-ffa6-253c-61fa-8e266038c56c" testName="ExpirationReleasesEntireBatchBeforeAnyGatewayLookup" computerName="DESKTOP-EU1F40H" duration="00:00:00.3396920" startTime="2026-10-27T11:13:39.1030211+07:00" endTime="2026-10-27T11:13:39.4427135+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e43ea517-97e3-4a8d-b4aa-42d0dbbf7ef4" />
+    <UnitTestResult executionId="8dafaee8-ca52-4815-8365-4c178134f3a2" testId="4e5b6677-28bd-dfe0-4ada-b3d136fd311d" testName="JeansToToteToPaidDeliveryUsesPersistedLifecycleAndCost" computerName="DESKTOP-EU1F40H" duration="00:00:00.4708150" startTime="2026-10-27T11:13:53.5223039+07:00" endTime="2026-10-27T11:13:53.9931184+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8dafaee8-ca52-4815-8365-4c178134f3a2" />
+    <UnitTestResult executionId="39482613-167a-4e21-aaa1-623137cd7e43" testId="fe0681a8-eb61-d5ae-a8fa-3bda8c4d47fb" testName="CatalogReplacementRejectsDriftWithoutHidingAnotherProduct" computerName="DESKTOP-EU1F40H" duration="00:00:00.2210070" startTime="2026-10-27T11:13:34.7325978+07:00" endTime="2026-10-27T11:13:34.9536045+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="39482613-167a-4e21-aaa1-623137cd7e43" />
+    <UnitTestResult executionId="bee476b0-6f75-47fd-a843-7a7a937620e9" testId="198b9546-e211-c700-f4a3-9d39f266a115" testName="FiftyHttpCheckoutsReserveOneUniqueProductAndSignedWebhookRepeatsOnce" computerName="DESKTOP-EU1F40H" duration="00:00:03.3970780" startTime="2026-10-27T11:13:40.7840307+07:00" endTime="2026-10-27T11:13:44.1811083+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bee476b0-6f75-47fd-a843-7a7a937620e9" />
+    <UnitTestResult executionId="8b23744e-aa7c-4546-94bb-319654178c96" testId="cb79fbb7-18b0-a280-7c57-b6652f6ac86d" testName="PayoutAndMaterialAllocationAreNotDuplicated" computerName="DESKTOP-EU1F40H" duration="00:00:00.3686620" startTime="2026-10-27T11:14:00.6619096+07:00" endTime="2026-10-27T11:14:01.0305715+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8b23744e-aa7c-4546-94bb-319654178c96" />
+    <UnitTestResult executionId="d706f361-c832-4b83-8328-4ef40d68ce5a" testId="5e798609-8a7d-66bd-c9d6-c0b89ed21231" testName="PartialMoneyOnCancelledGatewaySessionIsRecordedForReconciliation" computerName="DESKTOP-EU1F40H" duration="00:00:00.2902280" startTime="2026-10-27T11:14:00.3716449+07:00" endTime="2026-10-27T11:14:00.6618727+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d706f361-c832-4b83-8328-4ef40d68ce5a" />
+    <UnitTestResult executionId="628b032a-7e5b-47f8-8ec7-d11eb552bab2" testId="a3650f16-5ec6-856f-f28a-a881f768ed81" testName="OrderNotificationsArePrivateAndOperationsReadsArePerUser" computerName="DESKTOP-EU1F40H" duration="00:00:00.2652780" startTime="2026-10-27T11:13:59.1524596+07:00" endTime="2026-10-27T11:13:59.4177369+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="628b032a-7e5b-47f8-8ec7-d11eb552bab2" />
+    <UnitTestResult executionId="f17d1f5b-9427-4e21-8a41-1b6197060456" testId="c10d36ab-3a4d-ae5a-2eaf-fd3f11055767" testName="PreviewCannotBypassRecyclingProjectQc(&quot;Upcycled&quot;)" computerName="DESKTOP-EU1F40H" duration="00:00:00.2413560" startTime="2026-10-27T11:14:01.4131187+07:00" endTime="2026-10-27T11:14:01.6544741+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f17d1f5b-9427-4e21-8a41-1b6197060456" />
+    <UnitTestResult executionId="a536c7af-3a1b-43bc-a22c-37dc589981a8" testId="09bd9eed-8506-893c-2ca4-df5dd752b960" testName="GalleryUploadFailureLeavesCurrentImagesUntouched" computerName="DESKTOP-EU1F40H" duration="00:00:00.2699910" startTime="2026-10-27T11:13:44.9705012+07:00" endTime="2026-10-27T11:13:45.2404922+07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a536c7af-3a1b-43bc-a22c-37dc589981a8" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="ReconciliationRejectsMismatchedGatewayOrderCode" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="13bcb482-0128-c330-55ab-054bf710e2c2">
+      <Execution id="9ca208eb-cb9a-40ae-a25b-9039c0768a62" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ReconciliationRejectsMismatchedGatewayOrderCode" />
+    </UnitTest>
+    <UnitTest name="ShippingBrowserAcceptanceAgainstRealLocalApi" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="8ea50b4b-e6a1-a205-77b4-ecb51b48740a">
+      <Execution id="82eda5c2-75f0-45c1-820f-f2a8598d6d5d" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ShippingBrowserAcceptanceAgainstRealLocalApi" />
+    </UnitTest>
+    <UnitTest name="OtpCannotBeUsedAfterFiveWrongAttempts" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="2bfdaefe-bbd4-8e03-0249-3c147fe205ff">
+      <Execution id="f46a04bb-2e39-4433-bea4-8ad453e00434" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="OtpCannotBeUsedAfterFiveWrongAttempts" />
+    </UnitTest>
+    <UnitTest name="ForeignAddressDoesNotReserveStock" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e8f957ee-92f4-c9e8-7a7d-465aec9b5ef8">
+      <Execution id="98e209b9-389b-453d-9347-23e48b92cc8b" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ForeignAddressDoesNotReserveStock" />
+    </UnitTest>
+    <UnitTest name="FailedDeliveryReturnRequiresReceiptInspectionAndRefundBeforeRestock(True)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="ae360d77-cb2c-fc5e-f41f-cb52b96743ea">
+      <Execution id="809fc98c-7c07-4421-8a7d-27bc8db812d3" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="FailedDeliveryReturnRequiresReceiptInspectionAndRefundBeforeRestock(True)" />
+    </UnitTest>
+    <UnitTest name="ExpirationReleasesEntireBatchBeforeAnyGatewayLookup" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="5392af29-ffa6-253c-61fa-8e266038c56c">
+      <Execution id="e43ea517-97e3-4a8d-b4aa-42d0dbbf7ef4" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ExpirationReleasesEntireBatchBeforeAnyGatewayLookup" />
+    </UnitTest>
+    <UnitTest name="SourcingNotificationsFollowPriceAndPickupAssignment" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="f8739c69-1ad1-10c1-3231-b1e7d32e255d">
+      <Execution id="aa2df060-3bef-420f-9cac-95477530165d" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="SourcingNotificationsFollowPriceAndPickupAssignment" />
+    </UnitTest>
+    <UnitTest name="ConcurrentSessionInitializationCreatesOneGatewayIdentity" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="d3266551-113b-3538-21ea-c4889f36432a">
+      <Execution id="44480e97-695f-47cf-8190-0c9f53a6a58b" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ConcurrentSessionInitializationCreatesOneGatewayIdentity" />
+    </UnitTest>
+    <UnitTest name="PaidSourceCannotUseLegacyResaleAndRemainsAvailableForRecycling" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="dd569aa2-bdbf-2780-2e81-ca9e2d65a1db">
+      <Execution id="8ff57ac9-8829-489d-a231-ef3caa36cc2a" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PaidSourceCannotUseLegacyResaleAndRemainsAvailableForRecycling" />
+    </UnitTest>
+    <UnitTest name="CatalogReplacementRejectsDriftWithoutHidingAnotherProduct" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="fe0681a8-eb61-d5ae-a8fa-3bda8c4d47fb">
+      <Execution id="39482613-167a-4e21-aaa1-623137cd7e43" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CatalogReplacementRejectsDriftWithoutHidingAnotherProduct" />
+    </UnitTest>
+    <UnitTest name="DifferentReceiptReferencesRecordExtraMoneyWithoutSellingTwice" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="69e43c3c-29a5-15eb-4eed-8a6cb8603f15">
+      <Execution id="cd78dad4-259a-4a16-9911-7ca313813e30" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="DifferentReceiptReferencesRecordExtraMoneyWithoutSellingTwice" />
+    </UnitTest>
+    <UnitTest name="RepeatedSessionCreationUsesSingleGatewayRequestAndRemovesOnlyPurchasedCartLines" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e6a23572-dd1a-8603-1a1c-8886d5024035">
+      <Execution id="740c5d46-97d6-4535-91a0-efd95f0d8efb" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="RepeatedSessionCreationUsesSingleGatewayRequestAndRemovesOnlyPurchasedCartLines" />
+    </UnitTest>
+    <UnitTest name="StyleWatchRejectsInvalidCriteriaAndMatchesVietnameseColors" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="5542326a-4462-1d06-82ab-37ad3f78c2c6">
+      <Execution id="d2a302f9-62a7-4cb3-9669-d77cd5ce5134" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="StyleWatchRejectsInvalidCriteriaAndMatchesVietnameseColors" />
+    </UnitTest>
+    <UnitTest name="FailedDeliveryReturnRequiresReceiptInspectionAndRefundBeforeRestock(False)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="4c6ea96f-c0da-b41f-92ca-a6d6131d8cac">
+      <Execution id="dddc55e6-b962-45af-a07c-e929faee0f76" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="FailedDeliveryReturnRequiresReceiptInspectionAndRefundBeforeRestock(False)" />
+    </UnitTest>
+    <UnitTest name="LegacyRawQcItemsCanEnterRecyclingWithoutLosingHistory(&quot;QCApproved&quot;)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="39f6d3af-0bab-422a-78f3-14d29622c109">
+      <Execution id="ecb6a989-657a-40dd-8f92-298d64744fa3" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="LegacyRawQcItemsCanEnterRecyclingWithoutLosingHistory(&quot;QCApproved&quot;)" />
+    </UnitTest>
+    <UnitTest name="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;&quot;)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="aa4ebd13-42b0-32f1-398a-876c89064fc4">
+      <Execution id="1f6c5e64-ae44-4d57-bcd0-3aafa4df5ec9" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;&quot;)" />
+    </UnitTest>
+    <UnitTest name="PreviewCannotBypassRecyclingProjectQc(&quot;Upcycled&quot;)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="c10d36ab-3a4d-ae5a-2eaf-fd3f11055767">
+      <Execution id="f17d1f5b-9427-4e21-8a41-1b6197060456" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PreviewCannotBypassRecyclingProjectQc(&quot;Upcycled&quot;)" />
+    </UnitTest>
+    <UnitTest name="InitializationFailureKeepsCartAndExpiresWithoutBrowser" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="2306b52e-dfd2-961f-a805-b590fb04842d">
+      <Execution id="ebd5ff24-ec96-466e-b11a-464a85ce834b" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="InitializationFailureKeepsCartAndExpiresWithoutBrowser" />
+    </UnitTest>
+    <UnitTest name="LegacyRawQcItemsCanEnterRecyclingWithoutLosingHistory(&quot;Rework&quot;)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="c579f032-928e-b826-5961-606904f03579">
+      <Execution id="717ce63c-a2d7-415e-b683-90aa91c6dfb9" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="LegacyRawQcItemsCanEnterRecyclingWithoutLosingHistory(&quot;Rework&quot;)" />
+    </UnitTest>
+    <UnitTest name="PartialMoneyOnCancelledGatewaySessionIsRecordedForReconciliation" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="5e798609-8a7d-66bd-c9d6-c0b89ed21231">
+      <Execution id="d706f361-c832-4b83-8328-4ef40d68ce5a" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PartialMoneyOnCancelledGatewaySessionIsRecordedForReconciliation" />
+    </UnitTest>
+    <UnitTest name="CheckoutWithoutPaymentRecordExpiresAndReleasesOnlyOnce" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="c09dffcf-64a4-e901-403c-2a3ecc47dd42">
+      <Execution id="642f422f-3ac0-42e5-93b1-6095c19c0d38" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CheckoutWithoutPaymentRecordExpiresAndReleasesOnlyOnce" />
+    </UnitTest>
+    <UnitTest name="ProductWithActiveOrderReservationCannotBeHidden" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="097b1574-f432-c567-5b9d-0ae0bb9eb5d5">
+      <Execution id="810bc04e-b084-4fce-9088-e89331f0da8a" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ProductWithActiveOrderReservationCannotBeHidden" />
+    </UnitTest>
+    <UnitTest name="DeliveredBuyerCanRequestReturnOnceAndSeesOwnRecord" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="afacf160-5021-2df6-b8d9-51bc4f7140c2">
+      <Execution id="19a4a36f-d4b0-4f35-9d28-4ee08e5ed3f3" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="DeliveredBuyerCanRequestReturnOnceAndSeesOwnRecord" />
+    </UnitTest>
+    <UnitTest name="CatalogReplacementPreservesOldStockAndHistoryAndDoesNotDuplicateOnRetry" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e88fa54d-7018-d276-50e1-c2ee5af1725d">
+      <Execution id="905ff7e5-46aa-497d-9822-ea9990893d4d" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CatalogReplacementPreservesOldStockAndHistoryAndDoesNotDuplicateOnRetry" />
+    </UnitTest>
+    <UnitTest name="MongoTransactionRollsBackPartialWrites" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="17be61a6-19dc-4a96-3faa-542b08b810d3">
+      <Execution id="c93c6f02-ed30-4ae3-a0b1-84fbb2c1ed76" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="MongoTransactionRollsBackPartialWrites" />
+    </UnitTest>
+    <UnitTest name="LegacyShipmentDoesNotInventPickupOrHistoryDates" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="7f4942ae-ef22-4553-5812-a4b06579405e">
+      <Execution id="f34cb7e4-9023-48e0-87d3-492da516374b" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="LegacyShipmentDoesNotInventPickupOrHistoryDates" />
+    </UnitTest>
+    <UnitTest name="ConcurrentCheckoutsCannotBothReserveUniqueItem" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="f0f5c481-965f-8c24-308d-973684b145dd">
+      <Execution id="cbfffcba-5cf6-49f8-b686-c779e9324da9" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ConcurrentCheckoutsCannotBothReserveUniqueItem" />
+    </UnitTest>
+    <UnitTest name="CustomerSourcingDetailOmitsInternalInspectionNote" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="85e72601-3bc7-956b-d574-756a62c96bd2">
+      <Execution id="9f2dcd73-271a-4e4d-85de-5067ee54d8a5" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CustomerSourcingDetailOmitsInternalInspectionNote" />
+    </UnitTest>
+    <UnitTest name="FailedQcBlocksPublicationAndSupportsRework" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="86c8eb79-ce7f-ad05-d8e2-efb652e392a7">
+      <Execution id="2f9e082c-65f8-412a-b8d6-1581f2701d1f" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="FailedQcBlocksPublicationAndSupportsRework" />
+    </UnitTest>
+    <UnitTest name="PayoutAndMaterialAllocationAreNotDuplicated" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="cb79fbb7-18b0-a280-7c57-b6652f6ac86d">
+      <Execution id="8b23744e-aa7c-4546-94bb-319654178c96" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PayoutAndMaterialAllocationAreNotDuplicated" />
+    </UnitTest>
+    <UnitTest name="RevisedInspectionOfferNeedsFreshCustomerAcceptance" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="a7d8e613-ead7-3b29-4e2a-e6ce6d538175">
+      <Execution id="8c414a34-19ae-41f8-866c-6dbc9cc7526f" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="RevisedInspectionOfferNeedsFreshCustomerAcceptance" />
+    </UnitTest>
+    <UnitTest name="DuplicateCheckoutReturnsSameOrderAndDoesNotExtendReservation" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="0ab44bc3-d7f0-9a8c-373d-fe7ef8a0842c">
+      <Execution id="aca7f56f-e9ef-4f31-b6e6-b9c38443f146" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="DuplicateCheckoutReturnsSameOrderAndDoesNotExtendReservation" />
+    </UnitTest>
+    <UnitTest name="ShippingRejectsForeignShipperAndSkippedSteps" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="1b4152b0-8536-07d3-5d52-1ce77b7c5c84">
+      <Execution id="7c921168-ff41-4805-b8a1-ee871c1724e1" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ShippingRejectsForeignShipperAndSkippedSteps" />
+    </UnitTest>
+    <UnitTest name="HttpDeliveryThreeRolesShareActualHistoryAndEnforceAssignment" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="3d2004de-2511-8f22-aaf6-08524cc507a6">
+      <Execution id="cf45e1be-7b8d-43a6-a99a-1a1afa3e646b" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="HttpDeliveryThreeRolesShareActualHistoryAndEnforceAssignment" />
+    </UnitTest>
+    <UnitTest name="StyleWatchEndpointsRequireMemberSession" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e518d24c-555b-7c2e-6d94-858467cf710e">
+      <Execution id="9b2258dd-d103-4e77-9ca6-3fb1a8f08a02" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="StyleWatchEndpointsRequireMemberSession" />
+    </UnitTest>
+    <UnitTest name="CatalogReplacementUploadFailureLeavesOldCatalogVisible" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="9c09a9ec-91ec-50e3-000e-cda8f7e7a708">
+      <Execution id="eba23864-b3c0-4d89-9b6b-2a0cbe762ada" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CatalogReplacementUploadFailureLeavesOldCatalogVisible" />
+    </UnitTest>
+    <UnitTest name="ReturnRequestRejectsOtherOwnerAndUnreceivedOrder" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="0e32270c-131c-4e80-c5d7-61e8902728dd">
+      <Execution id="397e35b7-d1e1-479c-bfcd-15f3ada57c9e" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ReturnRequestRejectsOtherOwnerAndUnreceivedOrder" />
+    </UnitTest>
+    <UnitTest name="UnpaidSourceCannotBecomeRetailProduct" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="1d69d7a8-f4b7-3994-6925-7c3c401684de">
+      <Execution id="ea1085ee-fcae-4ec3-adf2-55dedde74150" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="UnpaidSourceCannotBecomeRetailProduct" />
+    </UnitTest>
+    <UnitTest name="HttpAuthorizationRejectsAnonymousMemberAndShipperOnOperations" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="19483b64-cfc2-69b7-73cd-4ff314340319">
+      <Execution id="6d0ca1f8-aa73-4fce-9cd6-0e47106f228d" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="HttpAuthorizationRejectsAnonymousMemberAndShipperOnOperations" />
+    </UnitTest>
+    <UnitTest name="ActualApiEntrypointResolvesCommerceServicesWithIsolatedConfiguration" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e64f6e39-5f98-6645-89bc-90401321ad61">
+      <Execution id="304e9321-9e6f-4fdb-999a-d56170b86f9b" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ActualApiEntrypointResolvesCommerceServicesWithIsolatedConfiguration" />
+    </UnitTest>
+    <UnitTest name="NotificationApiRequiresLoginAndCannotReadAnotherMembersItem" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="66ca6777-4482-a519-192e-77b76e579bcd">
+      <Execution id="8d559af4-d3f1-46e8-8934-2f929151c544" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="NotificationApiRequiresLoginAndCannotReadAnotherMembersItem" />
+    </UnitTest>
+    <UnitTest name="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;Unknown&quot;)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="a98ba180-5ecf-00c3-6e50-76c8df2b1be2">
+      <Execution id="74dd01d7-5057-4c48-a9cc-bedd4dbaaf0a" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;Unknown&quot;)" />
+    </UnitTest>
+    <UnitTest name="WebhookSignatureRejectsModifiedData" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="4cb8059a-76b1-f952-afba-6d063b14de4d">
+      <Execution id="a38a66a0-312f-4349-ba5c-657690d20e9e" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="WebhookSignatureRejectsModifiedData" />
+    </UnitTest>
+    <UnitTest name="MoneyReceivedAfterRefundDoesNotInventAnotherRefundOrRestock" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="26b6863e-ba91-27bd-b1e6-42c6af56ea63">
+      <Execution id="700e22ce-7fd2-4aa5-b10a-06500a373b6f" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="MoneyReceivedAfterRefundDoesNotInventAnotherRefundOrRestock" />
+    </UnitTest>
+    <UnitTest name="PreviewCannotBypassRecyclingProjectQc(&quot;SecondHand&quot;)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="3a0707ef-7b69-8ed3-c41a-9d9d395a4d6d">
+      <Execution id="f293b25d-0cf8-404e-b911-b25ededce278" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PreviewCannotBypassRecyclingProjectQc(&quot;SecondHand&quot;)" />
+    </UnitTest>
+    <UnitTest name="StyleWatchOnlyAlertsForNewMatchingBuyableUniqueItemsAndDoesNotRepeat" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="3e20f7d5-fa79-b6d8-cdf9-345c6fdc10e5">
+      <Execution id="399e61af-6b27-489a-9964-30ae0dcd8916" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="StyleWatchOnlyAlertsForNewMatchingBuyableUniqueItemsAndDoesNotRepeat" />
+    </UnitTest>
+    <UnitTest name="CatalogPreviewCannotBePurchasedEvenIfSomeoneAddsStock" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="7cc6c5a8-1392-225f-7800-95c0fde2839f">
+      <Execution id="4b543675-beb3-48bd-92d1-4566e72e3e05" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CatalogPreviewCannotBePurchasedEvenIfSomeoneAddsStock" />
+    </UnitTest>
+    <UnitTest name="AmountMismatchDoesNotConfirmFulfillment" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="2cdb4815-1d69-7cfd-d7c8-2197bff43e9d">
+      <Execution id="4dc63787-dbfc-426d-a08b-2636ff6054b1" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="AmountMismatchDoesNotConfirmFulfillment" />
+    </UnitTest>
+    <UnitTest name="GalleryUpdateDoesNotOverwriteAConcurrentImageChange" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="274af62d-4293-2f66-423e-e553d70c93f3">
+      <Execution id="f133eed4-798d-4058-bd47-6dcaba5791e0" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="GalleryUpdateDoesNotOverwriteAConcurrentImageChange" />
+    </UnitTest>
+    <UnitTest name="PublicCatalogExcludesResaleButOperationsCanReadHistoricalRecords" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="aec487aa-8c54-2059-db73-b8f4c1e4ca08">
+      <Execution id="7818fd0e-4db6-4f4a-b806-293e662839cc" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PublicCatalogExcludesResaleButOperationsCanReadHistoricalRecords" />
+    </UnitTest>
+    <UnitTest name="PickupAndWarehouseReceiptAreDistinctStepsWithRealContactDetails" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="d9a36717-80ba-e922-5d9e-0aea15e0da8f">
+      <Execution id="cc2061f6-2158-4747-a01f-e8e16b4f0e88" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PickupAndWarehouseReceiptAreDistinctStepsWithRealContactDetails" />
+    </UnitTest>
+    <UnitTest name="CatalogPreviewJourneyUsesIllustrationsWithoutFabricatingLifecycleEvents" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="b2296f24-d1e0-d461-191a-a56cdad5fc62">
+      <Execution id="6ca3b75f-f7a2-4c5d-a176-82ed139193a8" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CatalogPreviewJourneyUsesIllustrationsWithoutFabricatingLifecycleEvents" />
+    </UnitTest>
+    <UnitTest name="RegistrationAlwaysCreatesMember" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e748b605-5190-56a7-ad05-37bde066e283">
+      <Execution id="6aa78180-12af-491c-b3d2-e877213ffcd0" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="RegistrationAlwaysCreatesMember" />
+    </UnitTest>
+    <UnitTest name="ConcurrentDuplicatePaidCallbacksCommitOneOutcome" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="84319ea1-a06c-12bf-c856-3a707f40ca34">
+      <Execution id="69b32247-82fc-4252-b532-5eba6e8497ea" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="ConcurrentDuplicatePaidCallbacksCommitOneOutcome" />
+    </UnitTest>
+    <UnitTest name="LatePaymentCannotTakeInventoryReservedByAnotherOrder" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="b6867a6e-0ff8-2e69-0239-e42493dce9d4">
+      <Execution id="db447ce5-ddad-42e4-9d21-1164888d5950" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="LatePaymentCannotTakeInventoryReservedByAnotherOrder" />
+    </UnitTest>
+    <UnitTest name="JeansToToteToPaidDeliveryUsesPersistedLifecycleAndCost" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="4e5b6677-28bd-dfe0-4ada-b3d136fd311d">
+      <Execution id="8dafaee8-ca52-4815-8365-4c178134f3a2" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="JeansToToteToPaidDeliveryUsesPersistedLifecycleAndCost" />
+    </UnitTest>
+    <UnitTest name="UniqueCartItemCannotBeDuplicated" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="2366395e-fd93-5ee5-715d-c4ff694dafca">
+      <Execution id="9a447a25-91e7-42d7-8a00-d8be3ec4c494" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="UniqueCartItemCannotBeDuplicated" />
+    </UnitTest>
+    <UnitTest name="PaidCancellationRequiresManualEvidenceAndRestocksExactlyOnce" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="d13bb295-aaa3-0c00-f3dc-9e0cb4ff34a2">
+      <Execution id="9f489b57-1362-41be-9254-821b8002b88a" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="PaidCancellationRequiresManualEvidenceAndRestocksExactlyOnce" />
+    </UnitTest>
+    <UnitTest name="WorkerReconcilesLateMoneyEvenAfterExpiryAndWithoutBrowser" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="b551bdf2-b7d0-8ca5-2b48-512753af93ec">
+      <Execution id="cb274e0a-2e1f-48d2-b05e-4f46b4a75d60" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="WorkerReconcilesLateMoneyEvenAfterExpiryAndWithoutBrowser" />
+    </UnitTest>
+    <UnitTest name="VersionedMigrationIsAdditiveIdempotentAndPreservesLegacyDocuments" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="d3b0c0e7-20e6-1e91-0ad4-ae9ac7281e85">
+      <Execution id="8fdb4900-16ff-4f56-9c1d-03cda500151d" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="VersionedMigrationIsAdditiveIdempotentAndPreservesLegacyDocuments" />
+    </UnitTest>
+    <UnitTest name="CatalogReplacementRequiresBeforeAndAfterForUpcyclingAndNoBeforeForResale" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="bc5bd815-02dc-ca59-eabb-7617fb674104">
+      <Execution id="3b728a40-b118-4ada-a6b4-68a6f032df7c" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="CatalogReplacementRequiresBeforeAndAfterForUpcyclingAndNoBeforeForResale" />
+    </UnitTest>
+    <UnitTest name="DirectCreationCannotBypassRecyclingProjectQc" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="083cd37d-efd2-9e8d-69c6-299b1fe9a05b">
+      <Execution id="cbf636ba-f7a1-485c-9458-29ccd3b1448c" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="DirectCreationCannotBypassRecyclingProjectQc" />
+    </UnitTest>
+    <UnitTest name="FiftyHttpCheckoutsReserveOneUniqueProductAndSignedWebhookRepeatsOnce" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="198b9546-e211-c700-f4a3-9d39f266a115">
+      <Execution id="bee476b0-6f75-47fd-a843-7a7a937620e9" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="FiftyHttpCheckoutsReserveOneUniqueProductAndSignedWebhookRepeatsOnce" />
+    </UnitTest>
+    <UnitTest name="DeliveryMigrationPreservesLegacyShippingHistoryAndIsIdempotent" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="8df879ff-1004-5b37-c452-9e0c8ffc5dcc">
+      <Execution id="0f4e018a-f408-43c1-a90d-d6d596f0b6d0" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="DeliveryMigrationPreservesLegacyShippingHistoryAndIsIdempotent" />
+    </UnitTest>
+    <UnitTest name="GalleryUploadFailureLeavesCurrentImagesUntouched" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="09bd9eed-8506-893c-2ca4-df5dd752b960">
+      <Execution id="a536c7af-3a1b-43bc-a22c-37dc589981a8" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="GalleryUploadFailureLeavesCurrentImagesUntouched" />
+    </UnitTest>
+    <UnitTest name="OrderNotificationsArePrivateAndOperationsReadsArePerUser" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="a3650f16-5ec6-856f-f28a-a881f768ed81">
+      <Execution id="628b032a-7e5b-47f8-8ec7-d11eb552bab2" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="OrderNotificationsArePrivateAndOperationsReadsArePerUser" />
+    </UnitTest>
+    <UnitTest name="EveryCatalogWriteHasServerAuthorization" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e91df086-451e-37ca-96e6-0afc0e57db75">
+      <Execution id="f8f2a4ab-4afc-4536-a8c5-29329717c101" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="EveryCatalogWriteHasServerAuthorization" />
+    </UnitTest>
+    <UnitTest name="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;SecondHand&quot;)" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="2de3ed74-82d4-e683-14a2-eba991afb7ab">
+      <Execution id="d57541e2-c78d-4777-ac00-ce29f0f5da6b" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="NonUpcycledInventoryCannotBeBoughtEvenFromAnExistingCart(&quot;SecondHand&quot;)" />
+    </UnitTest>
+    <UnitTest name="HttpFailedDeliveryKeepsPrivateNotesAndRedeliveryRetainsHistory" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="b6a5f64d-6fe2-da4c-e340-2809d8e6b954">
+      <Execution id="a1eacbab-7e54-416b-95ad-2c1c9fbe7594" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="HttpFailedDeliveryKeepsPrivateNotesAndRedeliveryRetainsHistory" />
+    </UnitTest>
+    <UnitTest name="DisablingEmailSkipsPendingDelivery" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="7b6df95a-9e2a-9a33-6c39-57560648b562">
+      <Execution id="036a8789-5368-431c-ab4f-0cb5a26c26ac" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="DisablingEmailSkipsPendingDelivery" />
+    </UnitTest>
+    <UnitTest name="GalleryUpdatePreservesFrontBeforeAndProductStateAndIsIdempotent" storage="d:\exe201\rewear_backend\.artifacts\recycling-only-tests\rewear.tests.dll" id="e8bd972c-d41a-a153-81ae-c7e4ed1bf067">
+      <Execution id="439c5682-15b5-4433-a2c9-c9a6ff3be60c" />
+      <TestMethod codeBase="D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll" adapterTypeName="executor://nunit3testexecutor/" className="REWEAR.Tests.CommerceTests" name="GalleryUpdatePreservesFrontBeforeAndProductStateAndIsIdempotent" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="a98ba180-5ecf-00c3-6e50-76c8df2b1be2" executionId="74dd01d7-5057-4c48-a9cc-bedd4dbaaf0a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aa4ebd13-42b0-32f1-398a-876c89064fc4" executionId="1f6c5e64-ae44-4d57-bcd0-3aafa4df5ec9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c579f032-928e-b826-5961-606904f03579" executionId="717ce63c-a2d7-415e-b683-90aa91c6dfb9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b6867a6e-0ff8-2e69-0239-e42493dce9d4" executionId="db447ce5-ddad-42e4-9d21-1164888d5950" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="097b1574-f432-c567-5b9d-0ae0bb9eb5d5" executionId="810bc04e-b084-4fce-9088-e89331f0da8a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="17be61a6-19dc-4a96-3faa-542b08b810d3" executionId="c93c6f02-ed30-4ae3-a0b1-84fbb2c1ed76" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aec487aa-8c54-2059-db73-b8f4c1e4ca08" executionId="7818fd0e-4db6-4f4a-b806-293e662839cc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="13bcb482-0128-c330-55ab-054bf710e2c2" executionId="9ca208eb-cb9a-40ae-a25b-9039c0768a62" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="66ca6777-4482-a519-192e-77b76e579bcd" executionId="8d559af4-d3f1-46e8-8934-2f929151c544" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9c09a9ec-91ec-50e3-000e-cda8f7e7a708" executionId="eba23864-b3c0-4d89-9b6b-2a0cbe762ada" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1b4152b0-8536-07d3-5d52-1ce77b7c5c84" executionId="7c921168-ff41-4805-b8a1-ee871c1724e1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d2004de-2511-8f22-aaf6-08524cc507a6" executionId="cf45e1be-7b8d-43a6-a99a-1a1afa3e646b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b6a5f64d-6fe2-da4c-e340-2809d8e6b954" executionId="a1eacbab-7e54-416b-95ad-2c1c9fbe7594" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="afacf160-5021-2df6-b8d9-51bc4f7140c2" executionId="19a4a36f-d4b0-4f35-9d28-4ee08e5ed3f3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d3b0c0e7-20e6-1e91-0ad4-ae9ac7281e85" executionId="8fdb4900-16ff-4f56-9c1d-03cda500151d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2cdb4815-1d69-7cfd-d7c8-2197bff43e9d" executionId="4dc63787-dbfc-426d-a08b-2636ff6054b1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d9a36717-80ba-e922-5d9e-0aea15e0da8f" executionId="cc2061f6-2158-4747-a01f-e8e16b4f0e88" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd569aa2-bdbf-2780-2e81-ca9e2d65a1db" executionId="8ff57ac9-8829-489d-a231-ef3caa36cc2a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2bfdaefe-bbd4-8e03-0249-3c147fe205ff" executionId="f46a04bb-2e39-4433-bea4-8ad453e00434" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7b6df95a-9e2a-9a33-6c39-57560648b562" executionId="036a8789-5368-431c-ab4f-0cb5a26c26ac" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e88fa54d-7018-d276-50e1-c2ee5af1725d" executionId="905ff7e5-46aa-497d-9822-ea9990893d4d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f0f5c481-965f-8c24-308d-973684b145dd" executionId="cbfffcba-5cf6-49f8-b686-c779e9324da9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2de3ed74-82d4-e683-14a2-eba991afb7ab" executionId="d57541e2-c78d-4777-ac00-ce29f0f5da6b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e64f6e39-5f98-6645-89bc-90401321ad61" executionId="304e9321-9e6f-4fdb-999a-d56170b86f9b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e748b605-5190-56a7-ad05-37bde066e283" executionId="6aa78180-12af-491c-b3d2-e877213ffcd0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1d69d7a8-f4b7-3994-6925-7c3c401684de" executionId="ea1085ee-fcae-4ec3-adf2-55dedde74150" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5542326a-4462-1d06-82ab-37ad3f78c2c6" executionId="d2a302f9-62a7-4cb3-9669-d77cd5ce5134" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8ea50b4b-e6a1-a205-77b4-ecb51b48740a" executionId="82eda5c2-75f0-45c1-820f-f2a8598d6d5d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="85e72601-3bc7-956b-d574-756a62c96bd2" executionId="9f2dcd73-271a-4e4d-85de-5067ee54d8a5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7f4942ae-ef22-4553-5812-a4b06579405e" executionId="f34cb7e4-9023-48e0-87d3-492da516374b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2306b52e-dfd2-961f-a805-b590fb04842d" executionId="ebd5ff24-ec96-466e-b11a-464a85ce834b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="69e43c3c-29a5-15eb-4eed-8a6cb8603f15" executionId="cd78dad4-259a-4a16-9911-7ca313813e30" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b2296f24-d1e0-d461-191a-a56cdad5fc62" executionId="6ca3b75f-f7a2-4c5d-a176-82ed139193a8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c09dffcf-64a4-e901-403c-2a3ecc47dd42" executionId="642f422f-3ac0-42e5-93b1-6095c19c0d38" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8df879ff-1004-5b37-c452-9e0c8ffc5dcc" executionId="0f4e018a-f408-43c1-a90d-d6d596f0b6d0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6a23572-dd1a-8603-1a1c-8886d5024035" executionId="740c5d46-97d6-4535-91a0-efd95f0d8efb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0ab44bc3-d7f0-9a8c-373d-fe7ef8a0842c" executionId="aca7f56f-e9ef-4f31-b6e6-b9c38443f146" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e518d24c-555b-7c2e-6d94-858467cf710e" executionId="9b2258dd-d103-4e77-9ca6-3fb1a8f08a02" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f8739c69-1ad1-10c1-3231-b1e7d32e255d" executionId="aa2df060-3bef-420f-9cac-95477530165d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="84319ea1-a06c-12bf-c856-3a707f40ca34" executionId="69b32247-82fc-4252-b532-5eba6e8497ea" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="19483b64-cfc2-69b7-73cd-4ff314340319" executionId="6d0ca1f8-aa73-4fce-9cd6-0e47106f228d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d3266551-113b-3538-21ea-c4889f36432a" executionId="44480e97-695f-47cf-8190-0c9f53a6a58b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2366395e-fd93-5ee5-715d-c4ff694dafca" executionId="9a447a25-91e7-42d7-8a00-d8be3ec4c494" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d13bb295-aaa3-0c00-f3dc-9e0cb4ff34a2" executionId="9f489b57-1362-41be-9254-821b8002b88a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="86c8eb79-ce7f-ad05-d8e2-efb652e392a7" executionId="2f9e082c-65f8-412a-b8d6-1581f2701d1f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e8bd972c-d41a-a153-81ae-c7e4ed1bf067" executionId="439c5682-15b5-4433-a2c9-c9a6ff3be60c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ae360d77-cb2c-fc5e-f41f-cb52b96743ea" executionId="809fc98c-7c07-4421-8a7d-27bc8db812d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0e32270c-131c-4e80-c5d7-61e8902728dd" executionId="397e35b7-d1e1-479c-bfcd-15f3ada57c9e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7cc6c5a8-1392-225f-7800-95c0fde2839f" executionId="4b543675-beb3-48bd-92d1-4566e72e3e05" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bc5bd815-02dc-ca59-eabb-7617fb674104" executionId="3b728a40-b118-4ada-a6b4-68a6f032df7c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e8f957ee-92f4-c9e8-7a7d-465aec9b5ef8" executionId="98e209b9-389b-453d-9347-23e48b92cc8b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b551bdf2-b7d0-8ca5-2b48-512753af93ec" executionId="cb274e0a-2e1f-48d2-b05e-4f46b4a75d60" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4cb8059a-76b1-f952-afba-6d063b14de4d" executionId="a38a66a0-312f-4349-ba5c-657690d20e9e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e91df086-451e-37ca-96e6-0afc0e57db75" executionId="f8f2a4ab-4afc-4536-a8c5-29329717c101" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a7d8e613-ead7-3b29-4e2a-e6ce6d538175" executionId="8c414a34-19ae-41f8-866c-6dbc9cc7526f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="39f6d3af-0bab-422a-78f3-14d29622c109" executionId="ecb6a989-657a-40dd-8f92-298d64744fa3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="274af62d-4293-2f66-423e-e553d70c93f3" executionId="f133eed4-798d-4058-bd47-6dcaba5791e0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="083cd37d-efd2-9e8d-69c6-299b1fe9a05b" executionId="cbf636ba-f7a1-485c-9458-29ccd3b1448c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e20f7d5-fa79-b6d8-cdf9-345c6fdc10e5" executionId="399e61af-6b27-489a-9964-30ae0dcd8916" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4c6ea96f-c0da-b41f-92ca-a6d6131d8cac" executionId="dddc55e6-b962-45af-a07c-e929faee0f76" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="26b6863e-ba91-27bd-b1e6-42c6af56ea63" executionId="700e22ce-7fd2-4aa5-b10a-06500a373b6f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3a0707ef-7b69-8ed3-c41a-9d9d395a4d6d" executionId="f293b25d-0cf8-404e-b911-b25ededce278" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5392af29-ffa6-253c-61fa-8e266038c56c" executionId="e43ea517-97e3-4a8d-b4aa-42d0dbbf7ef4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4e5b6677-28bd-dfe0-4ada-b3d136fd311d" executionId="8dafaee8-ca52-4815-8365-4c178134f3a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fe0681a8-eb61-d5ae-a8fa-3bda8c4d47fb" executionId="39482613-167a-4e21-aaa1-623137cd7e43" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="198b9546-e211-c700-f4a3-9d39f266a115" executionId="bee476b0-6f75-47fd-a843-7a7a937620e9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cb79fbb7-18b0-a280-7c57-b6652f6ac86d" executionId="8b23744e-aa7c-4546-94bb-319654178c96" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e798609-8a7d-66bd-c9d6-c0b89ed21231" executionId="d706f361-c832-4b83-8328-4ef40d68ce5a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a3650f16-5ec6-856f-f28a-a881f768ed81" executionId="628b032a-7e5b-47f8-8ec7-d11eb552bab2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c10d36ab-3a4d-ae5a-2eaf-fd3f11055767" executionId="f17d1f5b-9427-4e21-8a41-1b6197060456" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="09bd9eed-8506-893c-2ca4-df5dd752b960" executionId="a536c7af-3a1b-43bc-a22c-37dc589981a8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="71" executed="70" passed="70" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 5.0.0.0: Test execution started&#xD;
+Running all tests in D:\EXE201\Rewear_BackEnd\.artifacts\recycling-only-tests\REWEAR.Tests.dll&#xD;
+   NUnit3TestExecutor discovered 70 of 71 NUnit test cases using Current Discovery mode, Non-Explicit run&#xD;
+EVIDENCE: 50 HTTP checkout requests -&gt; 1 winner, 49 clear rejections, 1 reservation, stock 0; 20 signed duplicate webhooks -&gt; 1 receipt/sale; 10 assignment retries -&gt; 1 shipment.&#xD;
+EVIDENCE: real HTTP checkout/payment webhook -&gt; Staff assignment -&gt; assigned Shipper pickup/transit/delivery -&gt; customer tracking; foreign ownership, skipped steps and roles denied without history changes; one custody handoff each.&#xD;
+ShippingBrowserAcceptanceAgainstRealLocalApi: Starts isolated local API, Vite and headless Chromium; no external gateway calls.&#xD;
+NUnit Adapter 5.0.0.0: Test execution complete&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

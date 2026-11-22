@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { authFetch } from '../services/auth';
 import { useCart } from '../contexts/CartContext';
+import { formatCatalogText } from '../utils/catalogText';
 
 const getColorHex = (colorName) => {
   if (!colorName) return '#1b1b1b';
@@ -14,6 +15,11 @@ const getColorHex = (colorName) => {
     'indigo': '#1c2e4a',
     'green': '#2e4a2c',
     'red': '#8b0000',
+    'xanh chàm': '#1c2e4a',
+    'xanh sọc phối kem': '#9eafc5',
+    'kem': '#e6dfcc',
+    'xanh lá dịu': '#939d84',
+    'xám than': '#4b4c49',
   };
   return map[name] || '#70706f';
 };
@@ -50,50 +56,43 @@ const parseProductPrice = value => {
   return Number.isFinite(parsed) ? parsed : null;
 };
 
-const getFallbackProductImage = (title = '', category = '') => {
-  const text = `${title} ${category}`.toLowerCase();
-  if (text.includes('jean') || text.includes('quần') || text.includes('pant') || text.includes('denim')) {
-    return 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800';
-  }
-  if (text.includes('khoác') || text.includes('jacket') || text.includes('outerwear') || text.includes('coat')) {
-    return 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800';
-  }
-  if (text.includes('tote') || text.includes('túi') || text.includes('bag')) {
-    return 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800';
-  }
-  return 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800';
-};
-
 const mapApiProductToStoreProduct = (p) => {
   const productId = readProductField(p, 'id', 'productId');
   const productName = readProductField(p, 'title', 'name');
   const categoryName = readProductField(p, 'categoryName', 'category');
-  const description = readProductField(p, 'description');
+  const description = formatCatalogText(readProductField(p, 'description'));
   const rawPrice = parseProductPrice(readProductField(p, 'price'));
   const color = readProductField(p, 'color');
   const size = readProductField(p, 'size');
   const rawImages = readProductField(p, 'images', 'imageUrls');
+  const imageLabels = readProductField(p, 'imageLabels') || [];
   const imgs = Array.isArray(rawImages) ? rawImages : rawImages ? [rawImages] : [];
-  const defaultImg = getFallbackProductImage(productName, categoryName);
   const getImageUrl = image => typeof image === 'string'
     ? image
     : readProductField(image, 'imageUrl', 'url', 'src');
-  const validImgs = imgs.map(getImageUrl).filter(Boolean);
+  const validImgs = [...new Set(imgs.map(getImageUrl).filter(Boolean))];
   const hasCustomImage = validImgs.length > 0;
-  const mainImg = hasCustomImage ? validImgs[0] : defaultImg;
+  const mainImg = validImgs[0] || '';
   
   const mappedImages = hasCustomImage
     ? validImgs.map((src, idx) => ({ 
         id: `img-${idx}`, 
         src, 
-        alt: productName || '' 
+        label: imageLabels[idx] || `Ảnh ${idx + 1}`,
+        alt: `${productName || 'Sản phẩm REWEAR'} — ${imageLabels[idx] || `Ảnh ${idx + 1}`}`
       }))
-    : [{ id: 'img-0', src: defaultImg, alt: productName || '' }];
+    : [];
 
   const colorHex = getColorHex(color);
 
   return {
     id: productId,
+    status: readProductField(p, 'status'),
+    stockQuantity: Number(readProductField(p, 'stockQuantity') ?? 0),
+    productType: readProductField(p, 'productType'),
+    isPreview: readProductField(p, 'isPreview') === true,
+    imageSource: readProductField(p, 'imageSource') || '',
+    isUnique: readProductField(p, 'isUnique') === true,
     name: productName,
     price: rawPrice === null ? null : `${rawPrice.toLocaleString('vi-VN')} ₫`,
     rawPrice,
@@ -136,7 +135,7 @@ export const usePublicProducts = () => {
         const mappedProducts = data
           .filter(product => {
             const status = product.status ?? product.Status;
-            return status === 0 || status === '0';
+            return readProductField(product, 'productType') === 'Upcycled' && (status === 0 || status === '0' || status === 'Available');
           })
           .map(mapApiProductToStoreProduct);
         setProducts(mappedProducts);
@@ -151,4 +150,20 @@ export const usePublicProducts = () => {
   const getProductById = (id) => products.find(p => p.id === id);
 
   return { products, loading, getProductById };
+};
+
+export const usePublicProduct = id => {
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [revision, setRevision] = useState(0);
+  useEffect(() => {
+    const abort = new AbortController(); setLoading(true); setError(''); setProduct(null);
+    authFetch('/api/Products/' + encodeURIComponent(id), { signal: abort.signal, skipGlobalLoading: true })
+      .then(response => { if (!abort.signal.aborted) { const data = response.data ?? response; setProduct(readProductField(data, 'productType') === 'Upcycled' ? mapApiProductToStoreProduct(data) : null); } })
+      .catch(e => { if (!abort.signal.aborted && e.status !== 404) setError('Chưa tải được sản phẩm. Vui lòng thử lại.'); })
+      .finally(() => { if (!abort.signal.aborted) setLoading(false); });
+    return () => abort.abort();
+  }, [id, revision]);
+  return { product, loading, error, retry: () => setRevision(value => value + 1) };
 };
